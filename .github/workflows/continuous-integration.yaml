@@ -4,8 +4,7 @@ on:
   pull_request:
   push:
     branches:
-      - 'release/**'
-      - 'hotfix/**'
+      - 'main'
 
 jobs:
   autopep8:
@@ -35,13 +34,6 @@ jobs:
         if: steps.autopep8.outputs.exit-code == 2
         run: exit 1
 
-  check-all-modules-are-tested:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: Check all modules are tested
-      run: ./cd/check_modules.sh
-
   python-tests:
     runs-on: ubuntu-latest
     steps:
@@ -52,62 +44,12 @@ jobs:
         distribution: 'zulu'
         java-version: '8'
 
-    - name: Cache dependencies
-      uses: actions/cache@v2
-      with:
-        path: |
-          ~/.m2/repository
-          !~/.m2/repository/uk
-        key: gaffer-tools-dependencies
-
     - name: Start road-traffic example
       run: |
-        mvn verify -ntp -Proad-traffic-demo &
+        curl -o jetty-runner.jar https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-runner/9.4.52.v20230823/jetty-runner-9.4.52.v20230823.jar
+        curl -o road-traffic-rest.war https://repo1.maven.org/maven2/uk/gov/gchq/gaffer/road-traffic-rest/2.0.0/road-traffic-rest-2.0.0.war
+        java -Dgaffer.storeProperties=src/test/road-traffic-example/store.properties -Dgaffer.graph.config=src/test/road-traffic-example/graphConfig.json -Dgaffer.schemas=src/test/road-traffic-example/schema -DroadTraffic.dataLoader.dataPath=src/test/road-traffic-example/roadTrafficSampleData.csv -jar jetty-runner.jar --path rest road-traffic-rest.war &
         sleep 1m
 
     - name: Run Python tests
-      working-directory: python-shell
       run: python3 -m unittest discover -s src
-
-  java-build:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: true
-      matrix:
-        modules:
-        - :gaffer-tools,:mini-accumulo-cluster
-        - :random-element-generation,:performance-testing,:performance-testing-core,:performance-testing-accumulo-store,:performance-testing-aws
-
-    env:
-      MAVEN_OPTS: -Dmaven.wagon.http.retryHandler.count=3 -Dmaven.wagon.httpconnectionManager.ttlSeconds=25
-    steps:
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-
-    - name: Setup JDK
-      uses: actions/setup-java@v3
-      with:
-        distribution: 'zulu'
-        java-version: '8'
-
-    - name: Cache dependencies
-      uses: actions/cache@v2
-      with:
-        path: |
-          ~/.m2/repository
-          !~/.m2/repository/uk
-        key: gaffer-tools-dependencies
-
-    - name: Install
-      run: mvn -B -q clean install -P quick -pl ${{matrix.modules}} -am
-
-    - name: Test
-      run: mvn verify -B -P coverage -pl ${{matrix.modules}}
-
-    - name: Check Copyright Headers
-      if: github.event_name == 'pull_request'
-      run: mvn -B -q spotless:check -pl ${{matrix.modules}}
-
-    - name: Upload Coverage
-      uses: codecov/codecov-action@v2

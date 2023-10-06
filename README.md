@@ -17,10 +17,10 @@
 Gafferpy requires Python 3.6+. We don't currently release gafferpy on pypi, but you can install it over ssh with:
 
 ```bash
-pip install git+https://github.com/gchq/gafferpy.git#subdirectory=python-shell
+pip install git+https://github.com/gchq/gafferpy.git
 ```
 
-Or if you have the source code locally and want any changes you make reflected in your installation, you can go to the python-shell directory and run:
+Or if you have the source code locally and want any changes you make reflected in your installation, you can run:
 
 ```bash
 pip install -e .
@@ -28,7 +28,8 @@ pip install -e .
 
 ## Quick Start
 
-The python shell connects to a running Gaffer REST API. You can start the Gaffer road-traffic-demo rest server using the command:
+The python shell connects to a running Gaffer REST API.  
+You can start the Gaffer road-traffic-demo rest server from the Gaffer repository, using the command:
 
 ```bash
 mvn verify -Proad-traffic-demo
@@ -81,9 +82,10 @@ Please ensure that your coding style is consistent with the rest of the Gaffer p
 
 ```bash
 # To run all of the tests, first deploy the road traffic example
+# This needs to be done from the Gaffer java repository
 mvn verify -Proad-traffic-demo
 
-# Then from within the python-shell folder run
+# Then run
 python -m unittest discover
 ```
 
