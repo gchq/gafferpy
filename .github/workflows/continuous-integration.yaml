@@ -44,11 +44,24 @@ jobs:
         distribution: 'zulu'
         java-version: '8'
 
+    - name: Cache dependencies
+      uses: actions/cache@v2
+      with:
+        path: |
+          jetty-runner.jar
+          road-traffic-rest-2.0.0.war
+        key: road-traffic-dependencies
+
     - name: Start road-traffic example
       run: |
         curl -o jetty-runner.jar https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-runner/9.4.52.v20230823/jetty-runner-9.4.52.v20230823.jar
-        curl -o road-traffic-rest.war https://repo1.maven.org/maven2/uk/gov/gchq/gaffer/road-traffic-rest/2.0.0/road-traffic-rest-2.0.0.war
-        java -Dgaffer.storeProperties=src/test/road-traffic-example/store.properties -Dgaffer.graph.config=src/test/road-traffic-example/graphConfig.json -Dgaffer.schemas=src/test/road-traffic-example/schema -DroadTraffic.dataLoader.dataPath=src/test/road-traffic-example/roadTrafficSampleData.csv -jar jetty-runner.jar --path rest road-traffic-rest.war &
+        curl -o road-traffic-rest-2.0.0.war https://repo1.maven.org/maven2/uk/gov/gchq/gaffer/road-traffic-rest/2.0.0/road-traffic-rest-2.0.0.war
+        java \
+        -Dgaffer.storeProperties=src/test/road-traffic-example/store.properties \
+        -Dgaffer.graph.config=src/test/road-traffic-example/graphConfig.json \
+        -Dgaffer.schemas=src/test/road-traffic-example/schema \
+        -DroadTraffic.dataLoader.dataPath=src/test/road-traffic-example/roadTrafficSampleData.csv \
+        -jar jetty-runner.jar --path rest road-traffic-rest-2.0.0.war &
         sleep 1m
 
     - name: Run Python tests
