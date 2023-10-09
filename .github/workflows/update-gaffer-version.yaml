@@ -10,7 +10,6 @@ jobs:
   update-gaffer-version:
     runs-on: ubuntu-latest
     env:
-      MAVEN_OPTS: -Dmaven.wagon.http.retryHandler.count=3 -Dmaven.wagon.httpconnectionManager.ttlSeconds=25
       VERSION_UPDATE_BRANCH: updating-gaffer-version-${{ github.event.inputs.version }}
 
     steps:
@@ -25,24 +24,19 @@ jobs:
 
     - name: Update Gaffer Version
       run: |
-        mvn -q org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.parent.version
-        oldVersion=`mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.parent.version | grep -v '\['`
+        oldVersion=`sed -n '/^__version__\ =\ / {s///p;q;}' src/__init__.py | tr -d '"'`
         newVersion=${{ github.event.inputs.version }}
 
-        sed -i'' "s#version>$oldVersion<#version>$newVersion<#g" pom.xml
-        sed -i'' "s#gaffer2:$oldVersion#gaffer2:$newVersion#g" NOTICES
-
-        sed -i'' "s#__version__ = \"$oldVersion\"#__version__ = \"$newVersion\"#g" python-shell/__init__.py
-        sed -i'' "s#__version__ = \"$oldVersion\"#__version__ = \"$newVersion\"#g" python-shell/src/__init__.py
-        sed -i'' "s#__version__ = \"$oldVersion\"#__version__ = \"$newVersion\"#g" python-shell/src/*/__init__.py
+        sed -i'' "s#__version__ = \"$oldVersion\"#__version__ = \"$newVersion\"#g" src/__init__.py
+        sed -i'' "s#__version__ = \"$oldVersion\"#__version__ = \"$newVersion\"#g" src/*/__init__.py
 
     - name: Update gafferpy
       run: |
         newVersion=${{ github.event.inputs.version }}
         curl -o spring-rest.jar https://repo.maven.apache.org/maven2/uk/gov/gchq/gaffer/spring-rest/$newVersion/spring-rest-$newVersion-exec.jar
-        java -Dgaffer.schemas=cd/road-traffic-example/schema -Dgaffer.storeProperties=cd/road-traffic-example/federatedStore.properties -Dgaffer.graph.config=cd/road-traffic-example/federatedGraphConfig.json -jar spring-rest.jar &
+        java -Dgaffer.schemas=src/test/road-traffic-exampleschema -Dgaffer.storeProperties=src/test/road-traffic-examplefederatedStore.properties -Dgaffer.graph.config=src/test/road-traffic-examplefederatedGraphConfig.json -jar spring-rest.jar &
         sleep 1m
-        python python-shell/src/generate.py
+        python src/generate.py
         rm spring-rest.jar
 
     - name: Submit PR
