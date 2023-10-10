@@ -3,7 +3,7 @@
 # Gaffer Python Client
 
 ![ci](https://github.com/gchq/gafferpy/actions/workflows/continuous-integration.yaml/badge.svg)
-[<img src="https://img.shields.io/badge/docs-passing-success.svg?logo=readthedocs">](https://gchq.github.io/gaffer-doc/latest/)
+[<img src="https://img.shields.io/badge/docs-passing-success.svg?logo=readthedocs">](https://gchq.github.io/gafferpy/)
 
 ## Features
 
