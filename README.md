@@ -89,6 +89,19 @@ mvn verify -Proad-traffic-demo
 python -m unittest discover
 ```
 
+## Building the documentation
+
+To build the docs locally, assuming you have Python installed, install the docs dependencies:
+```bash
+cd docs/
+pip install -r requirements.txt
+```
+
+Then use the sphinx Makefile:
+```bash
+make html
+```
+
 ## License
 
 Copyright 2016-2022 Crown Copyright

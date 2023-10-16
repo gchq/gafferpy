@@ -21,3 +21,19 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+Building the documentation
+==========================
+
+To build the docs locally, assuming you have Python installed, install the docs dependencies:
+
+.. code-block:: console
+
+   cd docs/
+   pip install -r requirements.txt
+
+Then use the sphinx Makefile:
+
+.. code-block:: console
+
+   make html
