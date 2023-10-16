@@ -93,7 +93,7 @@ python -m unittest discover
 
 To build the docs locally, assuming you have Python installed, install the docs dependencies:
 ```bash
-cd docs/
+cd docs
 pip install -r requirements.txt
 ```
 
