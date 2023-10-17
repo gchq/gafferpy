@@ -3,7 +3,7 @@
 # Gaffer Python Client
 
 ![ci](https://github.com/gchq/gafferpy/actions/workflows/continuous-integration.yaml/badge.svg)
-[<img src="https://img.shields.io/badge/docs-passing-success.svg?logo=readthedocs">](https://gchq.github.io/gaffer-doc/latest/)
+[<img src="https://img.shields.io/badge/docs-passing-success.svg?logo=readthedocs">](https://gchq.github.io/gafferpy/)
 
 ## Features
 
@@ -87,6 +87,19 @@ mvn verify -Proad-traffic-demo
 
 # Then run
 python -m unittest discover
+```
+
+## Building the documentation
+
+To build the docs locally, assuming you have Python installed, install the docs dependencies:
+```bash
+cd docs
+pip install -r requirements.txt
+```
+
+Then use the sphinx Makefile:
+```bash
+make html
 ```
 
 ## License
