@@ -32,7 +32,7 @@ The python shell connects to a running Gaffer REST API.
 You can start the Gaffer road-traffic-demo rest server from the Gaffer repository, using the command:
 
 ```bash
-mvn verify -Proad-traffic-demo
+mvn clean install -pl :road-traffic-demo -Proad-traffic-demo,quick
 ```
 
 ```python
@@ -83,7 +83,7 @@ Please ensure that your coding style is consistent with the rest of the Gaffer p
 ```bash
 # To run all of the tests, first deploy the road traffic example
 # This needs to be done from the Gaffer java repository
-mvn verify -Proad-traffic-demo
+mvn clean install -pl :road-traffic-demo -Proad-traffic-demo,quick
 
 # Then run
 python -m unittest discover
