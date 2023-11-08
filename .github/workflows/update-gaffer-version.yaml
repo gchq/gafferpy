@@ -37,7 +37,7 @@ jobs:
       run: |
         newVersion=${{ github.event.inputs.version }}
         curl -o spring-rest.jar https://repo.maven.apache.org/maven2/uk/gov/gchq/gaffer/spring-rest/$newVersion/spring-rest-$newVersion-exec.jar
-        java -Dgaffer.schemas=src/test/road-traffic-exampleschema -Dgaffer.storeProperties=src/test/road-traffic-examplefederatedStore.properties -Dgaffer.graph.config=src/test/road-traffic-examplefederatedGraphConfig.json -jar spring-rest.jar &
+        java -Dgaffer.schemas=src/test/road-traffic-example/schema -Dgaffer.storeProperties=src/test/road-traffic-example/federatedStore.properties -Dgaffer.graph.config=src/test/road-traffic-example/federatedGraphConfig.json -jar spring-rest.jar &
         sleep 1m
         python src/generate.py
         rm spring-rest.jar
