@@ -54,6 +54,7 @@ jobs:
       run: |
         git checkout -b ${{ env.VERSION_UPDATE_BRANCH }}
         git commit -am "Updated Gaffer version to ${{ github.event.inputs.version }}"
+        git push
 
     - name: Submit PR
       run: gh pr create --fill --head ${{ env.VERSION_UPDATE_BRANCH }}
