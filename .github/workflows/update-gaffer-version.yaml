@@ -57,3 +57,5 @@ jobs:
 
     - name: Submit PR
       run: gh pr create --fill --head ${{ env.VERSION_UPDATE_BRANCH }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
