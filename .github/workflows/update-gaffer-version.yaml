@@ -6,6 +6,9 @@ on:
         description: 'Gaffer Version'
         required: true
 
+permissions:
+  pull-requests: write
+
 jobs:
   update-gaffer-version:
     runs-on: ubuntu-latest
@@ -42,9 +45,15 @@ jobs:
         python src/generate.py
         rm spring-rest.jar
 
+    - name: Set up Github credentials
+      run: |
+        git config user.name github-actions[bot]
+        git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+
+    - name: Create PR branch
+      run: |
+        git checkout -b ${{ env.VERSION_UPDATE_BRANCH }}
+        git commit -am "Updated Gaffer version to ${{ github.event.inputs.version }}"
+
     - name: Submit PR
-      uses: peter-evans/create-pull-request@v4
-      with:
-        title: Updated Gaffer version to ${{ github.event.inputs.version }}
-        commit-message: Updated Gaffer version to ${{ github.event.inputs.version }}
-        branch: ${{ env.VERSION_UPDATE_BRANCH }}
+      run: gh pr create --fill --head ${{ env.VERSION_UPDATE_BRANCH }}
