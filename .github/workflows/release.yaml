@@ -3,7 +3,7 @@ name: Full Release
 on:
   push:
     tags:
-      - "v*.*.*"
+      - "*"
 
 permissions:
   contents: write
