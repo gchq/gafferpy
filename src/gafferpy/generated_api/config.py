@@ -27,6 +27,11 @@ class GetJobs(GetGraph):
         super().__init__('/graph/jobs')
 
 
+class GetVersion(GetGraph):
+    def __init__(self):
+        super().__init__('/graph/version')
+
+
 class GetStatus(GetGraph):
     def __init__(self):
         super().__init__('/graph/status')
@@ -65,6 +70,11 @@ class GetOperationsDetailsAll(GetGraph):
         super().__init__('/graph/operations/details/all')
 
 
+class GetOperationsAll(GetGraph):
+    def __init__(self):
+        super().__init__('/graph/operations/all')
+
+
 class GetJobs(GetGraph):
     def __init__(self, id=""):
         super().__init__(
@@ -80,6 +90,11 @@ class GetJobsResults(GetGraph):
 class GetTransformFunctions(GetGraph):
     def __init__(self):
         super().__init__('/graph/config/transformFunctions')
+
+
+class GetStoreType(GetGraph):
+    def __init__(self):
+        super().__init__('/graph/config/storeType')
 
 
 class GetStoreTraits(GetGraph):

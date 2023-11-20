@@ -117,7 +117,6 @@ class GetElementsBetweenSetsPairs(Operation):
         view:
         include_incoming_out_going: Should the edges point towards, or away from your seeds
         directed_type: Is the Edge directed?
-        backwards_compatible_operation:
         views:
         options: Additional map of options
     Returns:
@@ -131,7 +130,6 @@ class GetElementsBetweenSetsPairs(Operation):
             view: View = None,
             include_incoming_out_going: str = None,
             directed_type: str = None,
-            backwards_compatible_operation: typing.Any = None,
             views: typing.List[View] = None,
             options: typing.Dict[str, str] = None):
         super().__init__(_class_name=self.CLASS, options=options)
@@ -139,7 +137,6 @@ class GetElementsBetweenSetsPairs(Operation):
         self.view = view
         self.include_incoming_out_going = include_incoming_out_going
         self.directed_type = directed_type
-        self.backwards_compatible_operation = backwards_compatible_operation
         self.views = views
 
     def to_json(self):
@@ -152,8 +149,6 @@ class GetElementsBetweenSetsPairs(Operation):
             operation_json["includeIncomingOutGoing"] = self.include_incoming_out_going
         if self.directed_type is not None:
             operation_json["directedType"] = self.directed_type
-        if self.backwards_compatible_operation is not None:
-            operation_json["backwardsCompatibleOperation"] = self.backwards_compatible_operation
         if self.views is not None:
             operation_json["views"] = self.views
         return operation_json
