@@ -6,6 +6,10 @@ on:
         description: 'Gaffer Version'
         required: true
 
+permissions:
+  pull-requests: write
+  contents: write
+
 jobs:
   update-gaffer-version:
     runs-on: ubuntu-latest
@@ -24,14 +28,12 @@ jobs:
 
     - name: Update Gaffer Version
       run: |
-        oldVersion=`sed -n '/^__version__\ =\ / {s///p;q;}' src/__init__.py | tr -d '"'`
+        oldVersion=`sed -n 's/^__version__.*"\(.*\)"$/\1/p' src/__init__.py`
         newVersion=${{ github.event.inputs.version }}
 
         sed -i'' "s#__version__ = \"$oldVersion\"#__version__ = \"$newVersion\"#g" src/__init__.py
         sed -i'' "s#__version__ = \"$oldVersion\"#__version__ = \"$newVersion\"#g" src/*/__init__.py
         sed -i'' "s#release = '$oldVersion'#release = '$newVersion'#g" docs/source/conf.py
-        sed -i'' "s#road-traffic-rest-$oldVersion.war#road-traffic-rest-$newVersion.war#g" .github/workflows/continuous-integration.yaml
-        sed -i'' "s#road-traffic-rest\/$oldVersion\/#road-traffic-rest\/$newVersion\/#g" .github/workflows/continuous-integration.yaml
 
     - name: Update gafferpy
       run: |
@@ -42,9 +44,18 @@ jobs:
         python src/generate.py
         rm spring-rest.jar
 
+    - name: Set up Github credentials
+      run: |
+        git config user.name github-actions[bot]
+        git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+
+    - name: Create PR branch
+      run: |
+        git checkout -b ${{ env.VERSION_UPDATE_BRANCH }}
+        git commit -am "Updated Gaffer version to ${{ github.event.inputs.version }}"
+        git push --set-upstream origin ${{ env.VERSION_UPDATE_BRANCH }}
+
     - name: Submit PR
-      uses: peter-evans/create-pull-request@v4
-      with:
-        title: Updated Gaffer version to ${{ github.event.inputs.version }}
-        commit-message: Updated Gaffer version to ${{ github.event.inputs.version }}
-        branch: ${{ env.VERSION_UPDATE_BRANCH }}
+      run: gh pr create --fill --head ${{ env.VERSION_UPDATE_BRANCH }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
