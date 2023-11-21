@@ -28,7 +28,7 @@ jobs:
 
     - name: Update Gaffer Version
       run: |
-        oldVersion=`sed -n '/^__version__\ =\ / {s///p;q;}' src/__init__.py | tr -d '"'`
+        oldVersion=`sed -n 's/^__version__.*"\(.*\)"$/\1/p' src/__init__.py`
         newVersion=${{ github.event.inputs.version }}
 
         sed -i'' "s#__version__ = \"$oldVersion\"#__version__ = \"$newVersion\"#g" src/__init__.py

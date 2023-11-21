@@ -46,7 +46,7 @@ jobs:
 
     - name: Start road-traffic example
       run: |
-        gafferVersion=`sed -n '/^__version__\ =\ / {s///p;q;}' src/__init__.py | tr -d '"'`
+        gafferVersion=`sed -n 's/^__version__.*"\(.*\)"$/\1/p' src/__init__.py`
         curl -o jetty-runner.jar https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-runner/9.4.52.v20230823/jetty-runner-9.4.52.v20230823.jar
         curl -o road-traffic-rest.war https://repo1.maven.org/maven2/uk/gov/gchq/gaffer/road-traffic-rest/$gafferVersion/road-traffic-rest-$gafferVersion.war
         java \
