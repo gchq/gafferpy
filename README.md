@@ -28,7 +28,7 @@ pip install -e .
 
 ## Quick Start
 
-The Python shell connects to a running Gaffer REST API.  
+The Python shell connects to a running Gaffer REST API.
 You can start the Gaffer [`road-traffic-demo`](https://github.com/gchq/Gaffer/blob/master/example/road-traffic/README.md) REST server from the Gaffer repository, using the command:
 
 ```bash
@@ -118,7 +118,7 @@ make html
 
 ## License
 
-Copyright 2016-2023 Crown Copyright
+Copyright 2016-2024 Crown Copyright
 
 Licensed under the Apache License, Version 2.0 \(the "License"\); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
