@@ -1,5 +1,5 @@
 #
-# Copyright 2016-2022 Crown Copyright
+# Copyright 2016-2023 Crown Copyright
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -361,7 +361,7 @@ def add_cardinality_entity(gc):
                     group='Cardinality',
                     vertex='M1:1',
                     properties={
-                        'hllp': g.hyper_log_log_plus(['M1']),
+                        'hll': g.hll_sketch(['M1']),
                         'count': g.long(60),
                         'edgeGroup': g.tree_set(['RoadHasJunction'])
                     }

@@ -1,5 +1,5 @@
 #
-# Copyright 2022 Crown Copyright
+# Copyright 2023 Crown Copyright
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -19,15 +19,17 @@ This module has been generated with fishbowl.
 To make changes, either extend these classes or change fishbowl.
 """
 
-from gafferpy.gaffer_functions import AbstractFunction
+import typing
+from gafferpy.gaffer_core import AbstractFunction, BinaryOperator, Function, Predicate
 
 
 class ElementTransformer(AbstractFunction):
     CLASS = "uk.gov.gchq.gaffer.data.element.function.ElementTransformer"
 
     def __init__(
-            self,
-            functions=None):
+        self,
+        functions: typing.Optional[typing.List[typing.Any]] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.functions = functions
 
@@ -52,8 +54,9 @@ class ExtractId(AbstractFunction):
     CLASS = "uk.gov.gchq.gaffer.data.element.function.ExtractId"
 
     def __init__(
-            self,
-            id=None):
+        self,
+        id: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.id = id
 
@@ -68,8 +71,9 @@ class ExtractProperty(AbstractFunction):
     CLASS = "uk.gov.gchq.gaffer.data.element.function.ExtractProperty"
 
     def __init__(
-            self,
-            name=None):
+        self,
+        name: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.name = name
 
@@ -84,8 +88,9 @@ class PropertiesTransformer(AbstractFunction):
     CLASS = "uk.gov.gchq.gaffer.data.element.function.PropertiesTransformer"
 
     def __init__(
-            self,
-            functions=None):
+        self,
+        functions: typing.Optional[typing.List[typing.Any]] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.functions = functions
 
@@ -100,11 +105,12 @@ class ReduceRelatedElements(AbstractFunction):
     CLASS = "uk.gov.gchq.gaffer.data.element.function.ReduceRelatedElements"
 
     def __init__(
-            self,
-            visibility_aggregator=None,
-            vertex_aggregator=None,
-            related_vertex_groups=None,
-            visibility_property=None):
+        self,
+        visibility_aggregator: typing.Optional[BinaryOperator] = None,
+        vertex_aggregator: typing.Optional[BinaryOperator] = None,
+        related_vertex_groups: typing.Optional[typing.Set[str]] = None,
+        visibility_property: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.visibility_aggregator = visibility_aggregator
         self.vertex_aggregator = vertex_aggregator
@@ -148,9 +154,10 @@ class TupleToElements(AbstractFunction):
     CLASS = "uk.gov.gchq.gaffer.data.element.function.TupleToElements"
 
     def __init__(
-            self,
-            elements=None,
-            use_group_mapping=None):
+        self,
+        elements: typing.Optional[typing.List[typing.Any]] = None,
+        use_group_mapping: typing.Optional[bool] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.elements = elements
         self.use_group_mapping = use_group_mapping
@@ -168,9 +175,10 @@ class TuplesToElements(AbstractFunction):
     CLASS = "uk.gov.gchq.gaffer.data.element.function.TuplesToElements"
 
     def __init__(
-            self,
-            elements=None,
-            use_group_mapping=None):
+        self,
+        elements: typing.Optional[typing.List[typing.Any]] = None,
+        use_group_mapping: typing.Optional[bool] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.elements = elements
         self.use_group_mapping = use_group_mapping
@@ -218,13 +226,14 @@ class CsvGenerator(AbstractFunction):
     CLASS = "uk.gov.gchq.gaffer.data.generator.CsvGenerator"
 
     def __init__(
-            self,
-            quoted=None,
-            comma_replacement=None,
-            include_default_fields=None,
-            include_schema_properties=None,
-            constants=None,
-            fields=None):
+        self,
+        quoted: typing.Optional[bool] = None,
+        comma_replacement: typing.Optional[str] = None,
+        include_default_fields: typing.Optional[bool] = None,
+        include_schema_properties: typing.Optional[bool] = None,
+        constants: typing.Optional[typing.Dict[str, str]] = None,
+        fields: typing.Optional[typing.Dict[str, str]] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.quoted = quoted
         self.comma_replacement = comma_replacement
@@ -264,9 +273,10 @@ class MapGenerator(AbstractFunction):
     CLASS = "uk.gov.gchq.gaffer.data.generator.MapGenerator"
 
     def __init__(
-            self,
-            constants=None,
-            fields=None):
+        self,
+        constants: typing.Optional[typing.Dict[str, str]] = None,
+        fields: typing.Optional[typing.Dict[str, str]] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.constants = constants
         self.fields = fields
@@ -284,11 +294,12 @@ class Neo4jCsvElementGenerator(AbstractFunction):
     CLASS = "uk.gov.gchq.gaffer.data.generator.Neo4jCsvElementGenerator"
 
     def __init__(
-            self,
-            first_row=None,
-            trim=None,
-            delimiter=None,
-            null_string=None):
+        self,
+        first_row: typing.Optional[int] = None,
+        trim: typing.Optional[bool] = None,
+        delimiter: typing.Optional[str] = None,
+        null_string: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.first_row = first_row
         self.trim = trim
@@ -312,13 +323,14 @@ class Neo4jCsvGenerator(AbstractFunction):
     CLASS = "uk.gov.gchq.gaffer.data.generator.Neo4jCsvGenerator"
 
     def __init__(
-            self,
-            quoted=None,
-            comma_replacement=None,
-            include_default_fields=None,
-            include_schema_properties=None,
-            constants=None,
-            fields=None):
+        self,
+        quoted: typing.Optional[bool] = None,
+        comma_replacement: typing.Optional[str] = None,
+        include_default_fields: typing.Optional[bool] = None,
+        include_schema_properties: typing.Optional[bool] = None,
+        constants: typing.Optional[typing.Dict[str, str]] = None,
+        fields: typing.Optional[typing.Dict[str, str]] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.quoted = quoted
         self.comma_replacement = comma_replacement
@@ -348,11 +360,12 @@ class NeptuneCsvElementGenerator(AbstractFunction):
     CLASS = "uk.gov.gchq.gaffer.data.generator.NeptuneCsvElementGenerator"
 
     def __init__(
-            self,
-            first_row=None,
-            trim=None,
-            delimiter=None,
-            null_string=None):
+        self,
+        first_row: typing.Optional[int] = None,
+        trim: typing.Optional[bool] = None,
+        delimiter: typing.Optional[str] = None,
+        null_string: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.first_row = first_row
         self.trim = trim
@@ -376,13 +389,14 @@ class NeptuneCsvGenerator(AbstractFunction):
     CLASS = "uk.gov.gchq.gaffer.data.generator.NeptuneCsvGenerator"
 
     def __init__(
-            self,
-            quoted=None,
-            comma_replacement=None,
-            include_default_fields=None,
-            include_schema_properties=None,
-            constants=None,
-            fields=None):
+        self,
+        quoted: typing.Optional[bool] = None,
+        comma_replacement: typing.Optional[str] = None,
+        include_default_fields: typing.Optional[bool] = None,
+        include_schema_properties: typing.Optional[bool] = None,
+        constants: typing.Optional[typing.Dict[str, str]] = None,
+        fields: typing.Optional[typing.Dict[str, str]] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.quoted = quoted
         self.comma_replacement = comma_replacement
@@ -422,8 +436,9 @@ class ExtractWalkEdgesFromHop(AbstractFunction):
     CLASS = "uk.gov.gchq.gaffer.data.graph.function.walk.ExtractWalkEdgesFromHop"
 
     def __init__(
-            self,
-            hop=None):
+        self,
+        hop: typing.Optional[int] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.hop = hop
 
@@ -448,8 +463,9 @@ class ExtractWalkEntitiesFromHop(AbstractFunction):
     CLASS = "uk.gov.gchq.gaffer.data.graph.function.walk.ExtractWalkEntitiesFromHop"
 
     def __init__(
-            self,
-            hop=None):
+        self,
+        hop: typing.Optional[int] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.hop = hop
 
@@ -484,8 +500,9 @@ class EntityIdExtractor(AbstractFunction):
     CLASS = "uk.gov.gchq.gaffer.operation.data.generator.EntityIdExtractor"
 
     def __init__(
-            self,
-            edge_identifier_to_extract=None):
+        self,
+        edge_identifier_to_extract: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.edge_identifier_to_extract = edge_identifier_to_extract
 
@@ -540,8 +557,9 @@ class ToTrailingWildcardPair(AbstractFunction):
     CLASS = "uk.gov.gchq.gaffer.operation.function.ToTrailingWildcardPair"
 
     def __init__(
-            self,
-            end_of_range=None):
+        self,
+        end_of_range: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.end_of_range = end_of_range
 
@@ -586,15 +604,18 @@ class HyperLogLogPlusEntityGenerator(AbstractFunction):
     CLASS = "uk.gov.gchq.gaffer.sketches.clearspring.cardinality.HyperLogLogPlusEntityGenerator"
 
     def __init__(
-            self,
-            properties_to_copy=None,
-            count_property=None,
-            cardinality_property_name=None,
-            edge_group_property=None,
-            vertex_value_converter=None,
-            group=None):
+        self,
+        properties_to_copy: typing.Optional[typing.List[str]] = None,
+        to_sketch_function: typing.Optional[typing.Any] = None,
+        count_property: typing.Optional[str] = None,
+        cardinality_property_name: typing.Optional[str] = None,
+        edge_group_property: typing.Optional[str] = None,
+        vertex_value_converter: typing.Optional[Function] = None,
+        group: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.properties_to_copy = properties_to_copy
+        self.to_sketch_function = to_sketch_function
         self.count_property = count_property
         self.cardinality_property_name = cardinality_property_name
         self.edge_group_property = edge_group_property
@@ -605,6 +626,8 @@ class HyperLogLogPlusEntityGenerator(AbstractFunction):
         function_json = super().to_json()
         if self.properties_to_copy is not None:
             function_json["propertiesToCopy"] = self.properties_to_copy
+        if self.to_sketch_function is not None:
+            function_json["toSketchFunction"] = self.to_sketch_function
         if self.count_property is not None:
             function_json["countProperty"] = self.count_property
         if self.cardinality_property_name is not None:
@@ -622,9 +645,10 @@ class IterableToHyperLogLogPlus(AbstractFunction):
     CLASS = "uk.gov.gchq.gaffer.sketches.clearspring.cardinality.function.IterableToHyperLogLogPlus"
 
     def __init__(
-            self,
-            p=None,
-            sp=None):
+        self,
+        p: typing.Optional[int] = None,
+        sp: typing.Optional[int] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.p = p
         self.sp = sp
@@ -642,9 +666,10 @@ class ToHyperLogLogPlus(AbstractFunction):
     CLASS = "uk.gov.gchq.gaffer.sketches.clearspring.cardinality.function.ToHyperLogLogPlus"
 
     def __init__(
-            self,
-            p=None,
-            sp=None):
+        self,
+        p: typing.Optional[int] = None,
+        sp: typing.Optional[int] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.p = p
         self.sp = sp
@@ -662,15 +687,18 @@ class HllSketchEntityGenerator(AbstractFunction):
     CLASS = "uk.gov.gchq.gaffer.sketches.datasketches.cardinality.HllSketchEntityGenerator"
 
     def __init__(
-            self,
-            properties_to_copy=None,
-            count_property=None,
-            cardinality_property_name=None,
-            edge_group_property=None,
-            vertex_value_converter=None,
-            group=None):
+        self,
+        properties_to_copy: typing.Optional[typing.List[str]] = None,
+        to_sketch_function: typing.Optional[typing.Any] = None,
+        count_property: typing.Optional[str] = None,
+        cardinality_property_name: typing.Optional[str] = None,
+        edge_group_property: typing.Optional[str] = None,
+        vertex_value_converter: typing.Optional[Function] = None,
+        group: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.properties_to_copy = properties_to_copy
+        self.to_sketch_function = to_sketch_function
         self.count_property = count_property
         self.cardinality_property_name = cardinality_property_name
         self.edge_group_property = edge_group_property
@@ -681,6 +709,8 @@ class HllSketchEntityGenerator(AbstractFunction):
         function_json = super().to_json()
         if self.properties_to_copy is not None:
             function_json["propertiesToCopy"] = self.properties_to_copy
+        if self.to_sketch_function is not None:
+            function_json["toSketchFunction"] = self.to_sketch_function
         if self.count_property is not None:
             function_json["countProperty"] = self.count_property
         if self.cardinality_property_name is not None:
@@ -698,15 +728,20 @@ class IterableToHllSketch(AbstractFunction):
     CLASS = "uk.gov.gchq.gaffer.sketches.datasketches.cardinality.function.IterableToHllSketch"
 
     def __init__(
-            self,
-            log_k=None):
+        self,
+        log_k: typing.Optional[int] = None,
+        hll_sketch: typing.Optional[typing.Any] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.log_k = log_k
+        self.hll_sketch = hll_sketch
 
     def to_json(self):
         function_json = super().to_json()
         if self.log_k is not None:
             function_json["logK"] = self.log_k
+        if self.hll_sketch is not None:
+            function_json["hllSketch"] = self.hll_sketch
         return function_json
 
 
@@ -714,15 +749,20 @@ class ToHllSketch(AbstractFunction):
     CLASS = "uk.gov.gchq.gaffer.sketches.datasketches.cardinality.function.ToHllSketch"
 
     def __init__(
-            self,
-            log_k=None):
+        self,
+        log_k: typing.Optional[int] = None,
+        hll_sketch: typing.Optional[typing.Any] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.log_k = log_k
+        self.hll_sketch = hll_sketch
 
     def to_json(self):
         function_json = super().to_json()
         if self.log_k is not None:
             function_json["logK"] = self.log_k
+        if self.hll_sketch is not None:
+            function_json["hllSketch"] = self.hll_sketch
         return function_json
 
 
@@ -760,8 +800,9 @@ class DateToTimeBucketEnd(AbstractFunction):
     CLASS = "uk.gov.gchq.gaffer.time.function.DateToTimeBucketEnd"
 
     def __init__(
-            self,
-            bucket=None):
+        self,
+        bucket: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.bucket = bucket
 
@@ -776,8 +817,9 @@ class DateToTimeBucketStart(AbstractFunction):
     CLASS = "uk.gov.gchq.gaffer.time.function.DateToTimeBucketStart"
 
     def __init__(
-            self,
-            bucket=None):
+        self,
+        bucket: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.bucket = bucket
 
@@ -792,10 +834,11 @@ class MaskTimestampSetByTimeRange(AbstractFunction):
     CLASS = "uk.gov.gchq.gaffer.time.function.MaskTimestampSetByTimeRange"
 
     def __init__(
-            self,
-            start_time=None,
-            end_time=None,
-            time_unit=None):
+        self,
+        start_time: typing.Optional[int] = None,
+        end_time: typing.Optional[int] = None,
+        time_unit: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.start_time = start_time
         self.end_time = end_time
@@ -826,8 +869,9 @@ class ToTimeBucket(AbstractFunction):
     CLASS = "uk.gov.gchq.gaffer.time.function.ToTimeBucket"
 
     def __init__(
-            self,
-            bucket=None):
+        self,
+        bucket: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.bucket = bucket
 
@@ -842,8 +886,9 @@ class ToTimeBucketEnd(AbstractFunction):
     CLASS = "uk.gov.gchq.gaffer.time.function.ToTimeBucketEnd"
 
     def __init__(
-            self,
-            bucket=None):
+        self,
+        bucket: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.bucket = bucket
 
@@ -858,8 +903,9 @@ class ToTimeBucketStart(AbstractFunction):
     CLASS = "uk.gov.gchq.gaffer.time.function.ToTimeBucketStart"
 
     def __init__(
-            self,
-            bucket=None):
+        self,
+        bucket: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.bucket = bucket
 
@@ -874,10 +920,11 @@ class ToTimestampSet(AbstractFunction):
     CLASS = "uk.gov.gchq.gaffer.time.function.ToTimestampSet"
 
     def __init__(
-            self,
-            bucket=None,
-            max_size=None,
-            millis_correction=None):
+        self,
+        bucket: typing.Optional[str] = None,
+        max_size: typing.Optional[int] = None,
+        millis_correction: typing.Optional[int] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.bucket = bucket
         self.max_size = max_size
@@ -898,8 +945,9 @@ class FreqMapExtractor(AbstractFunction):
     CLASS = "uk.gov.gchq.gaffer.types.function.FreqMapExtractor"
 
     def __init__(
-            self,
-            key=None):
+        self,
+        key: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.key = key
 
@@ -914,8 +962,9 @@ class FreqMapPredicator(AbstractFunction):
     CLASS = "uk.gov.gchq.gaffer.types.function.FreqMapPredicator"
 
     def __init__(
-            self,
-            predicate=None):
+        self,
+        predicate: typing.Optional[typing.Any] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.predicate = predicate
 
@@ -970,9 +1019,10 @@ class ToTypeSubTypeValue(AbstractFunction):
     CLASS = "uk.gov.gchq.gaffer.types.function.ToTypeSubTypeValue"
 
     def __init__(
-            self,
-            sub_type=None,
-            type=None):
+        self,
+        sub_type: typing.Optional[str] = None,
+        type: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.sub_type = sub_type
         self.type = type
@@ -990,8 +1040,9 @@ class ToTypeValue(AbstractFunction):
     CLASS = "uk.gov.gchq.gaffer.types.function.ToTypeValue"
 
     def __init__(
-            self,
-            type=None):
+        self,
+        type: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.type = type
 
@@ -1006,8 +1057,9 @@ class FunctionComposite(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.function.FunctionComposite"
 
     def __init__(
-            self,
-            functions=None):
+        self,
+        functions: typing.Optional[typing.List[typing.Any]] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.functions = functions
 
@@ -1022,8 +1074,9 @@ class FunctionMap(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.function.FunctionMap"
 
     def __init__(
-            self,
-            function=None):
+        self,
+        function: typing.Optional[Function] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.function = function
 
@@ -1038,8 +1091,9 @@ class ApplyBiFunction(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.ApplyBiFunction"
 
     def __init__(
-            self,
-            function=None):
+        self,
+        function: typing.Optional[typing.Any] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.function = function
 
@@ -1064,8 +1118,9 @@ class CallMethod(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.CallMethod"
 
     def __init__(
-            self,
-            method=None):
+        self,
+        method: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.method = method
 
@@ -1080,8 +1135,9 @@ class Cast(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.Cast"
 
     def __init__(
-            self,
-            output_class=None):
+        self,
+        output_class: typing.Optional[typing.Any] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.output_class = output_class
 
@@ -1096,8 +1152,9 @@ class Concat(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.Concat"
 
     def __init__(
-            self,
-            separator=None):
+        self,
+        separator: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.separator = separator
 
@@ -1112,8 +1169,9 @@ class CreateObject(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.CreateObject"
 
     def __init__(
-            self,
-            object_class=None):
+        self,
+        object_class: typing.Optional[typing.Any] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.object_class = object_class
 
@@ -1128,14 +1186,15 @@ class CsvLinesToMaps(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.CsvLinesToMaps"
 
     def __init__(
-            self,
-            quoted=None,
-            quote_char=None,
-            first_row=None,
-            trim=None,
-            delimiter=None,
-            null_string=None,
-            header=None):
+        self,
+        quoted: typing.Optional[bool] = None,
+        quote_char: typing.Optional[str] = None,
+        first_row: typing.Optional[int] = None,
+        trim: typing.Optional[bool] = None,
+        delimiter: typing.Optional[str] = None,
+        null_string: typing.Optional[str] = None,
+        header: typing.Optional[typing.List[str]] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.quoted = quoted
         self.quote_char = quote_char
@@ -1168,12 +1227,13 @@ class CsvToMaps(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.CsvToMaps"
 
     def __init__(
-            self,
-            quoted=None,
-            quote_char=None,
-            first_row=None,
-            delimiter=None,
-            header=None):
+        self,
+        quoted: typing.Optional[bool] = None,
+        quote_char: typing.Optional[str] = None,
+        first_row: typing.Optional[int] = None,
+        delimiter: typing.Optional[str] = None,
+        header: typing.Optional[typing.List[str]] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.quoted = quoted
         self.quote_char = quote_char
@@ -1220,8 +1280,9 @@ class DefaultIfEmpty(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.DefaultIfEmpty"
 
     def __init__(
-            self,
-            default_value=None):
+        self,
+        default_value: typing.Optional[typing.Any] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.default_value = default_value
 
@@ -1236,8 +1297,9 @@ class DefaultIfNull(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.DefaultIfNull"
 
     def __init__(
-            self,
-            default_value=None):
+        self,
+        default_value: typing.Optional[typing.Any] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.default_value = default_value
 
@@ -1252,8 +1314,9 @@ class DeserialiseJson(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.DeserialiseJson"
 
     def __init__(
-            self,
-            output_class=None):
+        self,
+        output_class: typing.Optional[typing.Any] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.output_class = output_class
 
@@ -1278,8 +1341,9 @@ class DictionaryLookup(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.DictionaryLookup"
 
     def __init__(
-            self,
-            dictionary=None):
+        self,
+        dictionary: typing.Optional[typing.Dict[typing.Any, typing.Any]] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.dictionary = dictionary
 
@@ -1304,8 +1368,9 @@ class DivideBy(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.DivideBy"
 
     def __init__(
-            self,
-            by=None):
+        self,
+        by: typing.Optional[int] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.by = by
 
@@ -1330,8 +1395,9 @@ class ExtractValue(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.ExtractValue"
 
     def __init__(
-            self,
-            key=None):
+        self,
+        key: typing.Optional[typing.Any] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.key = key
 
@@ -1366,8 +1432,9 @@ class FirstValid(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.FirstValid"
 
     def __init__(
-            self,
-            predicate=None):
+        self,
+        predicate: typing.Optional[Predicate] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.predicate = predicate
 
@@ -1382,8 +1449,9 @@ class FunctionChain(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.FunctionChain"
 
     def __init__(
-            self,
-            functions=None):
+        self,
+        functions: typing.Optional[typing.List[typing.Any]] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.functions = functions
 
@@ -1418,11 +1486,12 @@ class If(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.If"
 
     def __init__(
-            self,
-            otherwise=None,
-            predicate=None,
-            condition=None,
-            then=None):
+        self,
+        otherwise: typing.Optional[Function] = None,
+        predicate: typing.Optional[Predicate] = None,
+        condition: typing.Optional[bool] = None,
+        then: typing.Optional[Function] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.otherwise = otherwise
         self.predicate = predicate
@@ -1446,8 +1515,9 @@ class Increment(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.Increment"
 
     def __init__(
-            self,
-            increment=None):
+        self,
+        increment: typing.Optional[typing.Any] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.increment = increment
 
@@ -1482,8 +1552,9 @@ class IterableFilter(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.IterableFilter"
 
     def __init__(
-            self,
-            predicate=None):
+        self,
+        predicate: typing.Optional[Predicate] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.predicate = predicate
 
@@ -1498,8 +1569,9 @@ class IterableFlatten(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.IterableFlatten"
 
     def __init__(
-            self,
-            operator=None):
+        self,
+        operator: typing.Optional[BinaryOperator] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.operator = operator
 
@@ -1514,8 +1586,9 @@ class IterableFunction(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.IterableFunction"
 
     def __init__(
-            self,
-            functions=None):
+        self,
+        functions: typing.Optional[typing.List[Function]] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.functions = functions
 
@@ -1550,8 +1623,9 @@ class Length(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.Length"
 
     def __init__(
-            self,
-            max_length=None):
+        self,
+        max_length: typing.Optional[int] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.max_length = max_length
 
@@ -1576,10 +1650,11 @@ class MapFilter(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.MapFilter"
 
     def __init__(
-            self,
-            key_predicate=None,
-            key_value_predicate=None,
-            value_predicate=None):
+        self,
+        key_predicate: typing.Optional[Predicate] = None,
+        key_value_predicate: typing.Optional[typing.Any] = None,
+        value_predicate: typing.Optional[Predicate] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.key_predicate = key_predicate
         self.key_value_predicate = key_value_predicate
@@ -1620,8 +1695,9 @@ class MultiplyBy(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.MultiplyBy"
 
     def __init__(
-            self,
-            by=None):
+        self,
+        by: typing.Optional[int] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.by = by
 
@@ -1636,8 +1712,9 @@ class MultiplyLongBy(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.MultiplyLongBy"
 
     def __init__(
-            self,
-            by=None):
+        self,
+        by: typing.Optional[int] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.by = by
 
@@ -1652,8 +1729,9 @@ class NthItem(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.NthItem"
 
     def __init__(
-            self,
-            selection=None):
+        self,
+        selection: typing.Optional[int] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.selection = selection
 
@@ -1668,10 +1746,11 @@ class ParseDate(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.ParseDate"
 
     def __init__(
-            self,
-            format=None,
-            time_zone=None,
-            microseconds=None):
+        self,
+        format: typing.Optional[str] = None,
+        time_zone: typing.Optional[str] = None,
+        microseconds: typing.Optional[bool] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.format = format
         self.time_zone = time_zone
@@ -1692,10 +1771,11 @@ class ParseTime(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.ParseTime"
 
     def __init__(
-            self,
-            format=None,
-            time_zone=None,
-            time_unit=None):
+        self,
+        format: typing.Optional[str] = None,
+        time_zone: typing.Optional[str] = None,
+        time_unit: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.format = format
         self.time_zone = time_zone
@@ -1726,8 +1806,9 @@ class SetValue(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.SetValue"
 
     def __init__(
-            self,
-            value=None):
+        self,
+        value: typing.Optional[typing.Any] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.value = value
 
@@ -1752,8 +1833,9 @@ class StringAppend(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.StringAppend"
 
     def __init__(
-            self,
-            suffix=None):
+        self,
+        suffix: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.suffix = suffix
 
@@ -1768,8 +1850,9 @@ class StringJoin(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.StringJoin"
 
     def __init__(
-            self,
-            delimiter=None):
+        self,
+        delimiter: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.delimiter = delimiter
 
@@ -1784,8 +1867,9 @@ class StringPrepend(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.StringPrepend"
 
     def __init__(
-            self,
-            prefix=None):
+        self,
+        prefix: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.prefix = prefix
 
@@ -1800,9 +1884,10 @@ class StringRegexReplace(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.StringRegexReplace"
 
     def __init__(
-            self,
-            regex=None,
-            replacement=None):
+        self,
+        regex: typing.Optional[str] = None,
+        replacement: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.regex = regex
         self.replacement = replacement
@@ -1820,8 +1905,9 @@ class StringRegexSplit(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.StringRegexSplit"
 
     def __init__(
-            self,
-            regex=None):
+        self,
+        regex: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.regex = regex
 
@@ -1836,9 +1922,10 @@ class StringReplace(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.StringReplace"
 
     def __init__(
-            self,
-            search_string=None,
-            replacement=None):
+        self,
+        search_string: typing.Optional[str] = None,
+        replacement: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.search_string = search_string
         self.replacement = replacement
@@ -1856,8 +1943,9 @@ class StringSplit(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.StringSplit"
 
     def __init__(
-            self,
-            delimiter=None):
+        self,
+        delimiter: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.delimiter = delimiter
 
@@ -1882,9 +1970,10 @@ class StringTruncate(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.StringTruncate"
 
     def __init__(
-            self,
-            length=None,
-            ellipses=None):
+        self,
+        length: typing.Optional[int] = None,
+        ellipses: typing.Optional[bool] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.length = length
         self.ellipses = ellipses
@@ -1922,8 +2011,9 @@ class ToBytes(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.ToBytes"
 
     def __init__(
-            self,
-            charset=None):
+        self,
+        charset: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.charset = charset
 
@@ -1938,8 +2028,9 @@ class ToDateString(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.ToDateString"
 
     def __init__(
-            self,
-            format=None):
+        self,
+        format: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.format = format
 
@@ -2024,8 +2115,9 @@ class ToSet(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.ToSet"
 
     def __init__(
-            self,
-            implementation=None):
+        self,
+        implementation: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.implementation = implementation
 
@@ -2040,8 +2132,9 @@ class ToString(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.impl.function.ToString"
 
     def __init__(
-            self,
-            charset=None):
+        self,
+        charset: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.charset = charset
 
@@ -2076,8 +2169,9 @@ class TupleInputAdapter(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.tuple.TupleInputAdapter"
 
     def __init__(
-            self,
-            selection=None):
+        self,
+        selection: typing.Optional[typing.List[typing.Any]] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.selection = selection
 
@@ -2092,12 +2186,13 @@ class TupleAdaptedFunction(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.tuple.function.TupleAdaptedFunction"
 
     def __init__(
-            self,
-            input_adapter=None,
-            selection=None,
-            function=None,
-            output_adapter=None,
-            projection=None):
+        self,
+        input_adapter: typing.Optional[Function] = None,
+        selection: typing.Optional[typing.List[typing.Any]] = None,
+        function: typing.Optional[Function] = None,
+        output_adapter: typing.Optional[typing.Any] = None,
+        projection: typing.Optional[typing.List[typing.Any]] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.input_adapter = input_adapter
         self.selection = selection
@@ -2124,8 +2219,9 @@ class TupleAdaptedFunctionComposite(AbstractFunction):
     CLASS = "uk.gov.gchq.koryphe.tuple.function.TupleAdaptedFunctionComposite"
 
     def __init__(
-            self,
-            functions=None):
+        self,
+        functions: typing.Optional[typing.List[typing.Any]] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.functions = functions
 

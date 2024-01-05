@@ -1,13 +1,13 @@
 import re
 from codecs import open
-from os import path
+from pathlib import Path
 from setuptools import setup, find_packages
 
 ###############################################################################
 
 name = "gafferpy"
 packages = find_packages(where="src")
-meta_path = path.join("src", "gafferpy", "__init__.py")
+meta_path = Path("src", "gafferpy", "__init__.py")
 keywords = ["class", "attribute", "boilerplate"]
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -24,20 +24,27 @@ classifiers = [
 python_requires = ">3.6"
 install_requires = []
 extras_require = {
-    "requests": ["requests>=2.4.0"]
+    "requests": ["requests>=2.4.0"],
+    "dev": [
+        "tox",
+        "pytest",
+        "requests>=2.4.0",
+        "sphinx~=7.2.6",
+        "sphinx-rtd-theme~=1.3.0"
+    ]
 }
 
 ###############################################################################
 
-here = path.abspath(path.dirname(__file__))
+here = Path(__file__).parent
 
 
-def read(*parts):
+def read(parts):
     """
     Build an absolute path from *parts* and and return the contents of the
     resulting file.  Assume UTF-8 encoding.
     """
-    with open(path.join(here, *parts), "rb", "utf-8") as f:
+    with open(here / parts, "rb", "utf-8") as f:
         return f.read()
 
 
@@ -54,14 +61,14 @@ def find_meta(meta):
     )
     if meta_match:
         return meta_match.group(1)
-    raise RuntimeError("Unable to find __{meta}__ string.".format(meta=meta))
+    raise RuntimeError(f"Unable to find __{meta}__ string.")
 
 
 version = find_meta("version")
 uri = find_meta("uri")
 
 # Get the long description from the README.md file
-with open(path.join(here, "README.md"), encoding="utf-8") as f:
+with open(here / "README.md", encoding="utf-8") as f:
     long = f.read()
 
 setup(

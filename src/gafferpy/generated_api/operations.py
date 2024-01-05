@@ -1,5 +1,5 @@
 #
-# Copyright 2022 Crown Copyright
+# Copyright 2023 Crown Copyright
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -20,10 +20,10 @@ To make changes, either extend these classes or change fishbowl.
 """
 
 import typing
-
-import gafferpy.gaffer_core
-import gafferpy.gaffer_functions
-from gafferpy.gaffer_operations import Operation, View, Conditional, AggregatePair
+from gafferpy.gaffer_operations import AggregatePair, Conditional, Operation, View
+from gafferpy.gaffer_core import BinaryOperator, Element, ElementSeed, Function
+from gafferpy.gaffer_predicates import ElementFilter
+from gafferpy.gaffer_functions import CsvGenerator, ElementTransformer, MapGenerator
 
 
 class ImportAccumuloKeyValueFiles(Operation):
@@ -40,10 +40,12 @@ class ImportAccumuloKeyValueFiles(Operation):
     CLASS = "uk.gov.gchq.gaffer.accumulostore.operation.hdfs.operation.ImportAccumuloKeyValueFiles"
 
     def __init__(
-            self,
-            input_path: str,
-            failure_path: str,
-            options: typing.Dict[str, str] = None):
+        self,
+        input_path: str,
+        failure_path: str,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input_path = input_path
         self.failure_path = failure_path
@@ -75,14 +77,16 @@ class GetElementsBetweenSets(Operation):
     CLASS = "uk.gov.gchq.gaffer.accumulostore.operation.impl.GetElementsBetweenSets"
 
     def __init__(
-            self,
-            input: typing.List[typing.Any] = None,
-            view: View = None,
-            include_incoming_out_going: str = None,
-            input_b: typing.List[typing.Any] = None,
-            directed_type: str = None,
-            views: typing.List[View] = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        input: typing.Optional[typing.List[typing.Any]] = None,
+        view: typing.Optional[View] = None,
+        include_incoming_out_going: typing.Optional[str] = None,
+        input_b: typing.Optional[typing.List[typing.Any]] = None,
+        directed_type: typing.Optional[str] = None,
+        views: typing.Optional[typing.List[View]] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.view = view
@@ -117,7 +121,6 @@ class GetElementsBetweenSetsPairs(Operation):
         view:
         include_incoming_out_going: Should the edges point towards, or away from your seeds
         directed_type: Is the Edge directed?
-        backwards_compatible_operation:
         views:
         options: Additional map of options
     Returns:
@@ -126,20 +129,20 @@ class GetElementsBetweenSetsPairs(Operation):
     CLASS = "uk.gov.gchq.gaffer.accumulostore.operation.impl.GetElementsBetweenSetsPairs"
 
     def __init__(
-            self,
-            input: typing.Tuple[typing.Any] = None,
-            view: View = None,
-            include_incoming_out_going: str = None,
-            directed_type: str = None,
-            backwards_compatible_operation: typing.Any = None,
-            views: typing.List[View] = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        input: typing.Optional[typing.Tuple[typing.Any]] = None,
+        view: typing.Optional[View] = None,
+        include_incoming_out_going: typing.Optional[str] = None,
+        directed_type: typing.Optional[str] = None,
+        views: typing.Optional[typing.List[View]] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.view = view
         self.include_incoming_out_going = include_incoming_out_going
         self.directed_type = directed_type
-        self.backwards_compatible_operation = backwards_compatible_operation
         self.views = views
 
     def to_json(self):
@@ -152,8 +155,6 @@ class GetElementsBetweenSetsPairs(Operation):
             operation_json["includeIncomingOutGoing"] = self.include_incoming_out_going
         if self.directed_type is not None:
             operation_json["directedType"] = self.directed_type
-        if self.backwards_compatible_operation is not None:
-            operation_json["backwardsCompatibleOperation"] = self.backwards_compatible_operation
         if self.views is not None:
             operation_json["views"] = self.views
         return operation_json
@@ -176,13 +177,15 @@ class GetElementsInRanges(Operation):
     CLASS = "uk.gov.gchq.gaffer.accumulostore.operation.impl.GetElementsInRanges"
 
     def __init__(
-            self,
-            input: typing.List[typing.Tuple[gafferpy.gaffer_core.ElementSeed, gafferpy.gaffer_core.ElementSeed]] = None,
-            view: View = None,
-            include_incoming_out_going: str = None,
-            directed_type: str = None,
-            views: typing.List[View] = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        input: typing.Optional[typing.List[typing.Tuple[ElementSeed, ElementSeed]]] = None,
+        view: typing.Optional[View] = None,
+        include_incoming_out_going: typing.Optional[str] = None,
+        directed_type: typing.Optional[str] = None,
+        views: typing.Optional[typing.List[View]] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.view = view
@@ -221,12 +224,14 @@ class GetElementsWithinSet(Operation):
     CLASS = "uk.gov.gchq.gaffer.accumulostore.operation.impl.GetElementsWithinSet"
 
     def __init__(
-            self,
-            input: typing.List[typing.Any] = None,
-            view: View = None,
-            directed_type: str = None,
-            views: typing.List[View] = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        input: typing.Optional[typing.List[typing.Any]] = None,
+        view: typing.Optional[View] = None,
+        directed_type: typing.Optional[str] = None,
+        views: typing.Optional[typing.List[View]] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.view = view
@@ -263,13 +268,15 @@ class SummariseGroupOverRanges(Operation):
     CLASS = "uk.gov.gchq.gaffer.accumulostore.operation.impl.SummariseGroupOverRanges"
 
     def __init__(
-            self,
-            input: typing.List[typing.Tuple[gafferpy.gaffer_core.ElementSeed, gafferpy.gaffer_core.ElementSeed]] = None,
-            view: View = None,
-            include_incoming_out_going: str = None,
-            directed_type: str = None,
-            views: typing.List[View] = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        input: typing.Optional[typing.List[typing.Tuple[ElementSeed, ElementSeed]]] = None,
+        view: typing.Optional[View] = None,
+        include_incoming_out_going: typing.Optional[str] = None,
+        directed_type: typing.Optional[str] = None,
+        views: typing.Optional[typing.List[View]] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.view = view
@@ -314,18 +321,20 @@ class AddGraph(Operation):
     CLASS = "uk.gov.gchq.gaffer.federatedstore.operation.AddGraph"
 
     def __init__(
-            self,
-            graph_id: str,
-            schema: typing.Dict = None,
-            write_access_predicate: typing.Any = None,
-            store_properties: typing.Dict = None,
-            parent_properties_id: str = None,
-            read_access_predicate: typing.Any = None,
-            graph_auths: typing.Set[str] = None,
-            is_public: bool = None,
-            parent_schema_ids: typing.List[str] = None,
-            user_requesting_admin_usage: bool = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        graph_id: str,
+        schema: typing.Optional[typing.Dict] = None,
+        write_access_predicate: typing.Optional[typing.Any] = None,
+        store_properties: typing.Optional[typing.Dict] = None,
+        parent_properties_id: typing.Optional[str] = None,
+        read_access_predicate: typing.Optional[typing.Any] = None,
+        graph_auths: typing.Optional[typing.Set[str]] = None,
+        is_public: typing.Optional[bool] = None,
+        parent_schema_ids: typing.Optional[typing.List[str]] = None,
+        user_requesting_admin_usage: typing.Optional[bool] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.schema = schema
         self.write_access_predicate = write_access_predicate
@@ -386,19 +395,21 @@ class AddGraphWithHooks(Operation):
     CLASS = "uk.gov.gchq.gaffer.federatedstore.operation.AddGraphWithHooks"
 
     def __init__(
-            self,
-            schema: typing.Dict = None,
-            write_access_predicate: typing.Any = None,
-            store_properties: typing.Dict = None,
-            parent_properties_id: str = None,
-            read_access_predicate: typing.Any = None,
-            graph_auths: typing.Set[str] = None,
-            is_public: bool = None,
-            parent_schema_ids: typing.List[str] = None,
-            graph_id: str = None,
-            hooks: typing.List[typing.Any] = None,
-            user_requesting_admin_usage: bool = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        schema: typing.Optional[typing.Dict] = None,
+        write_access_predicate: typing.Optional[typing.Any] = None,
+        store_properties: typing.Optional[typing.Dict] = None,
+        parent_properties_id: typing.Optional[str] = None,
+        read_access_predicate: typing.Optional[typing.Any] = None,
+        graph_auths: typing.Optional[typing.Set[str]] = None,
+        is_public: typing.Optional[bool] = None,
+        parent_schema_ids: typing.Optional[typing.List[str]] = None,
+        graph_id: typing.Optional[str] = None,
+        hooks: typing.Optional[typing.List[typing.Any]] = None,
+        user_requesting_admin_usage: typing.Optional[bool] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.schema = schema
         self.write_access_predicate = write_access_predicate
@@ -456,13 +467,15 @@ class ChangeGraphAccess(Operation):
     CLASS = "uk.gov.gchq.gaffer.federatedstore.operation.ChangeGraphAccess"
 
     def __init__(
-            self,
-            graph_id: str,
-            owner_user_id: str = None,
-            graph_auths: typing.Set[str] = None,
-            is_public: bool = None,
-            user_requesting_admin_usage: bool = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        graph_id: str,
+        owner_user_id: typing.Optional[str] = None,
+        graph_auths: typing.Optional[typing.Set[str]] = None,
+        is_public: typing.Optional[bool] = None,
+        user_requesting_admin_usage: typing.Optional[bool] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.owner_user_id = owner_user_id
         self.graph_auths = graph_auths
@@ -500,11 +513,13 @@ class ChangeGraphId(Operation):
     CLASS = "uk.gov.gchq.gaffer.federatedstore.operation.ChangeGraphId"
 
     def __init__(
-            self,
-            graph_id: str,
-            new_graph_id: str = None,
-            user_requesting_admin_usage: bool = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        graph_id: str,
+        new_graph_id: typing.Optional[str] = None,
+        user_requesting_admin_usage: typing.Optional[bool] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.new_graph_id = new_graph_id
         self.graph_id = graph_id
@@ -539,14 +554,16 @@ class FederatedOperation(Operation):
     CLASS = "uk.gov.gchq.gaffer.federatedstore.operation.FederatedOperation"
 
     def __init__(
-            self,
-            skip_failed_federated_execution: typing.Any = None,
-            input: typing.Any = None,
-            graph_ids: typing.List[str] = None,
-            operation: Operation = None,
-            merge_function: typing.Any = None,
-            user_requesting_admin_usage: bool = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        skip_failed_federated_execution: typing.Optional[typing.Any] = None,
+        input: typing.Optional[typing.Any] = None,
+        graph_ids: typing.Optional[typing.List[str]] = None,
+        operation: typing.Optional[Operation] = None,
+        merge_function: typing.Optional[typing.Any] = None,
+        user_requesting_admin_usage: typing.Optional[bool] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.skip_failed_federated_execution = skip_failed_federated_execution
         self.input = input
@@ -585,9 +602,11 @@ class GetAllGraphIds(Operation):
     CLASS = "uk.gov.gchq.gaffer.federatedstore.operation.GetAllGraphIds"
 
     def __init__(
-            self,
-            user_requesting_admin_usage: bool = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        user_requesting_admin_usage: typing.Optional[bool] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.user_requesting_admin_usage = user_requesting_admin_usage
 
@@ -612,10 +631,12 @@ class GetAllGraphInfo(Operation):
     CLASS = "uk.gov.gchq.gaffer.federatedstore.operation.GetAllGraphInfo"
 
     def __init__(
-            self,
-            graph_ids: typing.List[str] = None,
-            user_requesting_admin_usage: bool = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        graph_ids: typing.Optional[typing.List[str]] = None,
+        user_requesting_admin_usage: typing.Optional[bool] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.graph_ids = graph_ids
         self.user_requesting_admin_usage = user_requesting_admin_usage
@@ -644,11 +665,13 @@ class RemoveGraph(Operation):
     CLASS = "uk.gov.gchq.gaffer.federatedstore.operation.RemoveGraph"
 
     def __init__(
-            self,
-            graph_id: str,
-            remove_cache: bool = None,
-            user_requesting_admin_usage: bool = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        graph_id: str,
+        remove_cache: typing.Optional[bool] = None,
+        user_requesting_admin_usage: typing.Optional[bool] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.remove_cache = remove_cache
         self.graph_id = graph_id
@@ -680,11 +703,13 @@ class RemoveGraphAndDeleteAllData(Operation):
     CLASS = "uk.gov.gchq.gaffer.federatedstore.operation.RemoveGraphAndDeleteAllData"
 
     def __init__(
-            self,
-            remove_cache: bool = None,
-            graph_id: str = None,
-            user_requesting_admin_usage: bool = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        remove_cache: typing.Optional[bool] = None,
+        graph_id: typing.Optional[str] = None,
+        user_requesting_admin_usage: typing.Optional[bool] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.remove_cache = remove_cache
         self.graph_id = graph_id
@@ -728,23 +753,25 @@ class AddElementsFromHdfs(Operation):
     CLASS = "uk.gov.gchq.gaffer.hdfs.operation.AddElementsFromHdfs"
 
     def __init__(
-            self,
-            job_initialiser: typing.Any,
-            input_mapper_pairs: typing.Dict[str, str],
-            failure_path: str,
-            output_path: str,
-            splits_file_path: str = None,
-            num_map_tasks: int = None,
-            working_path: str = None,
-            min_reduce_tasks: int = None,
-            max_reduce_tasks: int = None,
-            min_map_tasks: int = None,
-            use_provided_splits: bool = None,
-            command_line_args: typing.List[str] = None,
-            partitioner: typing.Any = None,
-            max_map_tasks: int = None,
-            validate: bool = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        job_initialiser: typing.Any,
+        input_mapper_pairs: typing.Dict[str, str],
+        failure_path: str,
+        output_path: str,
+        splits_file_path: typing.Optional[str] = None,
+        num_map_tasks: typing.Optional[int] = None,
+        working_path: typing.Optional[str] = None,
+        min_reduce_tasks: typing.Optional[int] = None,
+        max_reduce_tasks: typing.Optional[int] = None,
+        min_map_tasks: typing.Optional[int] = None,
+        use_provided_splits: typing.Optional[bool] = None,
+        command_line_args: typing.Optional[typing.List[str]] = None,
+        partitioner: typing.Optional[typing.Any] = None,
+        max_map_tasks: typing.Optional[int] = None,
+        validate: typing.Optional[bool] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.job_initialiser = job_initialiser
         self.splits_file_path = splits_file_path
@@ -825,24 +852,26 @@ class SampleDataForSplitPoints(Operation):
     CLASS = "uk.gov.gchq.gaffer.hdfs.operation.SampleDataForSplitPoints"
 
     def __init__(
-            self,
-            splits_file_path: str,
-            job_initialiser: typing.Any,
-            input_mapper_pairs: typing.Dict[str, str],
-            output_path: str,
-            num_map_tasks: int = None,
-            min_reduce_tasks: int = None,
-            num_splits: int = None,
-            max_reduce_tasks: int = None,
-            min_map_tasks: int = None,
-            use_provided_splits: bool = None,
-            command_line_args: typing.List[str] = None,
-            compression_codec: typing.Any = None,
-            partitioner: typing.Any = None,
-            proportion_to_sample: float = None,
-            max_map_tasks: int = None,
-            validate: bool = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        splits_file_path: str,
+        job_initialiser: typing.Any,
+        input_mapper_pairs: typing.Dict[str, str],
+        output_path: str,
+        num_map_tasks: typing.Optional[int] = None,
+        min_reduce_tasks: typing.Optional[int] = None,
+        num_splits: typing.Optional[int] = None,
+        max_reduce_tasks: typing.Optional[int] = None,
+        min_map_tasks: typing.Optional[int] = None,
+        use_provided_splits: typing.Optional[bool] = None,
+        command_line_args: typing.Optional[typing.List[str]] = None,
+        compression_codec: typing.Optional[typing.Any] = None,
+        partitioner: typing.Optional[typing.Any] = None,
+        proportion_to_sample: typing.Optional[float] = None,
+        max_map_tasks: typing.Optional[int] = None,
+        validate: typing.Optional[bool] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.splits_file_path = splits_file_path
         self.job_initialiser = job_initialiser
@@ -911,9 +940,11 @@ class CountAllElementsDefaultView(Operation):
     CLASS = "uk.gov.gchq.gaffer.mapstore.operation.CountAllElementsDefaultView"
 
     def __init__(
-            self,
-            input: typing.List[gafferpy.gaffer_core.Element] = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        input: typing.Optional[typing.List[Element]] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
 
@@ -947,19 +978,21 @@ class AddNamedOperation(Operation):
     CLASS = "uk.gov.gchq.gaffer.named.operation.AddNamedOperation"
 
     def __init__(
-            self,
-            overwrite_flag: bool = None,
-            write_access_predicate: typing.Any = None,
-            score: int = None,
-            read_access_roles: typing.List[str] = None,
-            read_access_predicate: typing.Any = None,
-            description: str = None,
-            operation_name: str = None,
-            operation_chain: typing.Any = None,
-            parameters: typing.Dict[str, typing.Any] = None,
-            write_access_roles: typing.List[str] = None,
-            labels: typing.List[str] = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        overwrite_flag: typing.Optional[bool] = None,
+        write_access_predicate: typing.Optional[typing.Any] = None,
+        score: typing.Optional[int] = None,
+        read_access_roles: typing.Optional[typing.List[str]] = None,
+        read_access_predicate: typing.Optional[typing.Any] = None,
+        description: typing.Optional[str] = None,
+        operation_name: typing.Optional[str] = None,
+        operation_chain: typing.Optional[typing.Any] = None,
+        parameters: typing.Optional[typing.Dict[str, typing.Any]] = None,
+        write_access_roles: typing.Optional[typing.List[str]] = None,
+        labels: typing.Optional[typing.List[str]] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.overwrite_flag = overwrite_flag
         self.write_access_predicate = write_access_predicate
@@ -1013,9 +1046,11 @@ class DeleteNamedOperation(Operation):
     CLASS = "uk.gov.gchq.gaffer.named.operation.DeleteNamedOperation"
 
     def __init__(
-            self,
-            operation_name: str,
-            options: typing.Dict[str, str] = None):
+        self,
+        operation_name: str,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.operation_name = operation_name
 
@@ -1038,8 +1073,10 @@ class GetAllNamedOperations(Operation):
     CLASS = "uk.gov.gchq.gaffer.named.operation.GetAllNamedOperations"
 
     def __init__(
-            self,
-            options: typing.Dict[str, str] = None):
+        self,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
 
     def to_json(self):
@@ -1061,11 +1098,13 @@ class NamedOperation(Operation):
     CLASS = "uk.gov.gchq.gaffer.named.operation.NamedOperation"
 
     def __init__(
-            self,
-            operation_name: str,
-            input: typing.List[typing.Any] = None,
-            parameters: typing.Dict[str, typing.Any] = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        operation_name: str,
+        input: typing.Optional[typing.List[typing.Any]] = None,
+        parameters: typing.Optional[typing.Dict[str, typing.Any]] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.operation_name = operation_name
@@ -1102,16 +1141,18 @@ class AddNamedView(Operation):
     CLASS = "uk.gov.gchq.gaffer.named.view.AddNamedView"
 
     def __init__(
-            self,
-            view: typing.Any,
-            name: str,
-            overwrite_flag: bool = None,
-            write_access_predicate: typing.Any = None,
-            read_access_predicate: typing.Any = None,
-            description: str = None,
-            parameters: typing.Dict[str, typing.Any] = None,
-            write_access_roles: typing.List[str] = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        view: typing.Any,
+        name: str,
+        overwrite_flag: typing.Optional[bool] = None,
+        write_access_predicate: typing.Optional[typing.Any] = None,
+        read_access_predicate: typing.Optional[typing.Any] = None,
+        description: typing.Optional[str] = None,
+        parameters: typing.Optional[typing.Dict[str, typing.Any]] = None,
+        write_access_roles: typing.Optional[typing.List[str]] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.overwrite_flag = overwrite_flag
         self.write_access_predicate = write_access_predicate
@@ -1156,9 +1197,11 @@ class DeleteNamedView(Operation):
     CLASS = "uk.gov.gchq.gaffer.named.view.DeleteNamedView"
 
     def __init__(
-            self,
-            name: str,
-            options: typing.Dict[str, str] = None):
+        self,
+        name: str,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.name = name
 
@@ -1181,8 +1224,10 @@ class GetAllNamedViews(Operation):
     CLASS = "uk.gov.gchq.gaffer.named.view.GetAllNamedViews"
 
     def __init__(
-            self,
-            options: typing.Dict[str, str] = None):
+        self,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
 
     def to_json(self):
@@ -1202,9 +1247,11 @@ class OperationChain(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.OperationChain"
 
     def __init__(
-            self,
-            operations: typing.List[Operation] = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        operations: typing.Optional[typing.List[Operation]] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.operations = operations
 
@@ -1232,13 +1279,15 @@ class ExportToOtherAuthorisedGraph(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.export.graph.ExportToOtherAuthorisedGraph"
 
     def __init__(
-            self,
-            graph_id: str,
-            input: typing.List[gafferpy.gaffer_core.Element] = None,
-            parent_store_properties_id: str = None,
-            parent_schema_ids: typing.List[str] = None,
-            key: str = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        graph_id: str,
+        input: typing.Optional[typing.List[Element]] = None,
+        parent_store_properties_id: typing.Optional[str] = None,
+        parent_schema_ids: typing.Optional[typing.List[str]] = None,
+        key: typing.Optional[str] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.parent_store_properties_id = parent_store_properties_id
@@ -1280,15 +1329,17 @@ class ExportToOtherGraph(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.export.graph.ExportToOtherGraph"
 
     def __init__(
-            self,
-            graph_id: str,
-            schema: typing.Dict = None,
-            input: typing.List[gafferpy.gaffer_core.Element] = None,
-            parent_store_properties_id: str = None,
-            store_properties: typing.Dict = None,
-            parent_schema_ids: typing.List[str] = None,
-            key: str = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        graph_id: str,
+        schema: typing.Optional[typing.Dict] = None,
+        input: typing.Optional[typing.List[Element]] = None,
+        parent_store_properties_id: typing.Optional[str] = None,
+        store_properties: typing.Optional[typing.Dict] = None,
+        parent_schema_ids: typing.Optional[typing.List[str]] = None,
+        key: typing.Optional[str] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.schema = schema
         self.input = input
@@ -1330,9 +1381,11 @@ class Count(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.Count"
 
     def __init__(
-            self,
-            input: typing.List[typing.Any] = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        input: typing.Optional[typing.List[typing.Any]] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
 
@@ -1357,10 +1410,12 @@ class CountGroups(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.CountGroups"
 
     def __init__(
-            self,
-            input: typing.List[gafferpy.gaffer_core.Element] = None,
-            limit: int = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        input: typing.Optional[typing.List[Element]] = None,
+        limit: typing.Optional[int] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.limit = limit
@@ -1387,9 +1442,11 @@ class DiscardOutput(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.DiscardOutput"
 
     def __init__(
-            self,
-            input: typing.Any = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        input: typing.Optional[typing.Any] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
 
@@ -1414,10 +1471,12 @@ class ForEach(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.ForEach"
 
     def __init__(
-            self,
-            input: typing.List[typing.Any] = None,
-            operation: Operation = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        input: typing.Optional[typing.List[typing.Any]] = None,
+        operation: typing.Optional[Operation] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.operation = operation
@@ -1445,10 +1504,12 @@ class GenerateSplitPointsFromSample(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.GenerateSplitPointsFromSample"
 
     def __init__(
-            self,
-            input: typing.List[typing.Any] = None,
-            num_splits: int = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        input: typing.Optional[typing.List[typing.Any]] = None,
+        num_splits: typing.Optional[int] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.num_splits = num_splits
@@ -1475,9 +1536,11 @@ class GetVariable(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.GetVariable"
 
     def __init__(
-            self,
-            variable_name: str = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        variable_name: typing.Optional[str] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.variable_name = variable_name
 
@@ -1501,9 +1564,11 @@ class GetVariables(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.GetVariables"
 
     def __init__(
-            self,
-            variable_names: typing.List[str] = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        variable_names: typing.Optional[typing.List[str]] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.variable_names = variable_names
 
@@ -1531,13 +1596,15 @@ class GetWalks(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.GetWalks"
 
     def __init__(
-            self,
-            input: typing.List[typing.Any] = None,
-            operations: typing.List[typing.Any] = None,
-            include_partial: bool = None,
-            conditional: Conditional = None,
-            results_limit: int = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        input: typing.Optional[typing.List[typing.Any]] = None,
+        operations: typing.Optional[typing.List[typing.Any]] = None,
+        include_partial: typing.Optional[bool] = None,
+        conditional: typing.Optional[Conditional] = None,
+        results_limit: typing.Optional[int] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.operations = operations
@@ -1578,14 +1645,16 @@ class If(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.If"
 
     def __init__(
-            self,
-            otherwise: Operation = None,
-            input: typing.Any = None,
-            condition: bool = None,
-            conditional: Conditional = None,
-            multi_input_wrapper: typing.Any = None,
-            then: Operation = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        otherwise: typing.Optional[Operation] = None,
+        input: typing.Optional[typing.Any] = None,
+        condition: typing.Optional[bool] = None,
+        conditional: typing.Optional[Conditional] = None,
+        multi_input_wrapper: typing.Optional[typing.Any] = None,
+        then: typing.Optional[Operation] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.otherwise = otherwise
         self.input = input
@@ -1626,11 +1695,13 @@ class Limit(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.Limit"
 
     def __init__(
-            self,
-            result_limit: int,
-            input: typing.List[typing.Any] = None,
-            truncate: bool = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        result_limit: int,
+        input: typing.Optional[typing.List[typing.Any]] = None,
+        truncate: typing.Optional[bool] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.result_limit = result_limit
@@ -1662,11 +1733,13 @@ class Map(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.Map"
 
     def __init__(
-            self,
-            functions: typing.List,
-            input: typing.Any = None,
-            function: typing.Any = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        functions: typing.List[Function],
+        input: typing.Optional[typing.Any] = None,
+        function: typing.Optional[Function] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.functions = functions
@@ -1698,11 +1771,13 @@ class Reduce(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.Reduce"
 
     def __init__(
-            self,
-            aggregate_function: gafferpy.gaffer_binaryoperators.BinaryOperator,
-            input: typing.List[typing.Any] = None,
-            identity: typing.Any = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        aggregate_function: BinaryOperator,
+        input: typing.Optional[typing.List[typing.Any]] = None,
+        identity: typing.Optional[typing.Any] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.identity = identity
@@ -1734,11 +1809,13 @@ class SampleElementsForSplitPoints(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.SampleElementsForSplitPoints"
 
     def __init__(
-            self,
-            input: typing.List[gafferpy.gaffer_core.Element] = None,
-            num_splits: int = None,
-            proportion_to_sample: float = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        input: typing.Optional[typing.List[Element]] = None,
+        num_splits: typing.Optional[int] = None,
+        proportion_to_sample: typing.Optional[float] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.num_splits = num_splits
@@ -1768,9 +1845,11 @@ class ScoreOperationChain(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.ScoreOperationChain"
 
     def __init__(
-            self,
-            operation_chain: OperationChain = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        operation_chain: typing.Optional[OperationChain] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.operation_chain = operation_chain
 
@@ -1795,10 +1874,12 @@ class SetVariable(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.SetVariable"
 
     def __init__(
-            self,
-            input: typing.Any = None,
-            variable_name: str = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        input: typing.Optional[typing.Any] = None,
+        variable_name: typing.Optional[str] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.variable_name = variable_name
@@ -1825,9 +1906,11 @@ class SplitStoreFromFile(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.SplitStoreFromFile"
 
     def __init__(
-            self,
-            input_path: str,
-            options: typing.Dict[str, str] = None):
+        self,
+        input_path: str,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input_path = input_path
 
@@ -1851,9 +1934,11 @@ class SplitStoreFromIterable(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.SplitStoreFromIterable"
 
     def __init__(
-            self,
-            input: typing.List[typing.Any] = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        input: typing.Optional[typing.List[typing.Any]] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
 
@@ -1879,11 +1964,13 @@ class Validate(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.Validate"
 
     def __init__(
-            self,
-            input: typing.List[gafferpy.gaffer_core.Element] = None,
-            skip_invalid_elements: bool = None,
-            validate: bool = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        input: typing.Optional[typing.List[Element]] = None,
+        skip_invalid_elements: typing.Optional[bool] = None,
+        validate: typing.Optional[bool] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.skip_invalid_elements = skip_invalid_elements
@@ -1913,9 +2000,11 @@ class ValidateOperationChain(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.ValidateOperationChain"
 
     def __init__(
-            self,
-            operation_chain: OperationChain,
-            options: typing.Dict[str, str] = None):
+        self,
+        operation_chain: OperationChain,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.operation_chain = operation_chain
 
@@ -1944,14 +2033,16 @@ class While(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.While"
 
     def __init__(
-            self,
-            input: typing.Any = None,
-            condition: bool = None,
-            conditional: Conditional = None,
-            max_repeats: int = None,
-            multi_input_wrapper: typing.Any = None,
-            operation: Operation = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        input: typing.Optional[typing.Any] = None,
+        condition: typing.Optional[bool] = None,
+        conditional: typing.Optional[Conditional] = None,
+        max_repeats: typing.Optional[int] = None,
+        multi_input_wrapper: typing.Optional[typing.Any] = None,
+        operation: typing.Optional[Operation] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.condition = condition
@@ -1992,11 +2083,13 @@ class AddElements(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.add.AddElements"
 
     def __init__(
-            self,
-            input: typing.List[gafferpy.gaffer_core.Element] = None,
-            skip_invalid_elements: bool = None,
-            validate: bool = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        input: typing.Optional[typing.List[Element]] = None,
+        skip_invalid_elements: typing.Optional[bool] = None,
+        validate: typing.Optional[bool] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.skip_invalid_elements = skip_invalid_elements
@@ -2030,13 +2123,15 @@ class AddElementsFromFile(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.add.AddElementsFromFile"
 
     def __init__(
-            self,
-            element_generator: typing.Any,
-            filename: str,
-            parallelism: int = None,
-            skip_invalid_elements: bool = None,
-            validate: bool = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        element_generator: typing.Any,
+        filename: str,
+        parallelism: typing.Optional[int] = None,
+        skip_invalid_elements: typing.Optional[bool] = None,
+        validate: typing.Optional[bool] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.element_generator = element_generator
         self.filename = filename
@@ -2079,16 +2174,18 @@ class AddElementsFromKafka(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.add.AddElementsFromKafka"
 
     def __init__(
-            self,
-            element_generator: typing.Any,
-            bootstrap_servers: typing.List[str],
-            group_id: str,
-            topic: str,
-            parallelism: int = None,
-            consume_as: typing.Any = None,
-            skip_invalid_elements: bool = None,
-            validate: bool = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        element_generator: typing.Any,
+        bootstrap_servers: typing.List[str],
+        group_id: str,
+        topic: str,
+        parallelism: typing.Optional[int] = None,
+        consume_as: typing.Optional[typing.Any] = None,
+        skip_invalid_elements: typing.Optional[bool] = None,
+        validate: typing.Optional[bool] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.element_generator = element_generator
         self.bootstrap_servers = bootstrap_servers
@@ -2139,15 +2236,17 @@ class AddElementsFromSocket(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.add.AddElementsFromSocket"
 
     def __init__(
-            self,
-            element_generator: typing.Any,
-            hostname: str,
-            port: int,
-            delimiter: str = None,
-            parallelism: int = None,
-            skip_invalid_elements: bool = None,
-            validate: bool = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        element_generator: typing.Any,
+        hostname: str,
+        port: int,
+        delimiter: typing.Optional[str] = None,
+        parallelism: typing.Optional[int] = None,
+        skip_invalid_elements: typing.Optional[bool] = None,
+        validate: typing.Optional[bool] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.element_generator = element_generator
         self.hostname = hostname
@@ -2190,10 +2289,12 @@ class Max(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.compare.Max"
 
     def __init__(
-            self,
-            comparators: typing.List[typing.Any],
-            input: typing.List[gafferpy.gaffer_core.Element] = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        comparators: typing.List[typing.Any],
+        input: typing.Optional[typing.List[Element]] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.comparators = comparators
@@ -2221,10 +2322,12 @@ class Min(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.compare.Min"
 
     def __init__(
-            self,
-            comparators: typing.List[typing.Any],
-            input: typing.List[gafferpy.gaffer_core.Element] = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        comparators: typing.List[typing.Any],
+        input: typing.Optional[typing.List[Element]] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.comparators = comparators
@@ -2254,12 +2357,14 @@ class Sort(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.compare.Sort"
 
     def __init__(
-            self,
-            comparators: typing.List[typing.Any],
-            input: typing.List[gafferpy.gaffer_core.Element] = None,
-            result_limit: int = None,
-            deduplicate: bool = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        comparators: typing.List[typing.Any],
+        input: typing.Optional[typing.List[Element]] = None,
+        result_limit: typing.Optional[int] = None,
+        deduplicate: typing.Optional[bool] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.result_limit = result_limit
@@ -2292,9 +2397,11 @@ class GetExports(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.export.GetExports"
 
     def __init__(
-            self,
-            get_exports: typing.List[typing.Any] = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        get_exports: typing.Optional[typing.List[typing.Any]] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.get_exports = get_exports
 
@@ -2320,11 +2427,13 @@ class ExportToLocalFile(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.export.localfile.ExportToLocalFile"
 
     def __init__(
-            self,
-            file_path: str,
-            input: typing.List[str] = None,
-            key: str = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        file_path: str,
+        input: typing.Optional[typing.List[str]] = None,
+        key: typing.Optional[str] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.file_path = file_path
@@ -2356,11 +2465,13 @@ class ImportFromLocalFile(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.export.localfile.ImportFromLocalFile"
 
     def __init__(
-            self,
-            file_path: str,
-            job_id: str = None,
-            key: str = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        file_path: str,
+        job_id: typing.Optional[str] = None,
+        key: typing.Optional[str] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.job_id = job_id
         self.file_path = file_path
@@ -2392,11 +2503,13 @@ class ExportToGafferResultCache(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.export.resultcache.ExportToGafferResultCache"
 
     def __init__(
-            self,
-            input: typing.Any = None,
-            op_auths: typing.Set[str] = None,
-            key: str = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        input: typing.Optional[typing.Any] = None,
+        op_auths: typing.Optional[typing.Set[str]] = None,
+        key: typing.Optional[str] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.op_auths = op_auths
@@ -2427,10 +2540,12 @@ class GetGafferResultCacheExport(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.export.resultcache.GetGafferResultCacheExport"
 
     def __init__(
-            self,
-            job_id: str = None,
-            key: str = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        job_id: typing.Optional[str] = None,
+        key: typing.Optional[str] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.job_id = job_id
         self.key = key
@@ -2458,10 +2573,12 @@ class ExportToSet(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.export.set.ExportToSet"
 
     def __init__(
-            self,
-            input: typing.Any = None,
-            key: str = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        input: typing.Optional[typing.Any] = None,
+        key: typing.Optional[str] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.key = key
@@ -2491,12 +2608,14 @@ class GetSetExport(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.export.set.GetSetExport"
 
     def __init__(
-            self,
-            job_id: str = None,
-            start: int = None,
-            end: int = None,
-            key: str = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        job_id: typing.Optional[str] = None,
+        start: typing.Optional[int] = None,
+        end: typing.Optional[int] = None,
+        key: typing.Optional[str] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.job_id = job_id
         self.start = start
@@ -2531,11 +2650,13 @@ class Aggregate(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.function.Aggregate"
 
     def __init__(
-            self,
-            input: typing.List[gafferpy.gaffer_core.Element] = None,
-            entities: typing.Dict[str, AggregatePair] = None,
-            edges: typing.Dict[str, AggregatePair] = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        input: typing.Optional[typing.List[Element]] = None,
+        entities: typing.Optional[typing.Dict[str, AggregatePair]] = None,
+        edges: typing.Optional[typing.Dict[str, AggregatePair]] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.entities = entities
@@ -2570,14 +2691,16 @@ class Filter(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.function.Filter"
 
     def __init__(
-            self,
-            input: typing.List[gafferpy.gaffer_core.Element] = None,
-            global_edges: gafferpy.generated_api.predicates.ElementFilter = None,
-            global_entities: gafferpy.generated_api.predicates.ElementFilter = None,
-            entities: typing.Dict[str, gafferpy.generated_api.predicates.ElementFilter] = None,
-            edges: typing.Dict[str, gafferpy.generated_api.predicates.ElementFilter] = None,
-            global_elements: gafferpy.generated_api.predicates.ElementFilter = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        input: typing.Optional[typing.List[Element]] = None,
+        global_edges: typing.Optional[ElementFilter] = None,
+        global_entities: typing.Optional[ElementFilter] = None,
+        entities: typing.Optional[typing.Dict[str, ElementFilter]] = None,
+        edges: typing.Optional[typing.Dict[str, ElementFilter]] = None,
+        global_elements: typing.Optional[ElementFilter] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.global_edges = global_edges
@@ -2618,11 +2741,13 @@ class Transform(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.function.Transform"
 
     def __init__(
-            self,
-            input: typing.List[gafferpy.gaffer_core.Element] = None,
-            entities: typing.Dict[str, gafferpy.generated_api.functions.ElementTransformer] = None,
-            edges: typing.Dict[str, gafferpy.generated_api.functions.ElementTransformer] = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        input: typing.Optional[typing.List[Element]] = None,
+        entities: typing.Optional[typing.Dict[str, ElementTransformer]] = None,
+        edges: typing.Optional[typing.Dict[str, ElementTransformer]] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.entities = entities
@@ -2653,10 +2778,12 @@ class GenerateElements(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.generate.GenerateElements"
 
     def __init__(
-            self,
-            element_generator: typing.Any,
-            input: typing.List[typing.Any] = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        element_generator: Function,
+        input: typing.Optional[typing.List[typing.Any]] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.element_generator = element_generator
@@ -2684,10 +2811,12 @@ class GenerateObjects(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.generate.GenerateObjects"
 
     def __init__(
-            self,
-            element_generator: typing.Any,
-            input: typing.List[gafferpy.gaffer_core.Element] = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        element_generator: Function,
+        input: typing.Optional[typing.List[Element]] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.element_generator = element_generator
@@ -2718,13 +2847,15 @@ class GetAdjacentIds(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.get.GetAdjacentIds"
 
     def __init__(
-            self,
-            input: typing.List[typing.Any] = None,
-            view: View = None,
-            include_incoming_out_going: str = None,
-            directed_type: str = None,
-            views: typing.List[View] = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        input: typing.Optional[typing.List[typing.Any]] = None,
+        view: typing.Optional[View] = None,
+        include_incoming_out_going: typing.Optional[str] = None,
+        directed_type: typing.Optional[str] = None,
+        views: typing.Optional[typing.List[View]] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.view = view
@@ -2762,11 +2893,13 @@ class GetAllElements(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements"
 
     def __init__(
-            self,
-            view: View = None,
-            directed_type: str = None,
-            views: typing.List[View] = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        view: typing.Optional[View] = None,
+        directed_type: typing.Optional[str] = None,
+        views: typing.Optional[typing.List[View]] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.view = view
         self.directed_type = directed_type
@@ -2800,13 +2933,15 @@ class GetElements(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.get.GetElements"
 
     def __init__(
-            self,
-            input: typing.List[typing.Any] = None,
-            view: View = None,
-            include_incoming_out_going: str = None,
-            directed_type: str = None,
-            views: typing.List[View] = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        input: typing.Optional[typing.List[typing.Any]] = None,
+        view: typing.Optional[View] = None,
+        include_incoming_out_going: typing.Optional[str] = None,
+        directed_type: typing.Optional[str] = None,
+        views: typing.Optional[typing.List[View]] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.view = view
@@ -2842,9 +2977,11 @@ class GetFromEndpoint(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.get.GetFromEndpoint"
 
     def __init__(
-            self,
-            endpoint: str,
-            options: typing.Dict[str, str] = None):
+        self,
+        endpoint: str,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.endpoint = endpoint
 
@@ -2868,9 +3005,11 @@ class CancelScheduledJob(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.job.CancelScheduledJob"
 
     def __init__(
-            self,
-            job_id: str,
-            options: typing.Dict[str, str] = None):
+        self,
+        job_id: str,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.job_id = job_id
 
@@ -2893,8 +3032,10 @@ class GetAllJobDetails(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.job.GetAllJobDetails"
 
     def __init__(
-            self,
-            options: typing.Dict[str, str] = None):
+        self,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
 
     def to_json(self):
@@ -2914,9 +3055,11 @@ class GetJobDetails(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.job.GetJobDetails"
 
     def __init__(
-            self,
-            job_id: str = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        job_id: typing.Optional[str] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.job_id = job_id
 
@@ -2940,9 +3083,11 @@ class GetJobResults(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.job.GetJobResults"
 
     def __init__(
-            self,
-            job_id: str = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        job_id: typing.Optional[str] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.job_id = job_id
 
@@ -2972,15 +3117,17 @@ class Join(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.join.Join"
 
     def __init__(
-            self,
-            flatten: bool = None,
-            input: typing.List[typing.Any] = None,
-            join_type: str = None,
-            match_key: str = None,
-            collection_limit: int = None,
-            match_method: typing.Any = None,
-            operation: Operation = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        flatten: typing.Optional[bool] = None,
+        input: typing.Optional[typing.List[typing.Any]] = None,
+        join_type: typing.Optional[str] = None,
+        match_key: typing.Optional[str] = None,
+        collection_limit: typing.Optional[int] = None,
+        match_method: typing.Optional[typing.Any] = None,
+        operation: typing.Optional[Operation] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.flatten = flatten
         self.input = input
@@ -3022,9 +3169,11 @@ class ToArray(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.output.ToArray"
 
     def __init__(
-            self,
-            input: typing.List[typing.Any] = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        input: typing.Optional[typing.List[typing.Any]] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
 
@@ -3050,11 +3199,13 @@ class ToCsv(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.output.ToCsv"
 
     def __init__(
-            self,
-            input: typing.List[gafferpy.gaffer_core.Element] = None,
-            csv_generator: gafferpy.generated_api.functions.CsvGenerator = None,
-            include_header: bool = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        input: typing.Optional[typing.List[Element]] = None,
+        csv_generator: typing.Optional[CsvGenerator] = None,
+        include_header: typing.Optional[bool] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.csv_generator = csv_generator
@@ -3084,9 +3235,11 @@ class ToEntitySeeds(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.output.ToEntitySeeds"
 
     def __init__(
-            self,
-            input: typing.List[typing.Any] = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        input: typing.Optional[typing.List[typing.Any]] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
 
@@ -3110,9 +3263,11 @@ class ToList(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.output.ToList"
 
     def __init__(
-            self,
-            input: typing.List[typing.Any] = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        input: typing.Optional[typing.List[typing.Any]] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
 
@@ -3137,10 +3292,12 @@ class ToMap(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.output.ToMap"
 
     def __init__(
-            self,
-            element_generator: gafferpy.generated_api.functions.MapGenerator,
-            input: typing.List[gafferpy.gaffer_core.Element] = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        element_generator: MapGenerator,
+        input: typing.Optional[typing.List[Element]] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.element_generator = element_generator
@@ -3167,9 +3324,11 @@ class ToSet(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.output.ToSet"
 
     def __init__(
-            self,
-            input: typing.List[typing.Any] = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        input: typing.Optional[typing.List[typing.Any]] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
 
@@ -3193,9 +3352,11 @@ class ToSingletonList(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.output.ToSingletonList"
 
     def __init__(
-            self,
-            input: typing.Any = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        input: typing.Optional[typing.Any] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
 
@@ -3219,9 +3380,11 @@ class ToStream(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.output.ToStream"
 
     def __init__(
-            self,
-            input: typing.List[typing.Any] = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        input: typing.Optional[typing.List[typing.Any]] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
 
@@ -3247,11 +3410,13 @@ class ToVertices(Operation):
     CLASS = "uk.gov.gchq.gaffer.operation.impl.output.ToVertices"
 
     def __init__(
-            self,
-            input: typing.List[gafferpy.gaffer_core.ElementSeed] = None,
-            use_matched_vertex: str = None,
-            edge_vertices: str = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        input: typing.Optional[typing.List[ElementSeed]] = None,
+        use_matched_vertex: typing.Optional[str] = None,
+        edge_vertices: typing.Optional[str] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.use_matched_vertex = use_matched_vertex
@@ -3280,8 +3445,10 @@ class GetProxyProperties(Operation):
     CLASS = "uk.gov.gchq.gaffer.proxystore.operation.GetProxyProperties"
 
     def __init__(
-            self,
-            options: typing.Dict[str, str] = None):
+        self,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
 
     def to_json(self):
@@ -3300,8 +3467,10 @@ class GetProxyUrl(Operation):
     CLASS = "uk.gov.gchq.gaffer.proxystore.operation.GetProxyUrl"
 
     def __init__(
-            self,
-            options: typing.Dict[str, str] = None):
+        self,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
 
     def to_json(self):
@@ -3320,8 +3489,10 @@ class DeleteAllData(Operation):
     CLASS = "uk.gov.gchq.gaffer.store.operation.DeleteAllData"
 
     def __init__(
-            self,
-            options: typing.Dict[str, str] = None):
+        self,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
 
     def to_json(self):
@@ -3341,9 +3512,11 @@ class GetSchema(Operation):
     CLASS = "uk.gov.gchq.gaffer.store.operation.GetSchema"
 
     def __init__(
-            self,
-            compact: bool = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        compact: typing.Optional[bool] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.compact = compact
 
@@ -3367,9 +3540,11 @@ class GetTraits(Operation):
     CLASS = "uk.gov.gchq.gaffer.store.operation.GetTraits"
 
     def __init__(
-            self,
-            current_traits: bool = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        current_traits: typing.Optional[bool] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.current_traits = current_traits
 
@@ -3394,10 +3569,12 @@ class HasTrait(Operation):
     CLASS = "uk.gov.gchq.gaffer.store.operation.HasTrait"
 
     def __init__(
-            self,
-            current_traits: bool = None,
-            trait: str = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        current_traits: typing.Optional[bool] = None,
+        trait: typing.Optional[str] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.current_traits = current_traits
         self.trait = trait
@@ -3426,11 +3603,13 @@ class AddSchemaToLibrary(Operation):
     CLASS = "uk.gov.gchq.gaffer.store.operation.add.AddSchemaToLibrary"
 
     def __init__(
-            self,
-            schema: typing.Dict,
-            id: str,
-            parent_schema_ids: typing.List[str] = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        schema: typing.Dict,
+        id: str,
+        parent_schema_ids: typing.Optional[typing.List[str]] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.schema = schema
         self.id = id
@@ -3462,11 +3641,13 @@ class AddStorePropertiesToLibrary(Operation):
     CLASS = "uk.gov.gchq.gaffer.store.operation.add.AddStorePropertiesToLibrary"
 
     def __init__(
-            self,
-            store_properties: typing.Dict,
-            id: str,
-            parent_properties_id: str = None,
-            options: typing.Dict[str, str] = None):
+        self,
+        store_properties: typing.Dict,
+        id: str,
+        parent_properties_id: typing.Optional[str] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
         super().__init__(_class_name=self.CLASS, options=options)
         self.store_properties = store_properties
         self.parent_properties_id = parent_properties_id

@@ -19,19 +19,39 @@
 This module contains Python copies of common Gaffer java types.
 """
 
-from typing import List, Dict, Any, Tuple, Set
+from typing import Any, Dict, List, Optional, Set, Tuple
+import logging
+import re
 
-from gafferpy.gaffer_core import ElementSeed, EntitySeed, EdgeSeed, Element, JsonConverter
+from gafferpy.gaffer_core import ElementSeed, EntitySeed, EdgeSeed, Element, JsonConverter, Function, BinaryOperator, Predicate
 from gafferpy.gaffer_operations import Operation
 
-anys = "T", "Object", "Object[]", "?", "OBJ", "java.lang.Object", "I", "I_ITEM", "java.lang.Class", "uk.gov.gchq.gaffer.access.predicate.AccessPredicate", "java.util.function.Function"
-lists = "java.lang.Iterable", "java.util.List"
+logging.basicConfig(level=logging.WARNING)
+logger = logging.getLogger(__name__)
+
+anys = (
+    "T", "Object", "Object[]", "?", "OBJ", "java.lang.Object", "I", "I_ITEM",
+    "java.lang.Class", "uk.gov.gchq.gaffer.access.predicate.AccessPredicate"
+)
+lists = "java.lang.Iterable", "java.util.List", "java.util.Collection"
 dicts = "java.util.Map", "java.util.LinkedHashMap", "java.util.Properties", "uk.gov.gchq.gaffer.store.schema.Schema"
 strings = "java.lang.String", "char"
 ints = "java.lang.Integer", "java.lang.Long", "int"
 
 
-def parse_java_type_to_string(java_type: str) -> str:
+def parse_java_type_to_string(java_type: str, return_full_path: bool = True) -> str:
+    """
+    Parse a Java type into a Python type and return as a string.
+
+    Args:
+        java_type: String of a Java type
+        return_full_path: Whether to return the full `gafferpy` path to a class i.e.
+            `gafferpy.gaffer_core.Function`, or just the class i.e. `Function`
+
+    Returns:
+        String of Python type
+    """
+
     python_type = parse_java_type(java_type)
     if isinstance(python_type, type):
         if python_type.__module__ == "builtins":
@@ -40,12 +60,24 @@ def parse_java_type_to_string(java_type: str) -> str:
     else:
         type_name = str(python_type)
 
-    type_name = type_name.replace("gafferpy.gaffer_operations.", "")
-    type_name = type_name.replace("gafferpy.generated_api.operations.", "")
+    if return_full_path is False and 'gafferpy' in type_name:
+        gafferpy_class = re.findall("gafferpy[\\w+ \\.]*", type_name)[0]
+        # replace the full gafferpy path with just class name
+        type_name = type_name.replace(gafferpy_class, gafferpy_class.split('.')[-1])
+
     return type_name
 
 
 def parse_java_type(java_type: str) -> type:
+    """
+    Parse a Java type into a Python type object.
+
+    Args:
+        java_type: String of a Java type
+
+    Returns:
+        Python type
+    """
     if "[]" in java_type:
         array_type = java_type.split("[]")[0]
         return List[parse_java_type(array_type)]
@@ -57,7 +89,18 @@ def parse_java_type(java_type: str) -> type:
             return Any
         if inner_type in anys:
             return parse_java_type(outter_type)
-        return parse_java_type(outter_type)[parse_java_type(inner_type)]
+        try:
+            return parse_java_type(outter_type)[parse_java_type(inner_type)]
+        except BaseException:
+            if "java.util.function.BinaryOperator" in java_type:
+                return BinaryOperator
+            if "java.util.function.Function" in java_type:
+                return Function
+            if "java.util.function.Predicate" in java_type:
+                return Predicate
+            logger.warning(
+                f"Unable to determine Python type for Java type {java_type}, using typing.Any")
+            return Any
     if "," in java_type:
         split = java_type.split(",")
         first_type = split[0]
@@ -98,18 +141,71 @@ def parse_java_type(java_type: str) -> type:
 
 
 def long(value: int) -> Dict[str, int]:
+    """
+    Convert integer value to an object that Gaffer can serialise into a Java Long type.
+
+    Args:
+        value: Integer value to convert
+
+    Returns:
+        Dictionary that can be serialised to a Java Long.
+    """
     return {"java.lang.Long": value}
 
 
 def date(value: int) -> Dict[str, int]:
+    """
+    Convert integer value to an object that Gaffer can serialise into a Java Date type.
+
+    Args:
+        value: Integer value to convert
+
+    Returns:
+        Dictionary that can be serialised to a Java Date.
+    """
     return {"java.util.Date": value}
 
 
 def freq_map(map_value: Dict[Any, int]) -> Dict[str, Dict[Any, int]]:
+    """
+    Convert {k:v} dict to an object that Gaffer can serialise into a Gaffer FreqMap type.
+
+    Args:
+        value: Dictionary to convert
+
+    Returns:
+        Dictionary that can be serialised to a Gaffer FreqMap.
+    """
     return {"uk.gov.gchq.gaffer.types.FreqMap": map_value}
 
 
-def type_value(type: Any = None, value: Any = None) -> Dict[str, Dict[str, Any]]:
+def tree_set(set: Set[Any]) -> Dict[str, Set[Any]]:
+    """
+    Convert set to an object that Gaffer can serialise into a Java TreeSet type.
+
+    Args:
+        set: Set to convert
+
+    Returns:
+        Dictionary that can be serialised to a Java TreeSet.
+    """
+    return {"java.util.TreeSet": set}
+
+
+def type_value(
+    type: Optional[Any] = None,
+    value: Optional[Any] = None
+) -> Dict[str, Dict[str, Any]]:
+    """
+    Convert a type and value to an object that Gaffer can serialise into a Gaffer TypeSubTypeValue type.
+
+    Args:
+        type: Populates `type` field in a Gaffer TypeSubTypeValue object
+        value: Populates `value` field in a Gaffer TypeSubTypeValue object
+
+    Returns:
+        Dictionary that can be serialised to a Gaffer TypeSubTypeValue.
+    """
     map = {}
     if type is not None:
         map["type"] = type
@@ -118,8 +214,22 @@ def type_value(type: Any = None, value: Any = None) -> Dict[str, Dict[str, Any]]
     return {"uk.gov.gchq.gaffer.types.TypeSubTypeValue": map}
 
 
-def type_subtype_value(type: Any = None, subType: Any = None,
-                       value: Any = None) -> Dict[str, Dict[str, Any]]:
+def type_subtype_value(
+    type: Optional[Any] = None,
+    subType: Optional[Any] = None,
+    value: Optional[Any] = None
+) -> Dict[str, Dict[str, Any]]:
+    """
+    Convert a type, subType and value to an object that Gaffer can serialise into a Gaffer TypeSubTypeValue type.
+
+    Args:
+        type: Populates `type` field in a Gaffer TypeSubTypeValue object
+        subType: Populates `subType` field in a Gaffer TypeSubTypeValue object
+        value: Populates `value` field in a Gaffer TypeSubTypeValue object
+
+    Returns:
+        Dictionary that can be serialised to a Gaffer TypeSubTypeValue.
+    """
     map = {}
     if type is not None:
         map["type"] = type
@@ -130,11 +240,43 @@ def type_subtype_value(type: Any = None, subType: Any = None,
     return {"uk.gov.gchq.gaffer.types.TypeSubTypeValue": map}
 
 
-def tree_set(set: Set[Any]) -> Dict[str, Set[Any]]:
-    return {"java.util.TreeSet": set}
+def hyper_log_log_plus(
+    offers: List[Any],
+    p: int = 5,
+    sp: int = 5
+) -> Dict[str, Dict[str, Dict[str, Any]]]:
+    """
+    Convert a list of objects to an object that Gaffer can serialise into a HyperLogLogPlus Sketch.
 
+    Args:
+        offers: Objects to add to the Sketch
+        p: Defines the accuracy and ultimately the size of Sketch.
+        sp: Defines the error properties of the Sketch sparse mode.
 
-def hyper_log_log_plus(offers: List[Any], p: int = 5,
-                       sp: int = 5) -> Dict[str, Dict[str, Dict[str, Any]]]:
+    Returns:
+        Dictionary that can be serialised to a clearspring HyperLogLogPlus Sketch.
+    """
     return {"com.clearspring.analytics.stream.cardinality.HyperLogLogPlus": {
         "hyperLogLogPlus": {"p": p, "sp": sp, "offers": offers}}}
+
+
+def hll_sketch(
+    values: List[Any],
+    log_k: int = 10
+) -> Dict[str, Dict[str, Any]]:
+    """
+    Convert a list of objects to an object that Gaffer can serialise into a HyperLogLog Sketch.
+
+    Args:
+        values: Objects to add to the Sketch
+        log_k: Defines the accuracy and ultimately the size of Sketch.
+
+    Returns:
+        Dictionary that can be serialised to a clearspring HyperLogLog Sketch.
+    """
+    return {
+        "org.apache.datasketches.hll.HllSketch": {
+            "logK": log_k,
+            "values": values
+        }
+    }

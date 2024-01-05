@@ -1,5 +1,5 @@
 #
-# Copyright 2022 Crown Copyright
+# Copyright 2023 Crown Copyright
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -19,16 +19,19 @@ This module has been generated with fishbowl.
 To make changes, either extend these classes or change fishbowl.
 """
 
-from gafferpy.gaffer_predicates import AbstractPredicate
+import typing
+from gafferpy.gaffer_core import AbstractPredicate, Function, Predicate
+from gafferpy.gaffer_functions import ElementTransformer
 
 
 class DefaultUserPredicate(AbstractPredicate):
     CLASS = "uk.gov.gchq.gaffer.access.predicate.user.DefaultUserPredicate"
 
     def __init__(
-            self,
-            auths=None,
-            creating_user_id=None):
+        self,
+        auths: typing.Optional[typing.List[str]] = None,
+        creating_user_id: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.auths = auths
         self.creating_user_id = creating_user_id
@@ -66,8 +69,9 @@ class ElementJoinComparator(AbstractPredicate):
     CLASS = "uk.gov.gchq.gaffer.data.element.comparison.ElementJoinComparator"
 
     def __init__(
-            self,
-            group_by_properties=None):
+        self,
+        group_by_properties: typing.Optional[typing.Set[str]] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.group_by_properties = group_by_properties
 
@@ -82,8 +86,9 @@ class ElementFilter(AbstractPredicate):
     CLASS = "uk.gov.gchq.gaffer.data.element.function.ElementFilter"
 
     def __init__(
-            self,
-            predicates=None):
+        self,
+        predicates: typing.Optional[typing.List[typing.Any]] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.predicates = predicates
 
@@ -98,8 +103,9 @@ class PropertiesFilter(AbstractPredicate):
     CLASS = "uk.gov.gchq.gaffer.data.element.function.PropertiesFilter"
 
     def __init__(
-            self,
-            predicates=None):
+        self,
+        predicates: typing.Optional[typing.List[typing.Any]] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.predicates = predicates
 
@@ -114,9 +120,10 @@ class NamedViewWriteUserPredicate(AbstractPredicate):
     CLASS = "uk.gov.gchq.gaffer.data.elementdefinition.view.access.predicate.user.NamedViewWriteUserPredicate"
 
     def __init__(
-            self,
-            auths=None,
-            creating_user_id=None):
+        self,
+        auths: typing.Optional[typing.List[str]] = None,
+        creating_user_id: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.auths = auths
         self.creating_user_id = creating_user_id
@@ -134,10 +141,11 @@ class FederatedGraphReadUserPredicate(AbstractPredicate):
     CLASS = "uk.gov.gchq.gaffer.federatedstore.access.predicate.user.FederatedGraphReadUserPredicate"
 
     def __init__(
-            self,
-            public=None,
-            auths=None,
-            creating_user_id=None):
+        self,
+        public: typing.Optional[bool] = None,
+        auths: typing.Optional[typing.List[str]] = None,
+        creating_user_id: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.public = public
         self.auths = auths
@@ -158,8 +166,9 @@ class FederatedGraphWriteUserPredicate(AbstractPredicate):
     CLASS = "uk.gov.gchq.gaffer.federatedstore.access.predicate.user.FederatedGraphWriteUserPredicate"
 
     def __init__(
-            self,
-            creating_user_id=None):
+        self,
+        creating_user_id: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.creating_user_id = creating_user_id
 
@@ -174,9 +183,10 @@ class TransformAndFilter(AbstractPredicate):
     CLASS = "uk.gov.gchq.gaffer.graph.hook.migrate.predicate.TransformAndFilter"
 
     def __init__(
-            self,
-            filter=None,
-            transformer=None):
+        self,
+        filter: typing.Optional[ElementFilter] = None,
+        transformer: typing.Optional[ElementTransformer] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.filter = filter
         self.transformer = transformer
@@ -204,9 +214,10 @@ class HyperLogLogPlusIsLessThan(AbstractPredicate):
     CLASS = "uk.gov.gchq.gaffer.sketches.clearspring.cardinality.predicate.HyperLogLogPlusIsLessThan"
 
     def __init__(
-            self,
-            value=None,
-            or_equal_to=None):
+        self,
+        value: typing.Optional[int] = None,
+        or_equal_to: typing.Optional[bool] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.value = value
         self.or_equal_to = or_equal_to
@@ -224,9 +235,10 @@ class HllSketchIsLessThan(AbstractPredicate):
     CLASS = "uk.gov.gchq.gaffer.sketches.datasketches.cardinality.predicate.HllSketchIsLessThan"
 
     def __init__(
-            self,
-            value=None,
-            or_equal_to=None):
+        self,
+        value: typing.Optional[int] = None,
+        or_equal_to: typing.Optional[bool] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.value = value
         self.or_equal_to = or_equal_to
@@ -254,11 +266,12 @@ class RBMBackedTimestampSetInRange(AbstractPredicate):
     CLASS = "uk.gov.gchq.gaffer.time.predicate.RBMBackedTimestampSetInRange"
 
     def __init__(
-            self,
-            start_time=None,
-            end_time=None,
-            include_all_timestamps=None,
-            time_unit=None):
+        self,
+        start_time: typing.Optional[typing.Any] = None,
+        end_time: typing.Optional[typing.Any] = None,
+        include_all_timestamps: typing.Optional[bool] = None,
+        time_unit: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.start_time = start_time
         self.end_time = end_time
@@ -282,10 +295,11 @@ class AgeOff(AbstractPredicate):
     CLASS = "uk.gov.gchq.koryphe.impl.predicate.AgeOff"
 
     def __init__(
-            self,
-            age_off_hours=None,
-            age_off_days=None,
-            age_off_time=None):
+        self,
+        age_off_hours: typing.Optional[int] = None,
+        age_off_days: typing.Optional[int] = None,
+        age_off_time: typing.Optional[int] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.age_off_hours = age_off_hours
         self.age_off_days = age_off_days
@@ -316,8 +330,9 @@ class And(AbstractPredicate):
     CLASS = "uk.gov.gchq.koryphe.impl.predicate.And"
 
     def __init__(
-            self,
-            predicates=None):
+        self,
+        predicates: typing.Optional[typing.List[typing.Any]] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.predicates = predicates
 
@@ -342,9 +357,10 @@ class AreIn(AbstractPredicate):
     CLASS = "uk.gov.gchq.koryphe.impl.predicate.AreIn"
 
     def __init__(
-            self,
-            values=None,
-            null_or_empty_values_accepted=None):
+        self,
+        values: typing.Optional[typing.List[typing.Any]] = None,
+        null_or_empty_values_accepted: typing.Optional[bool] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.values = values
         self.null_or_empty_values_accepted = null_or_empty_values_accepted
@@ -362,8 +378,9 @@ class CollectionContains(AbstractPredicate):
     CLASS = "uk.gov.gchq.koryphe.impl.predicate.CollectionContains"
 
     def __init__(
-            self,
-            value=None):
+        self,
+        value: typing.Optional[typing.Any] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.value = value
 
@@ -388,11 +405,12 @@ class If(AbstractPredicate):
     CLASS = "uk.gov.gchq.koryphe.impl.predicate.If"
 
     def __init__(
-            self,
-            otherwise=None,
-            predicate=None,
-            condition=None,
-            then=None):
+        self,
+        otherwise: typing.Optional[Predicate] = None,
+        predicate: typing.Optional[Predicate] = None,
+        condition: typing.Optional[bool] = None,
+        then: typing.Optional[Predicate] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.otherwise = otherwise
         self.predicate = predicate
@@ -416,8 +434,9 @@ class IsA(AbstractPredicate):
     CLASS = "uk.gov.gchq.koryphe.impl.predicate.IsA"
 
     def __init__(
-            self,
-            type=None):
+        self,
+        type: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.type = type
 
@@ -432,8 +451,9 @@ class IsEqual(AbstractPredicate):
     CLASS = "uk.gov.gchq.koryphe.impl.predicate.IsEqual"
 
     def __init__(
-            self,
-            value=None):
+        self,
+        value: typing.Optional[typing.Any] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.value = value
 
@@ -458,8 +478,9 @@ class IsIn(AbstractPredicate):
     CLASS = "uk.gov.gchq.koryphe.impl.predicate.IsIn"
 
     def __init__(
-            self,
-            values=None):
+        self,
+        values: typing.Optional[typing.List[typing.Any]] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.values = values
 
@@ -474,9 +495,10 @@ class IsLessThan(AbstractPredicate):
     CLASS = "uk.gov.gchq.koryphe.impl.predicate.IsLessThan"
 
     def __init__(
-            self,
-            value=None,
-            or_equal_to=None):
+        self,
+        value: typing.Optional[typing.Any] = None,
+        or_equal_to: typing.Optional[bool] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.value = value
         self.or_equal_to = or_equal_to
@@ -494,9 +516,10 @@ class IsLongerThan(AbstractPredicate):
     CLASS = "uk.gov.gchq.koryphe.impl.predicate.IsLongerThan"
 
     def __init__(
-            self,
-            min_length=None,
-            or_equal_to=None):
+        self,
+        min_length: typing.Optional[int] = None,
+        or_equal_to: typing.Optional[bool] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.min_length = min_length
         self.or_equal_to = or_equal_to
@@ -514,9 +537,10 @@ class IsMoreThan(AbstractPredicate):
     CLASS = "uk.gov.gchq.koryphe.impl.predicate.IsMoreThan"
 
     def __init__(
-            self,
-            value=None,
-            or_equal_to=None):
+        self,
+        value: typing.Optional[typing.Any] = None,
+        or_equal_to: typing.Optional[bool] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.value = value
         self.or_equal_to = or_equal_to
@@ -534,9 +558,10 @@ class IsShorterThan(AbstractPredicate):
     CLASS = "uk.gov.gchq.koryphe.impl.predicate.IsShorterThan"
 
     def __init__(
-            self,
-            max_length=None,
-            or_equal_to=None):
+        self,
+        max_length: typing.Optional[int] = None,
+        or_equal_to: typing.Optional[bool] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.max_length = max_length
         self.or_equal_to = or_equal_to
@@ -584,8 +609,9 @@ class MapContains(AbstractPredicate):
     CLASS = "uk.gov.gchq.koryphe.impl.predicate.MapContains"
 
     def __init__(
-            self,
-            key=None):
+        self,
+        key: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.key = key
 
@@ -600,8 +626,9 @@ class MapContainsPredicate(AbstractPredicate):
     CLASS = "uk.gov.gchq.koryphe.impl.predicate.MapContainsPredicate"
 
     def __init__(
-            self,
-            key_predicate=None):
+        self,
+        key_predicate: typing.Optional[Predicate] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.key_predicate = key_predicate
 
@@ -616,8 +643,9 @@ class MultiRegex(AbstractPredicate):
     CLASS = "uk.gov.gchq.koryphe.impl.predicate.MultiRegex"
 
     def __init__(
-            self,
-            value=None):
+        self,
+        value: typing.Optional[typing.List[typing.Any]] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.value = value
 
@@ -632,8 +660,9 @@ class Not(AbstractPredicate):
     CLASS = "uk.gov.gchq.koryphe.impl.predicate.Not"
 
     def __init__(
-            self,
-            predicate=None):
+        self,
+        predicate: typing.Optional[Predicate] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.predicate = predicate
 
@@ -648,8 +677,9 @@ class Or(AbstractPredicate):
     CLASS = "uk.gov.gchq.koryphe.impl.predicate.Or"
 
     def __init__(
-            self,
-            predicates=None):
+        self,
+        predicates: typing.Optional[typing.List[typing.Any]] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.predicates = predicates
 
@@ -664,8 +694,9 @@ class Regex(AbstractPredicate):
     CLASS = "uk.gov.gchq.koryphe.impl.predicate.Regex"
 
     def __init__(
-            self,
-            value=None):
+        self,
+        value: typing.Optional[typing.Any] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.value = value
 
@@ -680,9 +711,10 @@ class StringContains(AbstractPredicate):
     CLASS = "uk.gov.gchq.koryphe.impl.predicate.StringContains"
 
     def __init__(
-            self,
-            ignore_case=None,
-            value=None):
+        self,
+        ignore_case: typing.Optional[bool] = None,
+        value: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.ignore_case = ignore_case
         self.value = value
@@ -700,16 +732,17 @@ class InDateRange(AbstractPredicate):
     CLASS = "uk.gov.gchq.koryphe.impl.predicate.range.InDateRange"
 
     def __init__(
-            self,
-            end_offset=None,
-            offset_unit=None,
-            start_offset=None,
-            start_inclusive=None,
-            start=None,
-            time_zone=None,
-            end=None,
-            end_inclusive=None,
-            time_unit=None):
+        self,
+        end_offset: typing.Optional[int] = None,
+        offset_unit: typing.Optional[str] = None,
+        start_offset: typing.Optional[int] = None,
+        start_inclusive: typing.Optional[bool] = None,
+        start: typing.Optional[str] = None,
+        time_zone: typing.Optional[str] = None,
+        end: typing.Optional[str] = None,
+        end_inclusive: typing.Optional[bool] = None,
+        time_unit: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.end_offset = end_offset
         self.offset_unit = offset_unit
@@ -748,18 +781,19 @@ class InDateRangeDual(AbstractPredicate):
     CLASS = "uk.gov.gchq.koryphe.impl.predicate.range.InDateRangeDual"
 
     def __init__(
-            self,
-            end_fully_contained=None,
-            end_offset=None,
-            offset_unit=None,
-            start_offset=None,
-            start_inclusive=None,
-            start=None,
-            time_zone=None,
-            end=None,
-            end_inclusive=None,
-            start_fully_contained=None,
-            time_unit=None):
+        self,
+        end_fully_contained: typing.Optional[bool] = None,
+        end_offset: typing.Optional[int] = None,
+        offset_unit: typing.Optional[str] = None,
+        start_offset: typing.Optional[int] = None,
+        start_inclusive: typing.Optional[bool] = None,
+        start: typing.Optional[str] = None,
+        time_zone: typing.Optional[str] = None,
+        end: typing.Optional[str] = None,
+        end_inclusive: typing.Optional[bool] = None,
+        start_fully_contained: typing.Optional[bool] = None,
+        time_unit: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.end_fully_contained = end_fully_contained
         self.end_offset = end_offset
@@ -804,11 +838,12 @@ class InRange(AbstractPredicate):
     CLASS = "uk.gov.gchq.koryphe.impl.predicate.range.InRange"
 
     def __init__(
-            self,
-            start_inclusive=None,
-            start=None,
-            end=None,
-            end_inclusive=None):
+        self,
+        start_inclusive: typing.Optional[bool] = None,
+        start: typing.Optional[typing.Any] = None,
+        end: typing.Optional[typing.Any] = None,
+        end_inclusive: typing.Optional[bool] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.start_inclusive = start_inclusive
         self.start = start
@@ -832,13 +867,14 @@ class InRangeDual(AbstractPredicate):
     CLASS = "uk.gov.gchq.koryphe.impl.predicate.range.InRangeDual"
 
     def __init__(
-            self,
-            end_fully_contained=None,
-            start_inclusive=None,
-            start=None,
-            end=None,
-            end_inclusive=None,
-            start_fully_contained=None):
+        self,
+        end_fully_contained: typing.Optional[bool] = None,
+        start_inclusive: typing.Optional[bool] = None,
+        start: typing.Optional[typing.Any] = None,
+        end: typing.Optional[typing.Any] = None,
+        end_inclusive: typing.Optional[bool] = None,
+        start_fully_contained: typing.Optional[bool] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.end_fully_contained = end_fully_contained
         self.start_inclusive = start_inclusive
@@ -868,16 +904,17 @@ class InTimeRange(AbstractPredicate):
     CLASS = "uk.gov.gchq.koryphe.impl.predicate.range.InTimeRange"
 
     def __init__(
-            self,
-            end_offset=None,
-            offset_unit=None,
-            start_offset=None,
-            start_inclusive=None,
-            start=None,
-            time_zone=None,
-            end=None,
-            end_inclusive=None,
-            time_unit=None):
+        self,
+        end_offset: typing.Optional[int] = None,
+        offset_unit: typing.Optional[str] = None,
+        start_offset: typing.Optional[int] = None,
+        start_inclusive: typing.Optional[bool] = None,
+        start: typing.Optional[str] = None,
+        time_zone: typing.Optional[str] = None,
+        end: typing.Optional[str] = None,
+        end_inclusive: typing.Optional[bool] = None,
+        time_unit: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.end_offset = end_offset
         self.offset_unit = offset_unit
@@ -916,18 +953,19 @@ class InTimeRangeDual(AbstractPredicate):
     CLASS = "uk.gov.gchq.koryphe.impl.predicate.range.InTimeRangeDual"
 
     def __init__(
-            self,
-            end_fully_contained=None,
-            end_offset=None,
-            offset_unit=None,
-            start_offset=None,
-            start_inclusive=None,
-            start=None,
-            time_zone=None,
-            end=None,
-            end_inclusive=None,
-            start_fully_contained=None,
-            time_unit=None):
+        self,
+        end_fully_contained: typing.Optional[bool] = None,
+        end_offset: typing.Optional[int] = None,
+        offset_unit: typing.Optional[str] = None,
+        start_offset: typing.Optional[int] = None,
+        start_inclusive: typing.Optional[bool] = None,
+        start: typing.Optional[str] = None,
+        time_zone: typing.Optional[str] = None,
+        end: typing.Optional[str] = None,
+        end_inclusive: typing.Optional[bool] = None,
+        start_fully_contained: typing.Optional[bool] = None,
+        time_unit: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.end_fully_contained = end_fully_contained
         self.end_offset = end_offset
@@ -972,9 +1010,10 @@ class AdaptedPredicate(AbstractPredicate):
     CLASS = "uk.gov.gchq.koryphe.predicate.AdaptedPredicate"
 
     def __init__(
-            self,
-            predicate=None,
-            input_adapter=None):
+        self,
+        predicate: typing.Optional[Predicate] = None,
+        input_adapter: typing.Optional[Function] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.predicate = predicate
         self.input_adapter = input_adapter
@@ -992,8 +1031,9 @@ class PredicateComposite(AbstractPredicate):
     CLASS = "uk.gov.gchq.koryphe.predicate.PredicateComposite"
 
     def __init__(
-            self,
-            predicates=None):
+        self,
+        predicates: typing.Optional[typing.List[typing.Any]] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.predicates = predicates
 
@@ -1008,9 +1048,10 @@ class PredicateMap(AbstractPredicate):
     CLASS = "uk.gov.gchq.koryphe.predicate.PredicateMap"
 
     def __init__(
-            self,
-            predicate=None,
-            key=None):
+        self,
+        predicate: typing.Optional[Predicate] = None,
+        key: typing.Optional[typing.Any] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.predicate = predicate
         self.key = key
@@ -1028,10 +1069,11 @@ class IntegerTupleAdaptedPredicate(AbstractPredicate):
     CLASS = "uk.gov.gchq.koryphe.tuple.predicate.IntegerTupleAdaptedPredicate"
 
     def __init__(
-            self,
-            predicate=None,
-            input_adapter=None,
-            selection=None):
+        self,
+        predicate: typing.Optional[Predicate] = None,
+        input_adapter: typing.Optional[Function] = None,
+        selection: typing.Optional[typing.List[int]] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.predicate = predicate
         self.input_adapter = input_adapter
@@ -1052,10 +1094,11 @@ class TupleAdaptedPredicate(AbstractPredicate):
     CLASS = "uk.gov.gchq.koryphe.tuple.predicate.TupleAdaptedPredicate"
 
     def __init__(
-            self,
-            predicate=None,
-            input_adapter=None,
-            selection=None):
+        self,
+        predicate: typing.Optional[Predicate] = None,
+        input_adapter: typing.Optional[Function] = None,
+        selection: typing.Optional[typing.List[typing.Any]] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.predicate = predicate
         self.input_adapter = input_adapter
@@ -1076,8 +1119,9 @@ class TupleAdaptedPredicateComposite(AbstractPredicate):
     CLASS = "uk.gov.gchq.koryphe.tuple.predicate.TupleAdaptedPredicateComposite"
 
     def __init__(
-            self,
-            predicates=None):
+        self,
+        predicates: typing.Optional[typing.List[typing.Any]] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.predicates = predicates
 

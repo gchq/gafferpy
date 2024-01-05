@@ -14,7 +14,7 @@
 
 ## Installation
 
-Gafferpy requires Python 3.6+. We don't currently release gafferpy on pypi, but you can install it over ssh with:
+`gafferpy` requires Python 3.6+. We do not currently release `gafferpy` on PyPI, but you can install it over ssh with:
 
 ```bash
 pip install git+https://github.com/gchq/gafferpy.git
@@ -28,13 +28,13 @@ pip install -e .
 
 ## Quick Start
 
-The python shell connects to a running Gaffer REST API.  
-You can start the Gaffer road-traffic-demo rest server from the Gaffer repository, using the command:
+The Python shell connects to a running Gaffer REST API.
+You can start the Gaffer [`road-traffic-demo`](https://github.com/gchq/Gaffer/blob/master/example/road-traffic/README.md) REST server from the Gaffer repository, using the command:
 
 ```bash
 mvn clean install -pl :road-traffic-demo -Proad-traffic-demo,quick
 ```
-
+To connect to the running Gaffer API from Python (more information on the Python shell can be found [here](https://gchq.github.io/gaffer-doc/latest/user-guide/apis/python-api/)):
 ```python
 # Import the client library and connector
 from gafferpy import gaffer as g
@@ -42,8 +42,10 @@ from gafferpy import gaffer_connector
 
 # Instantiate a connector
 gc = gaffer_connector.GafferConnector("http://localhost:8080/rest/latest")
-
-# You can use the connector to perform get requests
+```
+Then perform requests against it:
+```python
+# You can use the connector to perform GET requests
 schema = gc.execute_get(g.GetSchema())
 
 # And also run operations
@@ -73,38 +75,50 @@ elements = gc.execute_operation_chain(
 )
 ```
 
-See [operation examples](https://gchq.github.io/gaffer-doc/v1docs/getting-started/operations/contents) for more examples of operations in python.
+See [Operations Guide](https://gchq.github.io/gaffer-doc/latest/reference/operations-guide/operations) for more examples of operations in Python.
 
-## Coding Style
-Please ensure that your coding style is consistent with the rest of the Gaffer project. Guides on the coding style for Gaffer can be found [here](https://gchq.github.io/gaffer-doc/latest/ways-of-working/#coding-style)
+## Developer Guide
 
-## Testing
+### Coding Style
+Please ensure that your coding style is consistent with the rest of the Gaffer project. Guides on the coding style for `gafferpy` and Gaffer can be found [here](https://gchq.github.io/gaffer-doc/latest/development-guide/ways-of-working).
 
+### Testing
+
+The `gafferpy` tests are implemented using `tox` and `pytest`.
+To run the tests, install the `gafferpy` 'dev' extra:
 ```bash
-# To run all of the tests, first deploy the road traffic example
-# This needs to be done from the Gaffer java repository
-mvn clean install -pl :road-traffic-demo -Proad-traffic-demo,quick
+pip install -e ".[dev]" # the quotes ensure compatibilty with zsh
+```
+This will install extra development dependecies for running tests and building documentation.
 
-# Then run
-python -m unittest discover
+`gafferpy` has both unit tests and integration tests - the integration tests use the Road Traffic Example to test the Python API. If this is not running, the integration tests are skipped. It is advisable that the integration tests are run prior to any code commits to ensure they do not fail due to any code changes.
+
+*For help starting the Road Traffic Example, see the [Quick Start](#quick-start) section above.*
+
+To run the tests, execute the below from the root directory of `gafferpy`:
+```bash
+tox
+```
+By default, `tox` will and try run the tests in multiple test envs (different Python versions) - if they do not exist then they are skipped.
+To run the test for a specifc test env e.g. Python3.9, run:
+```bash
+tox -e py39
 ```
 
-## Building the documentation
+### Building the documentation
 
-To build the docs locally, assuming you have Python installed, install the docs dependencies:
+To build the docs locally, assuming you have Make and Python installed, and `gafferpy` installed with the 'dev' extra:
 ```bash
 cd docs
-pip install -r requirements.txt
-```
-
-Then use the sphinx Makefile:
-```bash
 make html
 ```
 
+### Generating the Python API
+`gafferpy` has the ability to regenerate the Python API based upon the Gaffer REST API that a `GafferConnector` object is pointing at - a more detailed description and examples of how to do this can be found [here](./src/fishbowl/README.md).
+
 ## License
 
-Copyright 2016-2022 Crown Copyright
+Copyright 2016-2024 Crown Copyright
 
 Licensed under the Apache License, Version 2.0 \(the "License"\); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
