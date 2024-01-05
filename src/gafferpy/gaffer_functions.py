@@ -1,5 +1,5 @@
 #
-# Copyright 2016-2022 Crown Copyright
+# Copyright 2016-2023 Crown Copyright
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,50 +20,16 @@ This module contains Python copies of Gaffer function java classes
 """
 
 from gafferpy.gaffer_core import *
-import gafferpy.gaffer_predicates as pred
-import gafferpy.gaffer_binaryoperators as bop
-
-
-class Function(ToJson, ToCodeString):
-    CLASS = "java.util.function.Function"
-
-    def __init__(self, class_name=None, fields=None):
-        self.class_name = class_name
-        self.fields = fields
-
-    def to_json(self):
-        if self.fields is not None:
-            function_json = dict(self.fields)
-        else:
-            function_json = {}
-
-        if self.class_name is not None:
-            function_json['class'] = self.class_name
-
-        return function_json
-
-
-class AbstractFunction(Function):
-    CLASS = "java.util.function.Function"
-
-    def __init__(self, _class_name=None):
-        super().__init__()
-        self._class_name = _class_name
-
-    def to_json(self):
-        function_json = {}
-        if self._class_name is not None:
-            function_json['class'] = self._class_name
-
-        return function_json
 
 
 class ElementGenerator(Function):
     CLASS = 'uk.gov.gchq.gaffer.data.generator.ElementGenerator'
 
-    def __init__(self,
-                 class_name,
-                 fields=None):
+    def __init__(
+        self,
+        class_name,
+        fields=None
+    ):
         super().__init__(class_name=class_name, fields=fields)
 
 

@@ -1,5 +1,5 @@
 #
-# Copyright 2016-2019 Crown Copyright
+# Copyright 2023 Crown Copyright
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -14,15 +14,12 @@
 # limitations under the License.
 #
 
-import unittest
+from gafferpy_examples import example_map
 
-from gafferpy_examples import example
+from .conftest import skip_connection
 
-
-class ExampleTest(unittest.TestCase):
-    def test_example_does_not_error(self):
-        example.run('http://localhost:8080/rest/latest')
+skip_connection()
 
 
-if __name__ == "__main__":
-    unittest.main()
+def test_example_map_does_not_error():
+    example_map.run('http://localhost:8080/rest/latest')

@@ -94,7 +94,7 @@ celerybeat.pid
 
 # Environments
 .env
-.venv
+.venv*
 .venv-python-example
 env/
 venv/

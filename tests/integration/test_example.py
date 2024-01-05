@@ -1,5 +1,5 @@
 #
-# Copyright 2023 Crown Copyright
+# Copyright 2016-2023 Crown Copyright
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -14,9 +14,12 @@
 # limitations under the License.
 #
 
-"""
-This module has been generated with fishbowl.
-To make changes, either extend these classes or change fishbowl.
-"""
-{% block content%}
-{%- endblock %}
+from gafferpy_examples import example
+
+from .conftest import skip_connection
+
+skip_connection()
+
+
+def test_example_does_not_error():
+    example.run('http://localhost:8080/rest/latest')

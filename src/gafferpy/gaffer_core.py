@@ -1,5 +1,5 @@
 #
-# Copyright 2016-2022 Crown Copyright
+# Copyright 2016-2023 Crown Copyright
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -532,3 +532,105 @@ def load_core_json_map():
 
 
 load_core_json_map()
+
+
+class BinaryOperator(ToJson, ToCodeString):
+    CLASS = "java.util.function.BinaryOperator"
+
+    def __init__(self, class_name=None, fields=None):
+        self.class_name = class_name
+        self.fields = fields
+
+    def to_json(self):
+        if self.fields is not None:
+            function_json = dict(self.fields)
+        else:
+            function_json = {}
+
+        if self.class_name is not None:
+            function_json['class'] = self.class_name
+
+        return function_json
+
+
+class AbstractBinaryOperator(BinaryOperator):
+    CLASS = "java.util.function.BinaryOperator"
+
+    def __init__(self, _class_name=None):
+        super().__init__()
+        self._class_name = _class_name
+
+    def to_json(self):
+        function_json = {}
+
+        if self._class_name is not None:
+            function_json['class'] = self._class_name
+
+        return function_json
+
+
+class Predicate(ToJson, ToCodeString):
+    CLASS = "java.util.function.Predicate"
+
+    def __init__(self, class_name=None, fields=None):
+        self.class_name = class_name
+        self.fields = fields
+
+    def to_json(self):
+        if self.fields is not None:
+            predicate_json = dict(self.fields)
+        else:
+            predicate_json = {}
+
+        if self.class_name is not None:
+            predicate_json['class'] = self.class_name
+
+        return predicate_json
+
+
+class AbstractPredicate(Predicate):
+    def __init__(self, _class_name=None):
+        super().__init__()
+        self._class_name = _class_name
+
+    def to_json(self):
+        predicate_json = {}
+
+        if self._class_name is not None:
+            predicate_json['class'] = self._class_name
+
+        return predicate_json
+
+
+class Function(ToJson, ToCodeString):
+    CLASS = "java.util.function.Function"
+
+    def __init__(self, class_name=None, fields=None):
+        self.class_name = class_name
+        self.fields = fields
+
+    def to_json(self):
+        if self.fields is not None:
+            function_json = dict(self.fields)
+        else:
+            function_json = {}
+
+        if self.class_name is not None:
+            function_json['class'] = self.class_name
+
+        return function_json
+
+
+class AbstractFunction(Function):
+    CLASS = "java.util.function.Function"
+
+    def __init__(self, _class_name=None):
+        super().__init__()
+        self._class_name = _class_name
+
+    def to_json(self):
+        function_json = {}
+        if self._class_name is not None:
+            function_json['class'] = self._class_name
+
+        return function_json

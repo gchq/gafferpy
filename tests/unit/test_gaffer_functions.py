@@ -1,5 +1,5 @@
 #
-# Copyright 2016-2019 Crown Copyright
+# Copyright 2016-2023 Crown Copyright
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -14,14 +14,14 @@
 # limitations under the License.
 #
 
-import json
-import unittest
+import pytest
 
 from gafferpy import gaffer as g
 
 
-class GafferFunctionsTest(unittest.TestCase):
-    examples = [
+@pytest.mark.parametrize(
+    "json_string,gafferpy_method",
+    [
         [
             '''
             {
@@ -1147,17 +1147,7 @@ class GafferFunctionsTest(unittest.TestCase):
             ])
         ]
     ]
-
-    def test_examples(self):
-        for example in self.examples:
-            self.assertEqual(
-                json.loads(example[0]),
-                example[1].to_json(),
-                "json failed: \n" + example[0] + "\n"
-                + g.JsonConverter.from_json(example[0]).to_code_string()
-            )
-            g.JsonConverter.from_json(example[0], validate=True)
-
-
-if __name__ == "__main__":
-    unittest.main()
+)
+def test_functions(json_string, gafferpy_method):
+    assert g.json.loads(json_string) == gafferpy_method.to_json()
+    g.JsonConverter.from_json(json_string, validate=True)

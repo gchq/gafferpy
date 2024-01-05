@@ -14,9 +14,19 @@
 # limitations under the License.
 #
 
-"""
-This module has been generated with fishbowl.
-To make changes, either extend these classes or change fishbowl.
-"""
-{% block content%}
-{%- endblock %}
+import pytest
+
+
+@pytest.fixture
+def get_all_elements_json():
+    return {
+        "class": "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements"
+    }
+
+
+@pytest.fixture
+def non_serialisable_object():
+    class NonJsonSerialisable():
+        pass
+
+    return NonJsonSerialisable

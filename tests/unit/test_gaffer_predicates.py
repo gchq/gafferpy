@@ -1,5 +1,5 @@
 #
-# Copyright 2016-2019 Crown Copyright
+# Copyright 2016-2023 Crown Copyright
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -14,13 +14,13 @@
 # limitations under the License.
 #
 
-import unittest
-
+import pytest
 from gafferpy import gaffer as g
 
 
-class GafferPredicatesTest(unittest.TestCase):
-    examples = [
+@pytest.mark.parametrize(
+    "json_string,gafferpy_method",
+    [
         [
             '''
             {
@@ -627,16 +627,7 @@ class GafferPredicatesTest(unittest.TestCase):
             g.NamedViewWriteUserPredicate(auths=["a", "test2"], creating_user_id="user1")
         ]
     ]
-
-    def test_examples(self):
-        for example in self.examples:
-            self.assertEqual(
-                g.json.loads(example[0]),
-                example[1].to_json(),
-                "json failed: \n" + example[0]
-            )
-            g.JsonConverter.from_json(example[0], validate=True)
-
-
-if __name__ == "__main__":
-    unittest.main()
+)
+def test_predicates(json_string, gafferpy_method):
+    assert g.json.loads(json_string) == gafferpy_method.to_json()
+    g.JsonConverter.from_json(json_string, validate=True)

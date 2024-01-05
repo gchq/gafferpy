@@ -1,5 +1,5 @@
 #
-# Copyright 2021 Crown Copyright
+# Copyright 2016-2023 Crown Copyright
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -14,15 +14,19 @@
 # limitations under the License.
 #
 
-import unittest
+import pytest
 
-from gafferpy_examples import example_map
+from gafferpy import gaffer as g
+
+from .conftest import skip_connection, _get_functions
+
+skip_connection()
 
 
-class ExampleMapTest(unittest.TestCase):
-    def test_example_map_does_not_error(self):
-        example_map.run('http://localhost:8080/rest/latest')
+@pytest.fixture(params=_get_functions())
+def functions_to_test(request):
+    return request.param
 
 
-if __name__ == "__main__":
-    unittest.main()
+def test_all_functions_have_classes(functions_to_test):
+    assert functions_to_test in g.JsonConverter.GENERIC_JSON_CONVERTERS

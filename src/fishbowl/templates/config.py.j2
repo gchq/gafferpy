@@ -12,10 +12,9 @@ class {{ config_name(conf) }}(GetGraph):
     def __init__(self):
     {%- endif %}
     {%- if '{' in conf %}
-        super().__init__(
-            '{{ conf }}'.format({{ get_config_parameter(conf) }}={{ snake_case(get_config_parameter(conf)) }}))
+        super().__init__(f"{{ conf | replace(get_config_parameter(conf), snake_case(get_config_parameter(conf))) }}")
     {%- else %}
-        super().__init__('{{ conf }}')
+        super().__init__("{{ conf }}")
     {%- endif %}
 
 {%- endfor %}

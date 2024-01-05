@@ -1,5 +1,5 @@
 #
-# Copyright 2016-2019 Crown Copyright
+# Copyright 2016-2023 Crown Copyright
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -14,38 +14,38 @@
 # limitations under the License.
 #
 
-import json
-import unittest
+import pytest
 
 from gafferpy import gaffer as g
 from gafferpy.gaffer_operations import GetSchema
 
 
-class GafferOperationsTest(unittest.TestCase):
-    examples = [
+@pytest.mark.parametrize(
+    "json_string,gafferpy_method",
+    [
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.impl.add.AddElements",
-              "validate" : true,
-              "skipInvalidElements" : false,
-              "input" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.impl.add.AddElements",
+                "validate" : true,
+                "skipInvalidElements" : false,
+                "input" : [ {
                 "group" : "entity",
                 "vertex" : 6,
                 "properties" : {
-                  "count" : 1
+                    "count" : 1
                 },
                 "class" : "uk.gov.gchq.gaffer.data.element.Entity"
-              }, {
+                }, {
                 "group" : "edge",
                 "source" : 5,
                 "destination" : 6,
                 "directed" : true,
                 "properties" : {
-                  "count" : 1
+                    "count" : 1
                 },
                 "class" : "uk.gov.gchq.gaffer.data.element.Edge"
-              } ]
+                } ]
             }
             ''',
             g.AddElements(
@@ -70,12 +70,12 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.impl.add.AddElementsFromFile",
-              "filename" : "filename",
-              "elementGenerator" : "uk.gov.gchq.gaffer.doc.operation.generator.ElementGenerator",
-              "parallelism" : 1,
-              "validate" : true,
-              "skipInvalidElements" : false
+                "class" : "uk.gov.gchq.gaffer.operation.impl.add.AddElementsFromFile",
+                "filename" : "filename",
+                "elementGenerator" : "uk.gov.gchq.gaffer.doc.operation.generator.ElementGenerator",
+                "parallelism" : 1,
+                "validate" : true,
+                "skipInvalidElements" : false
             }
             ''',
             g.AddElementsFromFile(
@@ -90,14 +90,14 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.impl.add.AddElementsFromKafka",
-              "topic" : "topic1",
-              "groupId" : "groupId1",
-              "bootstrapServers" : [ "hostname1:8080,hostname2:8080" ],
-              "elementGenerator" : "uk.gov.gchq.gaffer.doc.operation.generator.ElementGenerator",
-              "parallelism" : 1,
-              "validate" : true,
-              "skipInvalidElements" : false
+                "class" : "uk.gov.gchq.gaffer.operation.impl.add.AddElementsFromKafka",
+                "topic" : "topic1",
+                "groupId" : "groupId1",
+                "bootstrapServers" : [ "hostname1:8080,hostname2:8080" ],
+                "elementGenerator" : "uk.gov.gchq.gaffer.doc.operation.generator.ElementGenerator",
+                "parallelism" : 1,
+                "validate" : true,
+                "skipInvalidElements" : false
             }
             ''',
             g.AddElementsFromKafka(
@@ -116,14 +116,14 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.impl.add.AddElementsFromSocket",
-              "hostname" : "localhost",
-              "port" : 8080,
-              "elementGenerator" : "uk.gov.gchq.gaffer.doc.operation.generator.ElementGenerator",
-              "parallelism" : 1,
-              "validate" : true,
-              "skipInvalidElements" : false,
-              "delimiter" : ","
+                "class" : "uk.gov.gchq.gaffer.operation.impl.add.AddElementsFromSocket",
+                "hostname" : "localhost",
+                "port" : 8080,
+                "elementGenerator" : "uk.gov.gchq.gaffer.doc.operation.generator.ElementGenerator",
+                "parallelism" : 1,
+                "validate" : true,
+                "skipInvalidElements" : false,
+                "delimiter" : ","
             }
             ''',
             g.AddElementsFromSocket(
@@ -140,12 +140,12 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.CountGroups"
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -159,13 +159,13 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.CountGroups",
                 "limit" : 5
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -181,17 +181,17 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.export.resultcache.ExportToGafferResultCache"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.DiscardOutput"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.export.resultcache.GetGafferResultCacheExport",
                 "key" : "ALL"
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -208,16 +208,16 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.export.resultcache.ExportToGafferResultCache"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.DiscardOutput"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.job.GetJobDetails"
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -232,12 +232,12 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.export.resultcache.GetGafferResultCacheExport",
                 "jobId" : "0f47bc2a-547d-4990-9104-04a8dd64e588",
                 "key" : "ALL"
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -252,31 +252,31 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.export.resultcache.ExportToGafferResultCache",
                 "key" : "edges"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.DiscardOutput"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.export.resultcache.ExportToGafferResultCache",
                 "key" : "entities"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.DiscardOutput"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.export.GetExports",
                 "getExports" : [ {
-                  "class" : "uk.gov.gchq.gaffer.operation.impl.export.resultcache.GetGafferResultCacheExport",
-                  "key" : "edges"
+                    "class" : "uk.gov.gchq.gaffer.operation.impl.export.resultcache.GetGafferResultCacheExport",
+                    "key" : "edges"
                 }, {
-                  "class" : "uk.gov.gchq.gaffer.operation.impl.export.resultcache.GetGafferResultCacheExport",
-                  "key" : "entities"
+                    "class" : "uk.gov.gchq.gaffer.operation.impl.export.resultcache.GetGafferResultCacheExport",
+                    "key" : "entities"
                 } ]
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -307,19 +307,19 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements",
                 "view" : {
-                  "edges" : {
+                    "edges" : {
                     "edge" : { }
-                  },
-                  "entities" : { }
+                    },
+                    "entities" : { }
                 }
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.export.graph.ExportToOtherAuthorisedGraph",
                 "graphId" : "graph2"
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -344,21 +344,21 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements",
                 "view" : {
-                  "edges" : {
+                    "edges" : {
                     "edge" : { }
-                  },
-                  "entities" : { }
+                    },
+                    "entities" : { }
                 }
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.export.graph.ExportToOtherAuthorisedGraph",
                 "graphId" : "newGraphId",
                 "parentSchemaIds" : [ "schemaId1" ],
                 "parentStorePropertiesId" : "storePropsId1"
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -387,19 +387,19 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements",
                 "view" : {
-                  "edges" : {
+                    "edges" : {
                     "edge" : { }
-                  },
-                  "entities" : { }
+                    },
+                    "entities" : { }
                 }
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.export.graph.ExportToOtherGraph",
                 "graphId" : "newGraphId"
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -424,66 +424,66 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements",
                 "view" : {
-                  "edges" : {
+                    "edges" : {
                     "edge" : { }
-                  },
-                  "entities" : { }
+                    },
+                    "entities" : { }
                 }
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.export.graph.ExportToOtherGraph",
                 "graphId" : "newGraphId",
                 "schema" : {
-                  "edges" : {
+                    "edges" : {
                     "edge" : {
-                      "properties" : {
+                        "properties" : {
                         "count" : "int"
-                      },
-                      "groupBy" : [ ],
-                      "directed" : "true",
-                      "source" : "int",
-                      "destination" : "int"
+                        },
+                        "groupBy" : [ ],
+                        "directed" : "true",
+                        "source" : "int",
+                        "destination" : "int"
                     }
-                  },
-                  "entities" : {
+                    },
+                    "entities" : {
                     "entity" : {
-                      "properties" : {
+                        "properties" : {
                         "count" : "int"
-                      },
-                      "groupBy" : [ ],
-                      "vertex" : "int"
+                        },
+                        "groupBy" : [ ],
+                        "vertex" : "int"
                     }
-                  },
-                  "types" : {
+                    },
+                    "types" : {
                     "int" : {
-                      "aggregateFunction" : {
+                        "aggregateFunction" : {
                         "class" : "uk.gov.gchq.koryphe.impl.binaryoperator.Sum"
-                      },
-                      "class" : "java.lang.Integer"
+                        },
+                        "class" : "java.lang.Integer"
                     },
                     "true" : {
-                      "validateFunctions" : [ {
+                        "validateFunctions" : [ {
                         "class" : "uk.gov.gchq.koryphe.impl.predicate.IsTrue"
-                      } ],
-                      "class" : "java.lang.Boolean"
+                        } ],
+                        "class" : "java.lang.Boolean"
                     }
-                  }
+                    }
                 },
                 "storeProperties" : {
-                  "accumulo.instance" : "someInstanceName",
-                  "gaffer.cache.service.class" : "uk.gov.gchq.gaffer.cache.impl.HashMapCacheService",
-                  "accumulo.password" : "password",
-                  "accumulo.zookeepers" : "localhost",
-                  "gaffer.store.class" : "uk.gov.gchq.gaffer.accumulostore.MiniAccumuloStore",
-                  "gaffer.store.job.tracker.enabled" : "true",
-                  "gaffer.store.operation.declarations" : "ExportToOtherGraphOperationDeclarations.json",
-                  "gaffer.store.properties.class" : "uk.gov.gchq.gaffer.accumulostore.AccumuloProperties",
-                  "accumulo.user" : "user01"
+                    "accumulo.instance" : "someInstanceName",
+                    "gaffer.cache.service.class" : "uk.gov.gchq.gaffer.cache.impl.HashMapCacheService",
+                    "accumulo.password" : "password",
+                    "accumulo.zookeepers" : "localhost",
+                    "gaffer.store.class" : "uk.gov.gchq.gaffer.accumulostore.MiniAccumuloStore",
+                    "gaffer.store.job.tracker.enabled" : "true",
+                    "gaffer.store.operation.declarations" : "ExportToOtherGraphOperationDeclarations.json",
+                    "gaffer.store.properties.class" : "uk.gov.gchq.gaffer.accumulostore.AccumuloProperties",
+                    "accumulo.user" : "user01"
                 }
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -531,26 +531,26 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements",
                 "view" : {
-                  "edges" : {
+                    "edges" : {
                     "edge" : { }
-                  },
-                  "entities" : { }
+                    },
+                    "entities" : { }
                 }
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.export.graph.ExportToOtherGraph",
                 "graphId" : "otherGafferRestApiGraphId",
                 "storeProperties" : {
-                  "gaffer.host" : "localhost",
-                  "gaffer.context-root" : "/rest/v1",
-                  "gaffer.store.class" : "uk.gov.gchq.gaffer.proxystore.ProxyStore",
-                  "gaffer.port" : "8081",
-                  "gaffer.store.properties.class" : "uk.gov.gchq.gaffer.proxystore.ProxyProperties"
+                    "gaffer.host" : "localhost",
+                    "gaffer.context-root" : "/rest/v1",
+                    "gaffer.store.class" : "uk.gov.gchq.gaffer.proxystore.ProxyStore",
+                    "gaffer.port" : "8081",
+                    "gaffer.store.properties.class" : "uk.gov.gchq.gaffer.proxystore.ProxyProperties"
                 }
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -580,19 +580,19 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements",
                 "view" : {
-                  "edges" : {
+                    "edges" : {
                     "edge" : { }
-                  },
-                  "entities" : { }
+                    },
+                    "entities" : { }
                 }
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.export.graph.ExportToOtherGraph",
                 "graphId" : "exportGraphId"
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -617,21 +617,21 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements",
                 "view" : {
-                  "edges" : {
+                    "edges" : {
                     "edge" : { }
-                  },
-                  "entities" : { }
+                    },
+                    "entities" : { }
                 }
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.export.graph.ExportToOtherGraph",
                 "graphId" : "newGraphId",
                 "parentSchemaIds" : [ "exportSchemaId" ],
                 "parentStorePropertiesId" : "exportStorePropertiesId"
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -660,17 +660,17 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.export.set.ExportToSet"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.DiscardOutput"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.export.set.GetSetExport",
                 "start" : 0
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -687,18 +687,18 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.export.set.ExportToSet"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.DiscardOutput"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.export.set.GetSetExport",
                 "start" : 2,
                 "end" : 4
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -716,33 +716,33 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.export.set.ExportToSet",
                 "key" : "edges"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.DiscardOutput"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.export.set.ExportToSet",
                 "key" : "entities"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.DiscardOutput"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.export.GetExports",
                 "getExports" : [ {
-                  "class" : "uk.gov.gchq.gaffer.operation.impl.export.set.GetSetExport",
-                  "key" : "edges",
-                  "start" : 0
+                    "class" : "uk.gov.gchq.gaffer.operation.impl.export.set.GetSetExport",
+                    "key" : "edges",
+                    "start" : 0
                 }, {
-                  "class" : "uk.gov.gchq.gaffer.operation.impl.export.set.GetSetExport",
-                  "key" : "entities",
-                  "start" : 0
+                    "class" : "uk.gov.gchq.gaffer.operation.impl.export.set.GetSetExport",
+                    "key" : "entities",
+                    "start" : 0
                 } ]
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -775,11 +775,11 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.impl.generate.GenerateElements",
-              "elementGenerator" : {
+                "class" : "uk.gov.gchq.gaffer.operation.impl.generate.GenerateElements",
+                "elementGenerator" : {
                 "class" : "uk.gov.gchq.gaffer.doc.operation.generator.ElementGenerator"
-              },
-              "input" : [ "1,1", "1,2,1" ]
+                },
+                "input" : [ "1,1", "1,2,1" ]
             }
             ''',
             g.GenerateElements(
@@ -796,20 +796,20 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.impl.generate.GenerateElements",
-              "elementGenerator" : {
+                "class" : "uk.gov.gchq.gaffer.operation.impl.generate.GenerateElements",
+                "elementGenerator" : {
                 "class" : "uk.gov.gchq.gaffer.doc.operation.GenerateElementsExample$DomainObjectGenerator"
-              },
-              "input" : [ {
+                },
+                "input" : [ {
                 "class" : "uk.gov.gchq.gaffer.doc.operation.GenerateElementsExample$DomainObject1",
                 "a" : 1,
                 "c" : 1
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.doc.operation.GenerateElementsExample$DomainObject2",
                 "a" : 1,
                 "b" : 2,
                 "c" : 1
-              } ]
+                } ]
             }
             ''',
             g.GenerateElements(
@@ -819,38 +819,38 @@ class GafferOperationsTest(unittest.TestCase):
                 ),
                 input=[
                     {'c': 1,
-                     'class': 'uk.gov.gchq.gaffer.doc.operation.GenerateElementsExample$DomainObject1',
-                     'a': 1},
+                        'class': 'uk.gov.gchq.gaffer.doc.operation.GenerateElementsExample$DomainObject1',
+                        'a': 1},
                     {'b': 2, 'c': 1,
-                     'class': 'uk.gov.gchq.gaffer.doc.operation.GenerateElementsExample$DomainObject2',
-                     'a': 1}
+                        'class': 'uk.gov.gchq.gaffer.doc.operation.GenerateElementsExample$DomainObject2',
+                        'a': 1}
                 ]
             )
         ],
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.impl.generate.GenerateObjects",
-              "elementGenerator" : {
+                "class" : "uk.gov.gchq.gaffer.operation.impl.generate.GenerateObjects",
+                "elementGenerator" : {
                 "class" : "uk.gov.gchq.gaffer.doc.operation.generator.ObjectGenerator"
-              },
-              "input" : [ {
+                },
+                "input" : [ {
                 "group" : "entity",
                 "vertex" : 6,
                 "properties" : {
-                  "count" : 1
+                    "count" : 1
                 },
                 "class" : "uk.gov.gchq.gaffer.data.element.Entity"
-              }, {
+                }, {
                 "group" : "edge",
                 "source" : 5,
                 "destination" : 6,
                 "directed" : true,
                 "properties" : {
-                  "count" : 1
+                    "count" : 1
                 },
                 "class" : "uk.gov.gchq.gaffer.data.element.Edge"
-              } ]
+                } ]
             }
             ''',
             g.GenerateObjects(
@@ -877,27 +877,27 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.impl.generate.GenerateObjects",
-              "elementGenerator" : {
+                "class" : "uk.gov.gchq.gaffer.operation.impl.generate.GenerateObjects",
+                "elementGenerator" : {
                 "class" : "uk.gov.gchq.gaffer.doc.operation.GenerateObjectsExample$DomainObjectGenerator"
-              },
-              "input" : [ {
+                },
+                "input" : [ {
                 "group" : "entity",
                 "vertex" : 6,
                 "properties" : {
-                  "count" : 1
+                    "count" : 1
                 },
                 "class" : "uk.gov.gchq.gaffer.data.element.Entity"
-              }, {
+                }, {
                 "group" : "edge",
                 "source" : 5,
                 "destination" : 6,
                 "directed" : true,
                 "properties" : {
-                  "count" : 1
+                    "count" : 1
                 },
                 "class" : "uk.gov.gchq.gaffer.data.element.Edge"
-              } ]
+                } ]
             }
             ''',
             g.GenerateObjects(
@@ -924,11 +924,11 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAdjacentIds",
-              "input" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAdjacentIds",
+                "input" : [ {
                 "vertex" : 2,
                 "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
-              } ]
+                } ]
             }
             ''',
             g.GetAdjacentIds(
@@ -942,12 +942,12 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAdjacentIds",
-              "includeIncomingOutGoing" : "OUTGOING",
-              "input" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAdjacentIds",
+                "includeIncomingOutGoing" : "OUTGOING",
+                "input" : [ {
                 "vertex" : 2,
                 "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
-              } ]
+                } ]
             }
             ''',
             g.GetAdjacentIds(
@@ -962,27 +962,27 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAdjacentIds",
-              "view" : {
+                "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAdjacentIds",
+                "view" : {
                 "edges" : {
-                  "edge" : {
+                    "edge" : {
                     "preAggregationFilterFunctions" : [ {
-                      "predicate" : {
+                        "predicate" : {
                         "class" : "uk.gov.gchq.koryphe.impl.predicate.IsMoreThan",
                         "orEqualTo" : false,
                         "value" : 1
-                      },
-                      "selection" : [ "count" ]
+                        },
+                        "selection" : [ "count" ]
                     } ]
-                  }
+                    }
                 },
                 "entities" : { }
-              },
-              "includeIncomingOutGoing" : "OUTGOING",
-              "input" : [ {
+                },
+                "includeIncomingOutGoing" : "OUTGOING",
+                "input" : [ {
                 "vertex" : 2,
                 "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
-              } ]
+                } ]
             }
             ''',
             g.GetAdjacentIds(
@@ -1017,7 +1017,7 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements"
+                "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements"
             }
             ''',
             g.GetAllElements()
@@ -1025,33 +1025,33 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements",
-              "view" : {
+                "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements",
+                "view" : {
                 "edges" : {
-                  "edge" : {
+                    "edge" : {
                     "preAggregationFilterFunctions" : [ {
-                      "predicate" : {
+                        "predicate" : {
                         "class" : "uk.gov.gchq.koryphe.impl.predicate.IsMoreThan",
                         "orEqualTo" : false,
                         "value" : 2
-                      },
-                      "selection" : [ "count" ]
+                        },
+                        "selection" : [ "count" ]
                     } ]
-                  }
+                    }
                 },
                 "entities" : {
-                  "entity" : {
+                    "entity" : {
                     "preAggregationFilterFunctions" : [ {
-                      "predicate" : {
+                        "predicate" : {
                         "class" : "uk.gov.gchq.koryphe.impl.predicate.IsMoreThan",
                         "orEqualTo" : false,
                         "value" : 2
-                      },
-                      "selection" : [ "count" ]
+                        },
+                        "selection" : [ "count" ]
                     } ]
-                  }
+                    }
                 }
-              }
+                }
             }
             ''',
             g.GetAllElements(
@@ -1090,7 +1090,7 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.impl.job.GetAllJobDetails"
+                "class" : "uk.gov.gchq.gaffer.operation.impl.job.GetAllJobDetails"
             }
             ''',
             g.GetAllJobDetails()
@@ -1098,17 +1098,17 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
-              "input" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
+                "input" : [ {
                 "vertex" : 2,
                 "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
-              }, {
+                }, {
                 "source" : 2,
                 "destination" : 3,
                 "directedType" : "EITHER",
                 "matchedVertex" : "SOURCE",
                 "class" : "uk.gov.gchq.gaffer.operation.data.EdgeSeed"
-              } ]
+                } ]
             }
             ''',
             g.GetElements(
@@ -1128,15 +1128,15 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
-              "input" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
+                "input" : [ {
                 "vertex" : 2,
                 "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
-              }],
-              "view": {
-                  "allEdges": true,
-                  "allEntities": true
-              }
+                }],
+                "view": {
+                    "allEdges": true,
+                    "allEntities": true
+                }
             }
             ''',
             g.GetElements(
@@ -1154,14 +1154,14 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
-              "input" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
+                "input" : [ {
                 "vertex" : 2,
                 "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
-              }],
-              "view": {
-                  "allEdges": true
-              }
+                }],
+                "view": {
+                    "allEdges": true
+                }
             }
             ''',
             g.GetElements(
@@ -1179,14 +1179,14 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
-              "input" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
+                "input" : [ {
                 "vertex" : 2,
                 "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
-              }],
-              "view": {
-                  "allEntities": true
-              }
+                }],
+                "view": {
+                    "allEntities": true
+                }
             }
             ''',
             g.GetElements(
@@ -1203,43 +1203,43 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
-              "view" : {
+                "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
+                "view" : {
                 "edges" : {
-                  "edge" : {
+                    "edge" : {
                     "preAggregationFilterFunctions" : [ {
-                      "predicate" : {
+                        "predicate" : {
                         "class" : "uk.gov.gchq.koryphe.impl.predicate.IsMoreThan",
                         "orEqualTo" : false,
                         "value" : 1
-                      },
-                      "selection" : [ "count" ]
+                        },
+                        "selection" : [ "count" ]
                     } ]
-                  }
+                    }
                 },
                 "entities" : {
-                  "entity" : {
+                    "entity" : {
                     "preAggregationFilterFunctions" : [ {
-                      "predicate" : {
+                        "predicate" : {
                         "class" : "uk.gov.gchq.koryphe.impl.predicate.IsMoreThan",
                         "orEqualTo" : false,
                         "value" : 1
-                      },
-                      "selection" : [ "count" ]
+                        },
+                        "selection" : [ "count" ]
                     } ]
-                  }
+                    }
                 }
-              },
-              "input" : [ {
+                },
+                "input" : [ {
                 "vertex" : 2,
                 "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
-              }, {
+                }, {
                 "source" : 2,
                 "destination" : 3,
                 "directedType" : "EITHER",
                 "matchedVertex" : "SOURCE",
                 "class" : "uk.gov.gchq.gaffer.operation.data.EdgeSeed"
-              } ]
+                } ]
             }
             ''',
             g.GetElements(
@@ -1289,11 +1289,11 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
-              "input" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
+                "input" : [ {
                 "vertex" : 2,
                 "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
-              } ]
+                } ]
             }
             ''',
             g.GetElements(
@@ -1307,14 +1307,14 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
-              "input" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
+                "input" : [ {
                 "source" : 1,
                 "destination" : 2,
                 "directedType" : "EITHER",
                 "matchedVertex" : "SOURCE",
                 "class" : "uk.gov.gchq.gaffer.operation.data.EdgeSeed"
-              } ]
+                } ]
             }
             ''',
             g.GetElements(
@@ -1331,40 +1331,40 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
-              "view" : {
+                "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
+                "view" : {
                 "edges" : {
-                  "edge" : {
+                    "edge" : {
                     "preAggregationFilterFunctions" : [ {
-                      "predicate" : {
+                        "predicate" : {
                         "class" : "uk.gov.gchq.koryphe.impl.predicate.IsMoreThan",
                         "orEqualTo" : false,
                         "value" : 1
-                      },
-                      "selection" : [ "count" ]
+                        },
+                        "selection" : [ "count" ]
                     } ]
-                  }
+                    }
                 },
                 "entities" : {
-                  "entity" : {
+                    "entity" : {
                     "preAggregationFilterFunctions" : [ {
-                      "predicate" : {
+                        "predicate" : {
                         "class" : "uk.gov.gchq.koryphe.impl.predicate.IsMoreThan",
                         "orEqualTo" : false,
                         "value" : 1
-                      },
-                      "selection" : [ "count" ]
+                        },
+                        "selection" : [ "count" ]
                     } ]
-                  }
+                    }
                 }
-              },
-              "input" : [ {
+                },
+                "input" : [ {
                 "source" : 1,
                 "destination" : 2,
                 "directedType" : "EITHER",
                 "matchedVertex" : "SOURCE",
                 "class" : "uk.gov.gchq.gaffer.operation.data.EdgeSeed"
-              } ]
+                } ]
             }
             ''',
             g.GetElements(
@@ -1413,39 +1413,39 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
-              "view" : {
+                "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
+                "view" : {
                 "edges" : { },
                 "entities" : {
-                  "entity" : {
+                    "entity" : {
                     "preAggregationFilterFunctions" : [ {
-                      "predicate" : {
+                        "predicate" : {
                         "class" : "uk.gov.gchq.koryphe.impl.predicate.Or",
                         "predicates" : [ {
-                          "class" : "uk.gov.gchq.koryphe.impl.predicate.IsLessThan",
-                          "orEqualTo" : false,
-                          "value" : 2
+                            "class" : "uk.gov.gchq.koryphe.impl.predicate.IsLessThan",
+                            "orEqualTo" : false,
+                            "value" : 2
                         }, {
-                          "class" : "uk.gov.gchq.koryphe.impl.predicate.IsMoreThan",
-                          "orEqualTo" : false,
-                          "value" : 5
+                            "class" : "uk.gov.gchq.koryphe.impl.predicate.IsMoreThan",
+                            "orEqualTo" : false,
+                            "value" : 5
                         } ]
-                      },
-                      "selection" : [ "count" ]
+                        },
+                        "selection" : [ "count" ]
                     } ]
-                  }
+                    }
                 }
-              },
-              "input" : [ {
+                },
+                "input" : [ {
                 "vertex" : 2,
                 "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
-              }, {
+                }, {
                 "source" : 2,
                 "destination" : 3,
                 "directedType" : "EITHER",
                 "matchedVertex" : "SOURCE",
                 "class" : "uk.gov.gchq.gaffer.operation.data.EdgeSeed"
-              } ]
+                } ]
             }
             ''',
             g.GetElements(
@@ -1493,41 +1493,41 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
-              "view" : {
+                "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
+                "view" : {
                 "edges" : {
-                  "edge" : {
+                    "edge" : {
                     "preAggregationFilterFunctions" : [ {
-                      "predicate" : {
+                        "predicate" : {
                         "class" : "uk.gov.gchq.koryphe.impl.predicate.Or",
                         "predicates" : [ {
-                          "class" : "uk.gov.gchq.koryphe.tuple.predicate.IntegerTupleAdaptedPredicate",
-                          "predicate" : {
+                            "class" : "uk.gov.gchq.koryphe.tuple.predicate.IntegerTupleAdaptedPredicate",
+                            "predicate" : {
                             "class" : "uk.gov.gchq.koryphe.impl.predicate.IsLessThan",
                             "orEqualTo" : false,
                             "value" : 2
-                          },
-                          "selection" : [ 0 ]
+                            },
+                            "selection" : [ 0 ]
                         }, {
-                          "class" : "uk.gov.gchq.koryphe.tuple.predicate.IntegerTupleAdaptedPredicate",
-                          "predicate" : {
+                            "class" : "uk.gov.gchq.koryphe.tuple.predicate.IntegerTupleAdaptedPredicate",
+                            "predicate" : {
                             "class" : "uk.gov.gchq.koryphe.impl.predicate.IsMoreThan",
                             "orEqualTo" : false,
                             "value" : 3
-                          },
-                          "selection" : [ 1 ]
+                            },
+                            "selection" : [ 1 ]
                         } ]
-                      },
-                      "selection" : [ "SOURCE", "DESTINATION" ]
+                        },
+                        "selection" : [ "SOURCE", "DESTINATION" ]
                     } ]
-                  }
+                    }
                 },
                 "entities" : { }
-              },
-              "input" : [ {
+                },
+                "input" : [ {
                 "vertex" : 2,
                 "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
-              } ]
+                } ]
             }
             ''',
             g.GetElements(
@@ -1580,30 +1580,30 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
-              "view" : {
+                "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
+                "view" : {
                 "edges" : {
-                  "edge" : {
+                    "edge" : {
                     "properties" : [ "vertex|count" ],
                     "transientProperties" : {
-                      "vertex|count" : "java.lang.String"
+                        "vertex|count" : "java.lang.String"
                     },
                     "transformFunctions" : [ {
-                      "function" : {
+                        "function" : {
                         "class" : "uk.gov.gchq.koryphe.impl.function.Concat",
                         "separator" : "|"
-                      },
-                      "selection" : [ "SOURCE", "count" ],
-                      "projection" : [ "vertex|count" ]
+                        },
+                        "selection" : [ "SOURCE", "count" ],
+                        "projection" : [ "vertex|count" ]
                     } ]
-                  }
+                    }
                 },
                 "entities" : { }
-              },
-              "input" : [ {
+                },
+                "input" : [ {
                 "vertex" : 2,
                 "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
-              } ]
+                } ]
             }
             ''',
             g.GetElements(
@@ -1643,30 +1643,30 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
-              "view" : {
+                "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
+                "view" : {
                 "edges" : {
-                  "edge" : {
+                    "edge" : {
                     "excludeProperties" : [ "count" ],
                     "transientProperties" : {
-                      "vertex|count" : "java.lang.String"
+                        "vertex|count" : "java.lang.String"
                     },
                     "transformFunctions" : [ {
-                      "function" : {
+                        "function" : {
                         "class" : "uk.gov.gchq.koryphe.impl.function.Concat",
                         "separator" : "|"
-                      },
-                      "selection" : [ "SOURCE", "count" ],
-                      "projection" : [ "vertex|count" ]
+                        },
+                        "selection" : [ "SOURCE", "count" ],
+                        "projection" : [ "vertex|count" ]
                     } ]
-                  }
+                    }
                 },
                 "entities" : { }
-              },
-              "input" : [ {
+                },
+                "input" : [ {
                 "vertex" : 2,
                 "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
-              } ]
+                } ]
             }
             ''',
             g.GetElements(
@@ -1715,17 +1715,17 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.export.resultcache.ExportToGafferResultCache"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.DiscardOutput"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.export.resultcache.GetGafferResultCacheExport",
                 "key" : "ALL"
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -1742,16 +1742,16 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.export.resultcache.ExportToGafferResultCache"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.DiscardOutput"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.job.GetJobDetails"
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -1766,12 +1766,12 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.export.resultcache.GetGafferResultCacheExport",
                 "jobId" : "675c6d4a-fba0-410b-8b84-6b40d0415555",
                 "key" : "ALL"
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -1786,31 +1786,31 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.export.resultcache.ExportToGafferResultCache",
                 "key" : "edges"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.DiscardOutput"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.export.resultcache.ExportToGafferResultCache",
                 "key" : "entities"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.DiscardOutput"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.export.GetExports",
                 "getExports" : [ {
-                  "class" : "uk.gov.gchq.gaffer.operation.impl.export.resultcache.GetGafferResultCacheExport",
-                  "key" : "edges"
+                    "class" : "uk.gov.gchq.gaffer.operation.impl.export.resultcache.GetGafferResultCacheExport",
+                    "key" : "edges"
                 }, {
-                  "class" : "uk.gov.gchq.gaffer.operation.impl.export.resultcache.GetGafferResultCacheExport",
-                  "key" : "entities"
+                    "class" : "uk.gov.gchq.gaffer.operation.impl.export.resultcache.GetGafferResultCacheExport",
+                    "key" : "entities"
                 } ]
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -1841,8 +1841,8 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.impl.job.GetJobDetails",
-              "jobId" : "18be2a20-5f36-4598-b522-1efc409b6b39"
+                "class" : "uk.gov.gchq.gaffer.operation.impl.job.GetJobDetails",
+                "jobId" : "18be2a20-5f36-4598-b522-1efc409b6b39"
             }
             ''',
             g.GetJobDetails(
@@ -1852,8 +1852,8 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.impl.job.GetJobResults",
-              "jobId" : "92932856-be96-41b3-85d8-bba7b6886284"
+                "class" : "uk.gov.gchq.gaffer.operation.impl.job.GetJobResults",
+                "jobId" : "92932856-be96-41b3-85d8-bba7b6886284"
             }
             ''',
             g.GetJobResults(
@@ -1863,17 +1863,17 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.export.set.ExportToSet"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.DiscardOutput"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.export.set.GetSetExport",
                 "start" : 0
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -1890,18 +1890,18 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.export.set.ExportToSet"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.DiscardOutput"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.export.set.GetSetExport",
                 "start" : 2,
                 "end" : 4
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -1919,33 +1919,33 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.export.set.ExportToSet",
                 "key" : "edges"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.DiscardOutput"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.export.set.ExportToSet",
                 "key" : "entities"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.DiscardOutput"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.export.GetExports",
                 "getExports" : [ {
-                  "class" : "uk.gov.gchq.gaffer.operation.impl.export.set.GetSetExport",
-                  "key" : "edges",
-                  "start" : 0
+                    "class" : "uk.gov.gchq.gaffer.operation.impl.export.set.GetSetExport",
+                    "key" : "edges",
+                    "start" : 0
                 }, {
-                  "class" : "uk.gov.gchq.gaffer.operation.impl.export.set.GetSetExport",
-                  "key" : "entities",
-                  "start" : 0
+                    "class" : "uk.gov.gchq.gaffer.operation.impl.export.set.GetSetExport",
+                    "key" : "entities",
+                    "start" : 0
                 } ]
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -1978,14 +1978,14 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.Limit",
                 "resultLimit" : 3,
                 "truncate" : true
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -2001,14 +2001,14 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.Limit",
                 "resultLimit" : 3,
                 "truncate" : false
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -2024,14 +2024,14 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.Limit",
                 "resultLimit" : 3,
                 "truncate" : true
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -2047,25 +2047,25 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
                 "input" : [ {
-                  "vertex" : 1,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 1,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 }, {
-                  "vertex" : 2,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 2,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 } ]
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.compare.Max",
                 "comparators" : [ {
-                  "class" : "uk.gov.gchq.gaffer.data.element.comparison.ElementPropertyComparator",
-                  "property" : "count",
-                  "groups" : [ "entity", "edge" ],
-                  "reversed" : false
+                    "class" : "uk.gov.gchq.gaffer.data.element.comparison.ElementPropertyComparator",
+                    "property" : "count",
+                    "groups" : [ "entity", "edge" ],
+                    "reversed" : false
                 } ]
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -2098,60 +2098,60 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
                 "view" : {
-                  "edges" : {
+                    "edges" : {
                     "edge" : {
-                      "transientProperties" : {
+                        "transientProperties" : {
                         "score" : "java.lang.Integer"
-                      },
-                      "transformFunctions" : [ {
+                        },
+                        "transformFunctions" : [ {
                         "function" : {
-                          "class" : "uk.gov.gchq.gaffer.doc.operation.function.ExampleScoreFunction"
+                            "class" : "uk.gov.gchq.gaffer.doc.operation.function.ExampleScoreFunction"
                         },
                         "selection" : [ "DESTINATION", "count" ],
                         "projection" : [ "score" ]
-                      } ]
+                        } ]
                     }
-                  },
-                  "entities" : {
+                    },
+                    "entities" : {
                     "entity" : {
-                      "transientProperties" : {
+                        "transientProperties" : {
                         "score" : "java.lang.Integer"
-                      },
-                      "transformFunctions" : [ {
+                        },
+                        "transformFunctions" : [ {
                         "function" : {
-                          "class" : "uk.gov.gchq.gaffer.doc.operation.function.ExampleScoreFunction"
+                            "class" : "uk.gov.gchq.gaffer.doc.operation.function.ExampleScoreFunction"
                         },
                         "selection" : [ "VERTEX", "count" ],
                         "projection" : [ "score" ]
-                      } ]
+                        } ]
                     }
-                  }
+                    }
                 },
                 "input" : [ {
-                  "vertex" : 1,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 1,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 }, {
-                  "vertex" : 2,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 2,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 } ]
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.compare.Max",
                 "comparators" : [ {
-                  "class" : "uk.gov.gchq.gaffer.data.element.comparison.ElementPropertyComparator",
-                  "property" : "count",
-                  "groups" : [ "entity", "edge" ],
-                  "reversed" : false
+                    "class" : "uk.gov.gchq.gaffer.data.element.comparison.ElementPropertyComparator",
+                    "property" : "count",
+                    "groups" : [ "entity", "edge" ],
+                    "reversed" : false
                 }, {
-                  "class" : "uk.gov.gchq.gaffer.data.element.comparison.ElementPropertyComparator",
-                  "property" : "score",
-                  "groups" : [ "entity", "edge" ],
-                  "reversed" : false
+                    "class" : "uk.gov.gchq.gaffer.data.element.comparison.ElementPropertyComparator",
+                    "property" : "score",
+                    "groups" : [ "entity", "edge" ],
+                    "reversed" : false
                 } ]
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -2238,25 +2238,25 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
                 "input" : [ {
-                  "vertex" : 1,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 1,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 }, {
-                  "vertex" : 2,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 2,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 } ]
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.compare.Min",
                 "comparators" : [ {
-                  "class" : "uk.gov.gchq.gaffer.data.element.comparison.ElementPropertyComparator",
-                  "property" : "count",
-                  "groups" : [ "entity", "edge" ],
-                  "reversed" : false
+                    "class" : "uk.gov.gchq.gaffer.data.element.comparison.ElementPropertyComparator",
+                    "property" : "count",
+                    "groups" : [ "entity", "edge" ],
+                    "reversed" : false
                 } ]
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -2289,60 +2289,60 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
                 "view" : {
-                  "edges" : {
+                    "edges" : {
                     "edge" : {
-                      "transientProperties" : {
+                        "transientProperties" : {
                         "score" : "java.lang.Integer"
-                      },
-                      "transformFunctions" : [ {
+                        },
+                        "transformFunctions" : [ {
                         "function" : {
-                          "class" : "uk.gov.gchq.gaffer.doc.operation.function.ExampleScoreFunction"
+                            "class" : "uk.gov.gchq.gaffer.doc.operation.function.ExampleScoreFunction"
                         },
                         "selection" : [ "DESTINATION", "count" ],
                         "projection" : [ "score" ]
-                      } ]
+                        } ]
                     }
-                  },
-                  "entities" : {
+                    },
+                    "entities" : {
                     "entity" : {
-                      "transientProperties" : {
+                        "transientProperties" : {
                         "score" : "java.lang.Integer"
-                      },
-                      "transformFunctions" : [ {
+                        },
+                        "transformFunctions" : [ {
                         "function" : {
-                          "class" : "uk.gov.gchq.gaffer.doc.operation.function.ExampleScoreFunction"
+                            "class" : "uk.gov.gchq.gaffer.doc.operation.function.ExampleScoreFunction"
                         },
                         "selection" : [ "VERTEX", "count" ],
                         "projection" : [ "score" ]
-                      } ]
+                        } ]
                     }
-                  }
+                    }
                 },
                 "input" : [ {
-                  "vertex" : 1,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 1,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 }, {
-                  "vertex" : 2,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 2,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 } ]
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.compare.Min",
                 "comparators" : [ {
-                  "class" : "uk.gov.gchq.gaffer.data.element.comparison.ElementPropertyComparator",
-                  "property" : "count",
-                  "groups" : [ "entity", "edge" ],
-                  "reversed" : false
+                    "class" : "uk.gov.gchq.gaffer.data.element.comparison.ElementPropertyComparator",
+                    "property" : "count",
+                    "groups" : [ "entity", "edge" ],
+                    "reversed" : false
                 }, {
-                  "class" : "uk.gov.gchq.gaffer.data.element.comparison.ElementPropertyComparator",
-                  "property" : "score",
-                  "groups" : [ "entity", "edge" ],
-                  "reversed" : false
+                    "class" : "uk.gov.gchq.gaffer.data.element.comparison.ElementPropertyComparator",
+                    "property" : "score",
+                    "groups" : [ "entity", "edge" ],
+                    "reversed" : false
                 } ]
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -2429,22 +2429,22 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.named.operation.AddNamedOperation",
-              "operationName" : "2-hop",
-              "description" : "2 hop query",
-              "readAccessRoles" : [ "read-user" ],
-              "writeAccessRoles" : [ "write-user" ],
-              "overwriteFlag" : true,
-              "labels": ["label_1", "label_2"],
-              "operationChain" : {
+                "class" : "uk.gov.gchq.gaffer.named.operation.AddNamedOperation",
+                "operationName" : "2-hop",
+                "description" : "2 hop query",
+                "readAccessRoles" : [ "read-user" ],
+                "writeAccessRoles" : [ "write-user" ],
+                "overwriteFlag" : true,
+                "labels": ["label_1", "label_2"],
+                "operationChain" : {
                 "operations" : [ {
-                  "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAdjacentIds",
-                  "includeIncomingOutGoing" : "OUTGOING"
+                    "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAdjacentIds",
+                    "includeIncomingOutGoing" : "OUTGOING"
                 }, {
-                  "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAdjacentIds",
-                  "includeIncomingOutGoing" : "OUTGOING"
+                    "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAdjacentIds",
+                    "includeIncomingOutGoing" : "OUTGOING"
                 } ]
-              }
+                }
             }
             ''',
             g.AddNamedOperation(
@@ -2473,22 +2473,22 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.named.operation.AddNamedOperation",
-              "operationName" : "2-hop-with-score",
-              "description" : "2 hop query",
-              "readAccessRoles" : [ "read-user" ],
-              "writeAccessRoles" : [ "write-user" ],
-              "overwriteFlag" : true,
-              "score" : 3,
-              "operationChain" : {
+                "class" : "uk.gov.gchq.gaffer.named.operation.AddNamedOperation",
+                "operationName" : "2-hop-with-score",
+                "description" : "2 hop query",
+                "readAccessRoles" : [ "read-user" ],
+                "writeAccessRoles" : [ "write-user" ],
+                "overwriteFlag" : true,
+                "score" : 3,
+                "operationChain" : {
                 "operations" : [ {
-                  "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAdjacentIds",
-                  "includeIncomingOutGoing" : "OUTGOING"
+                    "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAdjacentIds",
+                    "includeIncomingOutGoing" : "OUTGOING"
                 }, {
-                  "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAdjacentIds",
-                  "includeIncomingOutGoing" : "OUTGOING"
+                    "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAdjacentIds",
+                    "includeIncomingOutGoing" : "OUTGOING"
                 } ]
-              }
+                }
             }
             ''',
             g.AddNamedOperation(
@@ -2517,32 +2517,32 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.named.operation.AddNamedOperation",
-              "operationName" : "2-hop-with-limit",
-              "description" : "2 hop query with settable limit",
-              "readAccessRoles" : [ "read-user" ],
-              "writeAccessRoles" : [ "write-user" ],
-              "overwriteFlag" : true,
-              "parameters" : {
+                "class" : "uk.gov.gchq.gaffer.named.operation.AddNamedOperation",
+                "operationName" : "2-hop-with-limit",
+                "description" : "2 hop query with settable limit",
+                "readAccessRoles" : [ "read-user" ],
+                "writeAccessRoles" : [ "write-user" ],
+                "overwriteFlag" : true,
+                "parameters" : {
                 "param1" : {
-                  "description" : "Limit param",
-                  "defaultValue" : 1,
-                  "valueClass" : "java.lang.Long",
-                  "required" : false
+                    "description" : "Limit param",
+                    "defaultValue" : 1,
+                    "valueClass" : "java.lang.Long",
+                    "required" : false
                 }
-              },
-              "operationChain" : {
+                },
+                "operationChain" : {
                 "operations" : [ {
-                  "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAdjacentIds",
-                  "includeIncomingOutGoing" : "OUTGOING"
+                    "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAdjacentIds",
+                    "includeIncomingOutGoing" : "OUTGOING"
                 }, {
-                  "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAdjacentIds",
-                  "includeIncomingOutGoing" : "OUTGOING"
+                    "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAdjacentIds",
+                    "includeIncomingOutGoing" : "OUTGOING"
                 }, {
-                  "class" : "uk.gov.gchq.gaffer.operation.impl.Limit",
-                  "resultLimit" : "${param1}"
+                    "class" : "uk.gov.gchq.gaffer.operation.impl.Limit",
+                    "resultLimit" : "${param1}"
                 } ]
-              }
+                }
             }
             ''',
             g.AddNamedOperation(
@@ -2582,32 +2582,32 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.named.operation.AddNamedOperation",
-              "operationName" : "2-hop-with-limit",
-              "description" : "2 hop query with settable limit",
-              "readAccessRoles" : [ "read-user" ],
-              "writeAccessRoles" : [ "write-user" ],
-              "overwriteFlag" : true,
-              "parameters" : {
+                "class" : "uk.gov.gchq.gaffer.named.operation.AddNamedOperation",
+                "operationName" : "2-hop-with-limit",
+                "description" : "2 hop query with settable limit",
+                "readAccessRoles" : [ "read-user" ],
+                "writeAccessRoles" : [ "write-user" ],
+                "overwriteFlag" : true,
+                "parameters" : {
                 "param1" : {
-                  "description" : "Limit param",
-                  "defaultValue" : 1,
-                  "valueClass" : "java.lang.Long",
-                  "required" : false
+                    "description" : "Limit param",
+                    "defaultValue" : 1,
+                    "valueClass" : "java.lang.Long",
+                    "required" : false
                 }
-              },
-              "operationChain" : {
+                },
+                "operationChain" : {
                 "operations" : [ {
-                  "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAdjacentIds",
-                  "includeIncomingOutGoing" : "OUTGOING"
+                    "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAdjacentIds",
+                    "includeIncomingOutGoing" : "OUTGOING"
                 }, {
-                  "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAdjacentIds",
-                  "includeIncomingOutGoing" : "OUTGOING"
+                    "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAdjacentIds",
+                    "includeIncomingOutGoing" : "OUTGOING"
                 }, {
-                  "class" : "uk.gov.gchq.gaffer.operation.impl.Limit",
-                  "resultLimit" : "${param1}"
+                    "class" : "uk.gov.gchq.gaffer.operation.impl.Limit",
+                    "resultLimit" : "${param1}"
                 } ]
-              }
+                }
             }
             ''',
             g.AddNamedOperation(
@@ -2647,7 +2647,7 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.named.operation.GetAllNamedOperations"
+                "class" : "uk.gov.gchq.gaffer.named.operation.GetAllNamedOperations"
             }
             ''',
             g.GetAllNamedOperations()
@@ -2655,13 +2655,13 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.named.operation.NamedOperation",
-              "operationName" : "2-hop",
-              "input" : [ {
+                "class" : "uk.gov.gchq.gaffer.named.operation.NamedOperation",
+                "operationName" : "2-hop",
+                "input" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed",
                 "vertex" : 1,
                 "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
-              } ]
+                } ]
             }
             ''',
             g.NamedOperation(
@@ -2676,16 +2676,16 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.named.operation.NamedOperation",
-              "operationName" : "2-hop-with-limit",
-              "parameters" : {
+                "class" : "uk.gov.gchq.gaffer.named.operation.NamedOperation",
+                "operationName" : "2-hop-with-limit",
+                "parameters" : {
                 "param1" : 2
-              },
-              "input" : [ {
+                },
+                "input" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed",
                 "vertex" : 1,
                 "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
-              } ]
+                } ]
             }
             ''',
             g.NamedOperation(
@@ -2701,8 +2701,8 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.named.operation.DeleteNamedOperation",
-              "operationName" : "2-hop"
+                "class" : "uk.gov.gchq.gaffer.named.operation.DeleteNamedOperation",
+                "operationName" : "2-hop"
             }
             ''',
             g.DeleteNamedOperation(
@@ -2712,27 +2712,27 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
                 "input" : [ {
-                  "vertex" : 1,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 1,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 }, {
-                  "vertex" : 2,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 2,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 } ]
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.compare.Sort",
                 "comparators" : [ {
-                  "class" : "uk.gov.gchq.gaffer.data.element.comparison.ElementPropertyComparator",
-                  "property" : "count",
-                  "groups" : [ "entity", "edge" ],
-                  "reversed" : false
+                    "class" : "uk.gov.gchq.gaffer.data.element.comparison.ElementPropertyComparator",
+                    "property" : "count",
+                    "groups" : [ "entity", "edge" ],
+                    "reversed" : false
                 } ],
                 "resultLimit" : 10,
                 "deduplicate" : true
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -2767,27 +2767,27 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
                 "input" : [ {
-                  "vertex" : 1,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 1,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 }, {
-                  "vertex" : 2,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 2,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 } ]
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.compare.Sort",
                 "comparators" : [ {
-                  "class" : "uk.gov.gchq.gaffer.data.element.comparison.ElementPropertyComparator",
-                  "property" : "count",
-                  "groups" : [ "entity", "edge" ],
-                  "reversed" : false
+                    "class" : "uk.gov.gchq.gaffer.data.element.comparison.ElementPropertyComparator",
+                    "property" : "count",
+                    "groups" : [ "entity", "edge" ],
+                    "reversed" : false
                 } ],
                 "resultLimit" : 10,
                 "deduplicate" : false
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -2822,62 +2822,62 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
                 "view" : {
-                  "edges" : {
+                    "edges" : {
                     "edge" : {
-                      "transientProperties" : {
+                        "transientProperties" : {
                         "score" : "java.lang.Integer"
-                      },
-                      "transformFunctions" : [ {
+                        },
+                        "transformFunctions" : [ {
                         "function" : {
-                          "class" : "uk.gov.gchq.gaffer.doc.operation.function.ExampleScoreFunction"
+                            "class" : "uk.gov.gchq.gaffer.doc.operation.function.ExampleScoreFunction"
                         },
                         "selection" : [ "DESTINATION", "count" ],
                         "projection" : [ "score" ]
-                      } ]
+                        } ]
                     }
-                  },
-                  "entities" : {
+                    },
+                    "entities" : {
                     "entity" : {
-                      "transientProperties" : {
+                        "transientProperties" : {
                         "score" : "java.lang.Integer"
-                      },
-                      "transformFunctions" : [ {
+                        },
+                        "transformFunctions" : [ {
                         "function" : {
-                          "class" : "uk.gov.gchq.gaffer.doc.operation.function.ExampleScoreFunction"
+                            "class" : "uk.gov.gchq.gaffer.doc.operation.function.ExampleScoreFunction"
                         },
                         "selection" : [ "VERTEX", "count" ],
                         "projection" : [ "score" ]
-                      } ]
+                        } ]
                     }
-                  }
+                    }
                 },
                 "input" : [ {
-                  "vertex" : 1,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 1,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 }, {
-                  "vertex" : 2,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 2,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 } ]
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.compare.Sort",
                 "comparators" : [ {
-                  "class" : "uk.gov.gchq.gaffer.data.element.comparison.ElementPropertyComparator",
-                  "property" : "count",
-                  "groups" : [ "entity", "edge" ],
-                  "reversed" : false
+                    "class" : "uk.gov.gchq.gaffer.data.element.comparison.ElementPropertyComparator",
+                    "property" : "count",
+                    "groups" : [ "entity", "edge" ],
+                    "reversed" : false
                 }, {
-                  "class" : "uk.gov.gchq.gaffer.data.element.comparison.ElementPropertyComparator",
-                  "property" : "score",
-                  "groups" : [ "entity", "edge" ],
-                  "reversed" : false
+                    "class" : "uk.gov.gchq.gaffer.data.element.comparison.ElementPropertyComparator",
+                    "property" : "score",
+                    "groups" : [ "entity", "edge" ],
+                    "reversed" : false
                 } ],
                 "resultLimit" : 4,
                 "deduplicate" : true
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -2966,19 +2966,19 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
                 "input" : [ {
-                  "vertex" : 1,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 1,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 }, {
-                  "vertex" : 2,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 2,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 } ]
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.output.ToArray"
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -3000,30 +3000,30 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
                 "input" : [ {
-                  "vertex" : 1,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 1,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 }, {
-                  "vertex" : 2,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 2,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 } ]
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.output.ToCsv",
                 "csvGenerator" : {
-                  "class" : "uk.gov.gchq.gaffer.data.generator.CsvGenerator",
-                  "fields" : {
+                    "class" : "uk.gov.gchq.gaffer.data.generator.CsvGenerator",
+                    "fields" : {
                     "GROUP" : "Edge group",
                     "VERTEX" : "vertex",
                     "SOURCE" : "source",
                     "count" : "total count"
-                  },
-                  "quoted" : false
+                    },
+                    "quoted" : false
                 },
                 "includeHeader" : true
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -3056,19 +3056,19 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
                 "input" : [ {
-                  "vertex" : 1,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 1,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 }, {
-                  "vertex" : 2,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 2,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 } ]
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.output.ToEntitySeeds"
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -3090,19 +3090,19 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
                 "input" : [ {
-                  "vertex" : 1,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 1,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 }, {
-                  "vertex" : 2,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 2,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 } ]
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.output.ToList"
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -3124,28 +3124,28 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
                 "input" : [ {
-                  "vertex" : 1,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 1,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 }, {
-                  "vertex" : 2,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 2,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 } ]
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.output.ToMap",
                 "elementGenerator" : {
-                  "class" : "uk.gov.gchq.gaffer.data.generator.MapGenerator",
-                  "fields" : {
+                    "class" : "uk.gov.gchq.gaffer.data.generator.MapGenerator",
+                    "fields" : {
                     "GROUP" : "group",
                     "VERTEX" : "vertex",
                     "SOURCE" : "source",
                     "count" : "total count"
-                  }
+                    }
                 }
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -3176,14 +3176,14 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
-              "input" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
+                "input" : [ {
                 "vertex" : 1,
                 "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
-              }, {
+                }, {
                 "vertex" : 2,
                 "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
-              } ]
+                } ]
             }
             ''',
             g.GetElements(
@@ -3200,19 +3200,19 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
                 "input" : [ {
-                  "vertex" : 1,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 1,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 }, {
-                  "vertex" : 2,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 2,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 } ]
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.output.ToSet"
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -3234,19 +3234,19 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
                 "input" : [ {
-                  "vertex" : 1,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 1,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 }, {
-                  "vertex" : 2,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 2,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 } ]
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.output.ToStream"
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -3268,28 +3268,28 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
                 "view" : {
-                  "edges" : { },
-                  "entities" : {
+                    "edges" : { },
+                    "entities" : {
                     "entity" : { }
-                  }
+                    }
                 },
                 "input" : [ {
-                  "vertex" : 1,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 1,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 }, {
-                  "vertex" : 2,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 2,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 } ]
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.output.ToVertices",
                 "edgeVertices" : "NONE"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.output.ToSet"
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -3323,29 +3323,29 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
                 "view" : {
-                  "edges" : {
+                    "edges" : {
                     "edge" : { }
-                  },
-                  "entities" : { }
+                    },
+                    "entities" : { }
                 },
                 "includeIncomingOutGoing" : "OUTGOING",
                 "input" : [ {
-                  "vertex" : 1,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 1,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 }, {
-                  "vertex" : 2,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 2,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 } ]
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.output.ToVertices",
                 "edgeVertices" : "DESTINATION"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.output.ToSet"
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -3380,29 +3380,29 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
                 "view" : {
-                  "edges" : {
+                    "edges" : {
                     "edge" : { }
-                  },
-                  "entities" : { }
+                    },
+                    "entities" : { }
                 },
                 "includeIncomingOutGoing" : "OUTGOING",
                 "input" : [ {
-                  "vertex" : 1,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 1,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 }, {
-                  "vertex" : 2,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 2,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 } ]
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.output.ToVertices",
                 "edgeVertices" : "BOTH"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.output.ToSet"
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -3437,29 +3437,29 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
                 "view" : {
-                  "edges" : {
+                    "edges" : {
                     "edge" : { }
-                  },
-                  "entities" : { }
+                    },
+                    "entities" : { }
                 },
                 "includeIncomingOutGoing" : "OUTGOING",
                 "input" : [ {
-                  "vertex" : 1,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 1,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 }, {
-                  "vertex" : 2,
-                  "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
+                    "vertex" : 2,
+                    "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 } ]
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.output.ToVertices",
                 "useMatchedVertex" : "EQUAL"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.output.ToSet"
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -3494,23 +3494,23 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
-              "operations" : [ {
+                "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.job.GetJobResults",
                 "jobId" : "job1"
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.function.Filter",
                 "globalEdges" : {
-                  "predicates" : [ {
+                    "predicates" : [ {
                     "predicate" : {
-                      "class" : "uk.gov.gchq.koryphe.impl.predicate.IsMoreThan",
-                      "orEqualTo" : false,
-                      "value" : 2
+                        "class" : "uk.gov.gchq.koryphe.impl.predicate.IsMoreThan",
+                        "orEqualTo" : false,
+                        "value" : 2
                     },
                     "selection" : [ "count" ]
-                  } ]
+                    } ]
                 }
-              } ]
+                } ]
             }
             ''',
             g.OperationChain(
@@ -4156,91 +4156,91 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.impl.GetWalks",
-              "operations" : [
+                "class" : "uk.gov.gchq.gaffer.operation.impl.GetWalks",
+                "operations" : [
                 {
-                  "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
-                  "view" : {
+                    "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
+                    "view" : {
                     "edges" : {
-                      "BasicEdge" : {
+                        "BasicEdge" : {
                         "properties" : [ "count" ]
-                      }
+                        }
                     },
                     "entities" : { }
-                  },
-                  "directedType" : "DIRECTED",
-                  "includeIncomingOutGoing" : "OUTGOING"
+                    },
+                    "directedType" : "DIRECTED",
+                    "includeIncomingOutGoing" : "OUTGOING"
                 },
                 {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
-                  "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
-                  "view" : {
+                    "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
+                    "view" : {
                     "edges" : { },
                     "entities" : {
-                      "BasicEntity" : {
+                        "BasicEntity" : {
                         "postAggregationFilterFunctions" : [ {
-                          "predicate" : {
+                            "predicate" : {
                             "class" : "uk.gov.gchq.koryphe.impl.predicate.IsLessThan",
                             "orEqualTo" : false,
                             "value" : 3
-                          },
-                          "selection" : [ "property1" ]
+                            },
+                            "selection" : [ "property1" ]
                         } ]
-                      }
+                        }
                     }
-                  }
+                    }
                 }, {
-                  "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
-                  "view" : {
+                    "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
+                    "view" : {
                     "edges" : {
-                      "BasicEdge" : {
+                        "BasicEdge" : {
                         "properties" : [ "count" ]
-                      }
+                        }
                     },
                     "entities" : { }
-                  },
-                  "directedType" : "DIRECTED",
-                  "includeIncomingOutGoing" : "OUTGOING"
+                    },
+                    "directedType" : "DIRECTED",
+                    "includeIncomingOutGoing" : "OUTGOING"
                 } ]
-              }, {
+                }, {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
-                  "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
-                  "view" : {
+                    "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
+                    "view" : {
                     "edges" : { },
                     "entities" : {
-                      "BasicEntity" : {
+                        "BasicEntity" : {
                         "postAggregationFilterFunctions" : [ {
-                          "predicate" : {
+                            "predicate" : {
                             "class" : "uk.gov.gchq.koryphe.impl.predicate.IsLessThan",
                             "orEqualTo" : false,
                             "value" : 3
-                          },
-                          "selection" : [ "property1" ]
+                            },
+                            "selection" : [ "property1" ]
                         } ]
-                      }
+                        }
                     }
-                  }
+                    }
                 }, {
-                  "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
-                  "view" : {
+                    "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
+                    "view" : {
                     "edges" : {
-                      "BasicEdge" : {
+                        "BasicEdge" : {
                         "properties" : [ "count" ]
-                      }
+                        }
                     },
                     "entities" : { }
-                  },
-                  "directedType" : "DIRECTED",
-                  "includeIncomingOutGoing" : "OUTGOING"
+                    },
+                    "directedType" : "DIRECTED",
+                    "includeIncomingOutGoing" : "OUTGOING"
                 } ]
-              } ],
-              "resultsLimit" : 1000000,
-              "input" : [ {
+                } ],
+                "resultsLimit" : 1000000,
+                "input" : [ {
                 "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed",
                 "vertex" : "A"
-              } ]
+                } ]
             }
             ''',
             g.GetWalks(
@@ -4537,19 +4537,19 @@ class GafferOperationsTest(unittest.TestCase):
                     "group" : "entity",
                     "vertex" : 6,
                     "properties" : {
-                      "count" : 1
+                        "count" : 1
                     },
                     "class" : "uk.gov.gchq.gaffer.data.element.Entity"
-                  }, {
+                    }, {
                     "group" : "edge",
                     "source" : 5,
                     "destination" : 6,
                     "directed" : true,
                     "properties" : {
-                      "count" : 1
+                        "count" : 1
                     },
                     "class" : "uk.gov.gchq.gaffer.data.element.Edge"
-                  } ],
+                    } ],
                 "numSplits": 5,
                 "proportionToSample": 0.1
             }
@@ -4637,16 +4637,16 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.named.view.AddNamedView",
-              "name" : "testNamedView",
-              "description" : "example test NamedView",
-              "view" : {
+                "class" : "uk.gov.gchq.gaffer.named.view.AddNamedView",
+                "name" : "testNamedView",
+                "description" : "example test NamedView",
+                "view" : {
                 "edges" : {
-                  "testEdge" : { }
+                    "testEdge" : { }
                 }
-              },
-              "overwriteFlag" : true,
-              "writeAccessRoles" : [ "auth1", "auth2" ]
+                },
+                "overwriteFlag" : true,
+                "writeAccessRoles" : [ "auth1", "auth2" ]
             }
             ''',
             g.AddNamedView(
@@ -4665,32 +4665,32 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.named.view.AddNamedView",
-              "view" : {
+                "class" : "uk.gov.gchq.gaffer.named.view.AddNamedView",
+                "view" : {
                 "edges" : {
-                  "testEdge" : {
+                    "testEdge" : {
                     "preAggregationFilterFunctions" : [ {
-                      "selection" : [ "count" ],
-                      "predicate" : {
+                        "selection" : [ "count" ],
+                        "predicate" : {
                         "class" : "uk.gov.gchq.koryphe.impl.predicate.IsMoreThan",
                         "value" : "${countThreshold}"
-                      }
+                        }
                     } ]
-                  }
+                    }
                 }
-              },
-              "name" : "isMoreThan",
-              "description" : "is more than",
-              "parameters" : {
+                },
+                "name" : "isMoreThan",
+                "description" : "is more than",
+                "parameters" : {
                 "countThreshold" : {
-                  "valueClass" : "Long",
-                  "required" : false,
-                  "description" : "count threshold",
-                  "defaultValue" : 1
+                    "valueClass" : "Long",
+                    "required" : false,
+                    "description" : "count threshold",
+                    "defaultValue" : 1
                 }
-              },
-              "overwriteFlag" : true,
-              "writeAccessRoles" : [ "auth1", "auth2" ]
+                },
+                "overwriteFlag" : true,
+                "writeAccessRoles" : [ "auth1", "auth2" ]
             }
             ''',
             g.AddNamedView(
@@ -4726,8 +4726,8 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.federatedstore.operation.RemoveGraph",
-              "graphId" : "graph1"
+                "class" : "uk.gov.gchq.gaffer.federatedstore.operation.RemoveGraph",
+                "graphId" : "graph1"
             }
             ''',
             g.RemoveGraph(
@@ -4737,7 +4737,7 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.federatedstore.operation.GetAllGraphIds"
+                "class" : "uk.gov.gchq.gaffer.federatedstore.operation.GetAllGraphIds"
             }
             ''',
             g.GetAllGraphIds()
@@ -4745,7 +4745,7 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.federatedstore.operation.GetAllGraphInfo"
+                "class" : "uk.gov.gchq.gaffer.federatedstore.operation.GetAllGraphInfo"
             }
             ''',
             g.GetAllGraphInfo()
@@ -4753,35 +4753,35 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.federatedstore.operation.AddGraph",
-              "graphId" : "graph1",
-              "isPublic" : false,
-              "schema" : {
+                "class" : "uk.gov.gchq.gaffer.federatedstore.operation.AddGraph",
+                "graphId" : "graph1",
+                "isPublic" : false,
+                "schema" : {
                 "edges" : {
-                  "RoadHasJunction" : {
+                    "RoadHasJunction" : {
                     "description" : "A directed edge from each road to all the junctions on that road.",
                     "source" : "road",
                     "destination" : "junction",
                     "directed" : "true",
                     "properties" : { },
                     "groupBy" : [ ]
-                  }
+                    }
                 },
                 "types" : {
-                  "junction" : {
+                    "junction" : {
                     "description" : "A road junction represented by a String.",
                     "class" : "String"
-                  },
-                  "road" : {
+                    },
+                    "road" : {
                     "description" : "A road represented by a String.",
                     "class" : "String"
-                  }
+                    }
                 }
-              },
-              "storeProperties" : {
+                },
+                "storeProperties" : {
                 "gaffer.store.class" : "uk.gov.gchq.gaffer.mapstore.SingleUseMapStore",
                 "gaffer.cache.service.class" : "uk.gov.gchq.gaffer.cache.impl.HashMapCacheService"
-              }
+                }
             }
             ''',
             g.AddGraph(
@@ -4818,40 +4818,40 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.federatedstore.operation.AddGraphWithHooks",
-              "graphId" : "graph1",
-              "isPublic" : false,
-              "schema" : {
+                "class" : "uk.gov.gchq.gaffer.federatedstore.operation.AddGraphWithHooks",
+                "graphId" : "graph1",
+                "isPublic" : false,
+                "schema" : {
                 "edges" : {
-                  "RoadHasJunction" : {
+                    "RoadHasJunction" : {
                     "description" : "A directed edge from each road to all the junctions on that road.",
                     "source" : "road",
                     "destination" : "junction",
                     "directed" : "true",
                     "properties" : { },
                     "groupBy" : [ ]
-                  }
+                    }
                 },
                 "types" : {
-                  "junction" : {
+                    "junction" : {
                     "description" : "A road junction represented by a String.",
                     "class" : "String"
-                  },
-                  "road" : {
+                    },
+                    "road" : {
                     "description" : "A road represented by a String.",
                     "class" : "String"
-                  }
+                    }
                 }
-              },
-              "storeProperties" : {
+                },
+                "storeProperties" : {
                 "gaffer.store.class" : "uk.gov.gchq.gaffer.mapstore.SingleUseMapStore",
                 "gaffer.cache.service.class" : "uk.gov.gchq.gaffer.cache.impl.HashMapCacheService"
-              },
-              "hooks": [
+                },
+                "hooks": [
                 {
                     "class": "uk.gov.gchq.gaffer.graph.hook.Log4jLogger"
                 }
-              ]
+                ]
             }
             ''',
             g.AddGraphWithHooks(
@@ -5121,18 +5121,18 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.impl.ValidateOperationChain",
-              "operationChain" : {
+                "class" : "uk.gov.gchq.gaffer.operation.impl.ValidateOperationChain",
+                "operationChain" : {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
-                  "class" : "uk.gov.gchq.gaffer.operation.impl.add.AddElements"
+                    "class" : "uk.gov.gchq.gaffer.operation.impl.add.AddElements"
                 }, {
-                  "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements"
+                    "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements"
                 } ]
-              },
-              "options" : {
+                },
+                "options" : {
                 "key" : "value"
-              }
+                }
             }
             ''',
             g.ValidateOperationChain(
@@ -5150,18 +5150,18 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.operation.impl.ValidateOperationChain",
-              "operationChain" : {
+                "class" : "uk.gov.gchq.gaffer.operation.impl.ValidateOperationChain",
+                "operationChain" : {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
-                  "class" : "uk.gov.gchq.gaffer.operation.impl.add.AddElements"
+                    "class" : "uk.gov.gchq.gaffer.operation.impl.add.AddElements"
                 }, {
-                  "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements"
+                    "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements"
                 } ]
-              },
-              "options" : {
+                },
+                "options" : {
                 "key" : "value"
-              }
+                }
             }
             ''',
             g.ValidateOperationChain(
@@ -5264,18 +5264,18 @@ class GafferOperationsTest(unittest.TestCase):
         [
             '''
             {
-              "class" : "uk.gov.gchq.gaffer.federatedstore.operation.FederatedOperation",
-              "operation": {
+                "class" : "uk.gov.gchq.gaffer.federatedstore.operation.FederatedOperation",
+                "operation": {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
-                  "class" : "uk.gov.gchq.gaffer.operation.impl.add.AddElements"
+                    "class" : "uk.gov.gchq.gaffer.operation.impl.add.AddElements"
                 }, {
-                  "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements"
+                    "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements"
                 } ]
-              },
-              "options" : {
+                },
+                "options" : {
                 "key" : "value"
-              }
+                }
             }
             ''',
             g.FederatedOperation(
@@ -5429,69 +5429,71 @@ class GafferOperationsTest(unittest.TestCase):
             )
         ]
     ]
+)
+def test_operations(json_string, gafferpy_method):
+    assert g.json.loads(json_string) == gafferpy_method.to_json()
+    g.JsonConverter.from_json(json_string, validate=True)
 
-    def test_operations(self):
-        self.maxDiff = None
-        for example in self.examples:
-            self.assertEqual(
-                json.loads(example[0]),
-                example[1].to_json(),
-                "json failed: \n" + example[0] + "\n" + example[
-                    1].to_json_pretty_str()
-            )
 
-            g.JsonConverter.from_json(example[0], validate=True)
-
-    def test_get_elements_should_handle_single_inputs(self):
-        self.assertEqual(
+def test_get_elements_should_handle_single_inputs():
+    expected_output_json = {
+        "class": "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
+        "input": [
             {
-                'class': 'uk.gov.gchq.gaffer.operation.impl.get.GetElements',
-                'input': [
+                "class": "uk.gov.gchq.gaffer.operation.data.EntitySeed",
+                "vertex": "value"
+            }
+        ]
+    }
+    assert g.GetElements(input="value") == expected_output_json
+
+
+def test_get_walks_correct_op():
+    expected_output_json = {
+        "class": "uk.gov.gchq.gaffer.operation.impl.GetWalks",
+        "operations": [
+            {
+                 "class": "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations": [
                     {
-                        'class': 'uk.gov.gchq.gaffer.operation.data.EntitySeed',
-                        'vertex': 'value'
+                        "class": "uk.gov.gchq.gaffer.operation.impl.get.GetElements"
                     }
                 ]
-            },
-            g.GetElements(input="value").to_json())
-
-    def test_get_walks_correct_op(self):
-        expected_output_json = {
-            "class": "uk.gov.gchq.gaffer.operation.impl.GetWalks",
-            "operations": [{
-                "class": "uk.gov.gchq.gaffer.operation.impl.get.GetElements"
-            }]
-        }
-        self.assertEqual(g.GetWalks(
-            operations=[g.GetElements()]), expected_output_json)
-
-    def test_get_walks_correct_json(self):
-        get_elements_json = {
-            "class": "uk.gov.gchq.gaffer.operation.impl.get.GetElements"
-        }
-        expected_output_json = {
-            "class": "uk.gov.gchq.gaffer.operation.impl.GetWalks",
-            "operations": [{
-                "class": "uk.gov.gchq.gaffer.operation.impl.get.GetElements"
-            }]
-        }
-        self.assertEqual(
-            g.GetWalks(operations=[get_elements_json]),
-            expected_output_json
-        )
-
-    def test_federated_graph_ids_helper(self):
-        expected_output_json = {
-            "class": "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements",
-            "options": {
-                "gaffer.federatedstore.operation.graphIds": "graph1,graph2"
             }
+        ]
+    }
+    assert g.GetWalks(
+        operations=[g.OperationChain(operations=[g.GetElements()])]
+    ) == expected_output_json
+
+
+def test_get_walks_correct_json():
+    get_elements_json = {
+        "class": "uk.gov.gchq.gaffer.operation.impl.get.GetElements"
+    }
+    expected_output_json = {
+        "class": "uk.gov.gchq.gaffer.operation.impl.GetWalks",
+        "operations": [
+            {
+                 "class": "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations": [
+                    {
+                        "class": "uk.gov.gchq.gaffer.operation.impl.get.GetElements"
+                    }
+                ]
+            }
+        ]
+    }
+    assert g.GetWalks(
+        operations=[g.OperationChain(operations=[get_elements_json])]
+    ) == expected_output_json
+
+
+def test_federated_graph_ids_helper():
+    expected_output_json = {
+        "class": "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements",
+        "options": {
+            "gaffer.federatedstore.operation.graphIds": "graph1,graph2"
         }
-        self.assertEqual(
-            g.GetAllElements(options=["graph1,graph2"]),
-            expected_output_json
-        )
-
-
-if __name__ == "__main__":
-    unittest.main()
+    }
+    assert g.GetAllElements(options=["graph1,graph2"]) == expected_output_json

@@ -1,5 +1,5 @@
 #
-# Copyright 2022 Crown Copyright
+# Copyright 2023 Crown Copyright
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -19,7 +19,8 @@ This module has been generated with fishbowl.
 To make changes, either extend these classes or change fishbowl.
 """
 
-from gafferpy.gaffer_binaryoperators import AbstractBinaryOperator
+import typing
+from gafferpy.gaffer_core import AbstractBinaryOperator, BinaryOperator, Function
 
 
 class RoaringBitmapAggregator(AbstractBinaryOperator):
@@ -36,8 +37,9 @@ class ElementAggregator(AbstractBinaryOperator):
     CLASS = "uk.gov.gchq.gaffer.data.element.function.ElementAggregator"
 
     def __init__(
-            self,
-            operators=None):
+        self,
+        operators: typing.Optional[typing.List[typing.Any]] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.operators = operators
 
@@ -282,8 +284,9 @@ class CustomMapAggregator(AbstractBinaryOperator):
     CLASS = "uk.gov.gchq.gaffer.types.binaryoperator.CustomMapAggregator"
 
     def __init__(
-            self,
-            binary_operator=None):
+        self,
+        binary_operator: typing.Optional[BinaryOperator] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.binary_operator = binary_operator
 
@@ -308,10 +311,11 @@ class AdaptedBinaryOperator(AbstractBinaryOperator):
     CLASS = "uk.gov.gchq.koryphe.binaryoperator.AdaptedBinaryOperator"
 
     def __init__(
-            self,
-            input_adapter=None,
-            binary_operator=None,
-            output_adapter=None):
+        self,
+        input_adapter: typing.Optional[Function] = None,
+        binary_operator: typing.Optional[BinaryOperator] = None,
+        output_adapter: typing.Optional[typing.Any] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.input_adapter = input_adapter
         self.binary_operator = binary_operator
@@ -332,8 +336,9 @@ class BinaryOperatorComposite(AbstractBinaryOperator):
     CLASS = "uk.gov.gchq.koryphe.binaryoperator.BinaryOperatorComposite"
 
     def __init__(
-            self,
-            operators=None):
+        self,
+        operators: typing.Optional[typing.List[typing.Any]] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.operators = operators
 
@@ -348,8 +353,9 @@ class BinaryOperatorMap(AbstractBinaryOperator):
     CLASS = "uk.gov.gchq.koryphe.binaryoperator.BinaryOperatorMap"
 
     def __init__(
-            self,
-            binary_operator=None):
+        self,
+        binary_operator: typing.Optional[BinaryOperator] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.binary_operator = binary_operator
 
@@ -454,8 +460,9 @@ class StringConcat(AbstractBinaryOperator):
     CLASS = "uk.gov.gchq.koryphe.impl.binaryoperator.StringConcat"
 
     def __init__(
-            self,
-            separator=None):
+        self,
+        separator: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.separator = separator
 
@@ -470,8 +477,9 @@ class StringDeduplicateConcat(AbstractBinaryOperator):
     CLASS = "uk.gov.gchq.koryphe.impl.binaryoperator.StringDeduplicateConcat"
 
     def __init__(
-            self,
-            separator=None):
+        self,
+        separator: typing.Optional[str] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.separator = separator
 
@@ -496,11 +504,12 @@ class TupleAdaptedBinaryOperator(AbstractBinaryOperator):
     CLASS = "uk.gov.gchq.koryphe.tuple.binaryoperator.TupleAdaptedBinaryOperator"
 
     def __init__(
-            self,
-            input_adapter=None,
-            selection=None,
-            binary_operator=None,
-            output_adapter=None):
+        self,
+        input_adapter: typing.Optional[Function] = None,
+        selection: typing.Optional[typing.List[typing.Any]] = None,
+        binary_operator: typing.Optional[BinaryOperator] = None,
+        output_adapter: typing.Optional[typing.Any] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.input_adapter = input_adapter
         self.selection = selection
@@ -524,8 +533,9 @@ class TupleAdaptedBinaryOperatorComposite(AbstractBinaryOperator):
     CLASS = "uk.gov.gchq.koryphe.tuple.binaryoperator.TupleAdaptedBinaryOperatorComposite"
 
     def __init__(
-            self,
-            operators=None):
+        self,
+        operators: typing.Optional[typing.List[typing.Any]] = None,
+    ):
         super().__init__(_class_name=self.CLASS)
         self.operators = operators
 
