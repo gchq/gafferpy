@@ -1,5 +1,5 @@
 #
-# Copyright 2023 Crown Copyright
+# Copyright 2022-2024 Crown Copyright
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -606,7 +606,6 @@ class HyperLogLogPlusEntityGenerator(AbstractFunction):
     def __init__(
         self,
         properties_to_copy: typing.Optional[typing.List[str]] = None,
-        to_sketch_function: typing.Optional[typing.Any] = None,
         count_property: typing.Optional[str] = None,
         cardinality_property_name: typing.Optional[str] = None,
         edge_group_property: typing.Optional[str] = None,
@@ -615,7 +614,6 @@ class HyperLogLogPlusEntityGenerator(AbstractFunction):
     ):
         super().__init__(_class_name=self.CLASS)
         self.properties_to_copy = properties_to_copy
-        self.to_sketch_function = to_sketch_function
         self.count_property = count_property
         self.cardinality_property_name = cardinality_property_name
         self.edge_group_property = edge_group_property
@@ -626,8 +624,6 @@ class HyperLogLogPlusEntityGenerator(AbstractFunction):
         function_json = super().to_json()
         if self.properties_to_copy is not None:
             function_json["propertiesToCopy"] = self.properties_to_copy
-        if self.to_sketch_function is not None:
-            function_json["toSketchFunction"] = self.to_sketch_function
         if self.count_property is not None:
             function_json["countProperty"] = self.count_property
         if self.cardinality_property_name is not None:
@@ -689,7 +685,6 @@ class HllSketchEntityGenerator(AbstractFunction):
     def __init__(
         self,
         properties_to_copy: typing.Optional[typing.List[str]] = None,
-        to_sketch_function: typing.Optional[typing.Any] = None,
         count_property: typing.Optional[str] = None,
         cardinality_property_name: typing.Optional[str] = None,
         edge_group_property: typing.Optional[str] = None,
@@ -698,7 +693,6 @@ class HllSketchEntityGenerator(AbstractFunction):
     ):
         super().__init__(_class_name=self.CLASS)
         self.properties_to_copy = properties_to_copy
-        self.to_sketch_function = to_sketch_function
         self.count_property = count_property
         self.cardinality_property_name = cardinality_property_name
         self.edge_group_property = edge_group_property
@@ -709,8 +703,6 @@ class HllSketchEntityGenerator(AbstractFunction):
         function_json = super().to_json()
         if self.properties_to_copy is not None:
             function_json["propertiesToCopy"] = self.properties_to_copy
-        if self.to_sketch_function is not None:
-            function_json["toSketchFunction"] = self.to_sketch_function
         if self.count_property is not None:
             function_json["countProperty"] = self.count_property
         if self.cardinality_property_name is not None:
@@ -730,18 +722,14 @@ class IterableToHllSketch(AbstractFunction):
     def __init__(
         self,
         log_k: typing.Optional[int] = None,
-        hll_sketch: typing.Optional[typing.Any] = None,
     ):
         super().__init__(_class_name=self.CLASS)
         self.log_k = log_k
-        self.hll_sketch = hll_sketch
 
     def to_json(self):
         function_json = super().to_json()
         if self.log_k is not None:
             function_json["logK"] = self.log_k
-        if self.hll_sketch is not None:
-            function_json["hllSketch"] = self.hll_sketch
         return function_json
 
 
@@ -751,18 +739,14 @@ class ToHllSketch(AbstractFunction):
     def __init__(
         self,
         log_k: typing.Optional[int] = None,
-        hll_sketch: typing.Optional[typing.Any] = None,
     ):
         super().__init__(_class_name=self.CLASS)
         self.log_k = log_k
-        self.hll_sketch = hll_sketch
 
     def to_json(self):
         function_json = super().to_json()
         if self.log_k is not None:
             function_json["logK"] = self.log_k
-        if self.hll_sketch is not None:
-            function_json["hllSketch"] = self.hll_sketch
         return function_json
 
 

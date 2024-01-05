@@ -1,5 +1,5 @@
 #
-# Copyright 2023 Crown Copyright
+# Copyright 2022-2024 Crown Copyright
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -25,6 +25,11 @@ from gafferpy.gaffer_config import GetGraph
 class GetJobs(GetGraph):
     def __init__(self):
         super().__init__("/graph/jobs")
+
+
+class GetVersion(GetGraph):
+    def __init__(self):
+        super().__init__("/graph/version")
 
 
 class GetStatus(GetGraph):
@@ -62,6 +67,11 @@ class GetOperationsDetailsAll(GetGraph):
         super().__init__("/graph/operations/details/all")
 
 
+class GetOperationsAll(GetGraph):
+    def __init__(self):
+        super().__init__("/graph/operations/all")
+
+
 class GetJobs(GetGraph):
     def __init__(self, id=""):
         super().__init__(f"/graph/jobs/{id}")
@@ -75,6 +85,11 @@ class GetJobsResults(GetGraph):
 class GetTransformFunctions(GetGraph):
     def __init__(self):
         super().__init__("/graph/config/transformFunctions")
+
+
+class GetStoreType(GetGraph):
+    def __init__(self):
+        super().__init__("/graph/config/storeType")
 
 
 class GetStoreTraits(GetGraph):
