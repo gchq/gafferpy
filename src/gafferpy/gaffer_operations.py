@@ -26,7 +26,7 @@ from gafferpy.gaffer_core import *
 
 
 class NamedOperationParameter(ToJson, ToCodeString):
-    CLASS = 'gaffer.NamedOperationParameter'
+    CLASS = "gaffer.NamedOperationParameter"
 
     def __init__(self,
                  name,
@@ -46,9 +46,9 @@ class NamedOperationParameter(ToJson, ToCodeString):
             "required": self.required
         }
         if self.description is not None:
-            detail['description'] = self.description
+            detail["description"] = self.description
         if self.default_value is not None:
-            detail['defaultValue'] = self.default_value
+            detail["defaultValue"] = self.default_value
         return detail
 
     def to_json(self):
@@ -61,7 +61,7 @@ class NamedOperationParameter(ToJson, ToCodeString):
 
 
 class NamedViewParameter(ToJson, ToCodeString):
-    CLASS = 'gaffer.NamedViewParameter'
+    CLASS = "gaffer.NamedViewParameter"
 
     def __init__(self,
                  name,
@@ -81,9 +81,9 @@ class NamedViewParameter(ToJson, ToCodeString):
             "required": self.required
         }
         if self.description is not None:
-            detail['description'] = self.description
+            detail["description"] = self.description
         if self.default_value is not None:
-            detail['defaultValue'] = self.default_value
+            detail["defaultValue"] = self.default_value
         return detail
 
     def to_json(self):
@@ -96,7 +96,7 @@ class NamedViewParameter(ToJson, ToCodeString):
 
 
 class View(ToJson, ToCodeString):
-    CLASS = 'uk.gov.gchq.gaffer.data.elementdefinition.view.View'
+    CLASS = "uk.gov.gchq.gaffer.data.elementdefinition.view.View"
 
     def __init__(self, entities=None, edges=None, global_elements=None,
                  global_entities=None, global_edges=None, all_edges=False,
@@ -199,42 +199,42 @@ class View(ToJson, ToCodeString):
             el_defs = {}
             for el_def in self.entities:
                 el_defs[el_def.group] = el_def.to_json()
-            view['entities'] = el_defs
+            view["entities"] = el_defs
         if self.edges is not None:
             el_defs = {}
             for el_def in self.edges:
                 el_defs[el_def.group] = el_def.to_json()
-            view['edges'] = el_defs
+            view["edges"] = el_defs
 
         if self.global_elements is not None:
             el_defs = []
             for el_def in self.global_elements:
                 el_defs.append(el_def.to_json())
-            view['globalElements'] = el_defs
+            view["globalElements"] = el_defs
 
         if self.global_entities is not None:
             el_defs = []
             for el_def in self.global_entities:
                 el_defs.append(el_def.to_json())
-            view['globalEntities'] = el_defs
+            view["globalEntities"] = el_defs
 
         if self.global_edges is not None:
             el_defs = []
             for el_def in self.global_edges:
                 el_defs.append(el_def.to_json())
-            view['globalEdges'] = el_defs
+            view["globalEdges"] = el_defs
 
         if self.all_edges is True:
-            view['allEdges'] = True
+            view["allEdges"] = True
 
         if self.all_entities is True:
-            view['allEntities'] = True
+            view["allEntities"] = True
 
         return view
 
 
 class NamedView(View):
-    CLASS = 'uk.gov.gchq.gaffer.data.elementdefinition.view.NamedView'
+    CLASS = "uk.gov.gchq.gaffer.data.elementdefinition.view.NamedView"
 
     def __init__(self, name, parameters=None, entities=None, edges=None,
                  global_elements=None,
@@ -246,17 +246,17 @@ class NamedView(View):
 
     def to_json(self):
         view = super().to_json()
-        view['class'] = self.CLASS
-        view['name'] = self.name
+        view["class"] = self.CLASS
+        view["name"] = self.name
         if self.parameters is not None:
-            view['parameters'] = self.parameters
+            view["parameters"] = self.parameters
         return view
 
 
 class ElementDefinition(ToJson, ToCodeString):
-    CLASS = 'uk.gov.gchq.gaffer.data.elementdefinition.view.ViewElementDefinition'
+    CLASS = "uk.gov.gchq.gaffer.data.elementdefinition.view.ViewElementDefinition"
 
-    def __init__(self, group='',
+    def __init__(self, group="",
                  transient_properties=None,
                  group_by=None,
                  pre_aggregation_filter_functions=None,
@@ -306,40 +306,40 @@ class ElementDefinition(ToJson, ToCodeString):
     def to_json(self):
         element_def = {}
         if self.transient_properties is not None:
-            element_def['transientProperties'] = self.transient_properties
+            element_def["transientProperties"] = self.transient_properties
         if self.pre_aggregation_filter_functions is not None:
             funcs = []
             for func in self.pre_aggregation_filter_functions:
                 funcs.append(func.to_json())
-            element_def['preAggregationFilterFunctions'] = funcs
+            element_def["preAggregationFilterFunctions"] = funcs
         if self.post_aggregation_filter_functions is not None:
             funcs = []
             for func in self.post_aggregation_filter_functions:
                 funcs.append(func.to_json())
-            element_def['postAggregationFilterFunctions'] = funcs
+            element_def["postAggregationFilterFunctions"] = funcs
         if self.transform_functions is not None:
             funcs = []
             for func in self.transform_functions:
                 funcs.append(func.to_json())
-            element_def['transformFunctions'] = funcs
+            element_def["transformFunctions"] = funcs
         if self.post_transform_filter_functions is not None:
             funcs = []
             for func in self.post_transform_filter_functions:
                 funcs.append(func.to_json())
-            element_def['postTransformFilterFunctions'] = funcs
+            element_def["postTransformFilterFunctions"] = funcs
         if self.group_by is not None:
-            element_def['groupBy'] = self.group_by
+            element_def["groupBy"] = self.group_by
         if self.properties is not None:
-            element_def['properties'] = self.properties
+            element_def["properties"] = self.properties
         if self.exclude_properties is not None:
-            element_def['excludeProperties'] = self.exclude_properties
+            element_def["excludeProperties"] = self.exclude_properties
         return element_def
 
 
 class ElementTransformDefinition(ToJson, ToCodeString):
-    CLASS = 'uk.gov.gchq.gaffer.operation.impl.function.ElementTransformDefinition'
+    CLASS = "uk.gov.gchq.gaffer.operation.impl.function.ElementTransformDefinition"
 
-    def __init__(self, group='',
+    def __init__(self, group="",
                  functions=None):
         super().__init__()
         self.group = group
@@ -352,12 +352,12 @@ class ElementTransformDefinition(ToJson, ToCodeString):
             funcs = []
             for func in self.functions:
                 funcs.append(func.to_json())
-            element_def['functions'] = funcs
+            element_def["functions"] = funcs
         return element_def
 
 
 class AggregatePair(ToJson, ToCodeString):
-    CLASS = 'uk.gov.gchq.gaffer.operation.util.AggregatePair'
+    CLASS = "uk.gov.gchq.gaffer.operation.util.AggregatePair"
 
     def __init__(self,
                  group=None,
@@ -371,20 +371,20 @@ class AggregatePair(ToJson, ToCodeString):
         if element_aggregator is not None and not isinstance(element_aggregator,
                                                              ElementAggregateDefinition):
             element_aggregator = ElementAggregateDefinition(
-                operators=element_aggregator['operators'])
+                operators=element_aggregator["operators"])
         self.element_aggregator = element_aggregator
 
     def to_json(self):
         element_def = {}
         if self.group_by is not None:
-            element_def['groupBy'] = self.group_by
+            element_def["groupBy"] = self.group_by
         if self.element_aggregator is not None:
-            element_def['elementAggregator'] = self.element_aggregator.to_json()
+            element_def["elementAggregator"] = self.element_aggregator.to_json()
         return element_def
 
 
 class ElementAggregateDefinition(ToJson, ToCodeString):
-    CLASS = 'uk.gov.gchq.gaffer.operation.impl.function.ElementAggregateDefinition'
+    CLASS = "uk.gov.gchq.gaffer.operation.impl.function.ElementAggregateDefinition"
 
     def __init__(self, operators=None):
         super().__init__()
@@ -397,14 +397,14 @@ class ElementAggregateDefinition(ToJson, ToCodeString):
             funcs = []
             for function in self.operators:
                 funcs.append(function.to_json())
-            element_def['operators'] = funcs
+            element_def["operators"] = funcs
         return element_def
 
 
 class ElementFilterDefinition(ToJson, ToCodeString):
-    CLASS = 'uk.gov.gchq.gaffer.operation.impl.function.ElementFilterDefinition'
+    CLASS = "uk.gov.gchq.gaffer.operation.impl.function.ElementFilterDefinition"
 
-    def __init__(self, group='',
+    def __init__(self, group="",
                  predicates=None):
         super().__init__()
         self.group = group
@@ -417,12 +417,12 @@ class ElementFilterDefinition(ToJson, ToCodeString):
             funcs = []
             for function in self.predicates:
                 funcs.append(function.to_json())
-            element_def['predicates'] = funcs
+            element_def["predicates"] = funcs
         return element_def
 
 
 class GlobalElementFilterDefinition(ToJson, ToCodeString):
-    CLASS = 'uk.gov.gchq.gaffer.operation.impl.function.GlobalElementFilterDefinition'
+    CLASS = "uk.gov.gchq.gaffer.operation.impl.function.GlobalElementFilterDefinition"
 
     def __init__(self, predicates=None):
         super().__init__()
@@ -435,12 +435,12 @@ class GlobalElementFilterDefinition(ToJson, ToCodeString):
             funcs = []
             for func in self.predicates:
                 funcs.append(func.to_json())
-            element_def['predicates'] = funcs
+            element_def["predicates"] = funcs
         return element_def
 
 
 class GlobalElementDefinition(ToJson, ToCodeString):
-    CLASS = 'uk.gov.gchq.gaffer.data.elementdefinition.view.GlobalViewElementDefinition'
+    CLASS = "uk.gov.gchq.gaffer.data.elementdefinition.view.GlobalViewElementDefinition"
 
     def __init__(self,
                  transient_properties=None,
@@ -488,33 +488,33 @@ class GlobalElementDefinition(ToJson, ToCodeString):
     def to_json(self):
         element_def = {}
         if self.transient_properties is not None:
-            element_def['transientProperties'] = self.transient_properties
+            element_def["transientProperties"] = self.transient_properties
         if self.pre_aggregation_filter_functions is not None:
             funcs = []
             for func in self.pre_aggregation_filter_functions:
                 funcs.append(func.to_json())
-            element_def['preAggregationFilterFunctions'] = funcs
+            element_def["preAggregationFilterFunctions"] = funcs
         if self.post_aggregation_filter_functions is not None:
             funcs = []
             for func in self.post_aggregation_filter_functions:
                 funcs.append(func.to_json())
-            element_def['postAggregationFilterFunctions'] = funcs
+            element_def["postAggregationFilterFunctions"] = funcs
         if self.transform_functions is not None:
             funcs = []
             for func in self.transform_functions:
                 funcs.append(func.to_json())
-            element_def['transformFunctions'] = funcs
+            element_def["transformFunctions"] = funcs
         if self.post_transform_filter_functions is not None:
             funcs = []
             for func in self.post_transform_filter_functions:
                 funcs.append(func.to_json())
-            element_def['postTransformFilterFunctions'] = funcs
+            element_def["postTransformFilterFunctions"] = funcs
         if self.group_by is not None:
-            element_def['groupBy'] = self.group_by
+            element_def["groupBy"] = self.group_by
         if self.properties is not None:
-            element_def['properties'] = self.properties
+            element_def["properties"] = self.properties
         if self.exclude_properties is not None:
-            element_def['excludeProperties'] = self.exclude_properties
+            element_def["excludeProperties"] = self.exclude_properties
         return element_def
 
 
@@ -524,9 +524,9 @@ class Property(ToJson, ToCodeString):
     def __init__(self, name, class_name):
         super().__init__()
         if not isinstance(name, str):
-            raise TypeError('Name must be a string')
+            raise TypeError("Name must be a string")
         if not isinstance(class_name, str):
-            raise TypeError('ClassName must be a class name string')
+            raise TypeError("ClassName must be a class name string")
         self.name = name
         self.class_name = class_name
 
@@ -562,20 +562,20 @@ class Operation(ToJson, ToCodeString):
         # e.g. options = ["graph_1", "graph_2"]
         if isinstance(options, list):
             options = {
-                "gaffer.federatedstore.operation.graphIds": ','.join(options)
+                "gaffer.federatedstore.operation.graphIds": ",".join(options)
             }
         self.options = options
 
     def to_json(self):
-        operation = {'class': self._class_name}
+        operation = {"class": self._class_name}
         if self.options is not None:
-            operation['options'] = self.options
+            operation["options"] = self.options
         if self.view is not None:
-            operation['view'] = ToJson.recursive_to_json(self.view)
+            operation["view"] = ToJson.recursive_to_json(self.view)
         if self.views is not None:
-            operation['views'] = []
+            operation["views"] = []
             for view in self.views:
-                operation['views'].append(ToJson.recursive_to_json(view))
+                operation["views"].append(ToJson.recursive_to_json(view))
 
         return operation
 
@@ -602,7 +602,7 @@ class Match(ToJson, ToCodeString):
 
     def to_json(self):
         return {
-            'class': self._class_name
+            "class": self._class_name
         }
 
 
@@ -617,7 +617,7 @@ class ElementMatch(Match):
     def to_json(self):
         match_json = super().to_json()
         if (self.group_by_properties is not None):
-            match_json['groupByProperties'] = self.group_by_properties
+            match_json["groupByProperties"] = self.group_by_properties
 
         return match_json
 
@@ -643,15 +643,15 @@ class KeyFunctionMatch(Match):
     def to_json(self):
         match_json = super().to_json()
         if self.first_key_function is not None:
-            match_json['firstKeyFunction'] = self.first_key_function.to_json()
+            match_json["firstKeyFunction"] = self.first_key_function.to_json()
         if self.second_key_function is not None:
-            match_json['secondKeyFunction'] = self.second_key_function.to_json()
+            match_json["secondKeyFunction"] = self.second_key_function.to_json()
 
         return match_json
 
 
 class Conditional(ToJson, ToCodeString):
-    CLASS = 'uk.gov.gchq.gaffer.operation.util.Conditional'
+    CLASS = "uk.gov.gchq.gaffer.operation.util.Conditional"
 
     def __init__(self, predicate=None, transform=None):
         self.predicate = JsonConverter.validate(
@@ -683,9 +683,9 @@ class AddNamedOperation(AddNamedOperation):
         operation_json = super().to_json()
         if self.parameters is not None:
             if isinstance(self.parameters, list):
-                operation_json['parameters'] = {}
+                operation_json["parameters"] = {}
                 for param in self.parameters:
-                    operation_json['parameters'][param.name] = param.get_detail()
+                    operation_json["parameters"][param.name] = param.get_detail()
         return operation_json
 
 
@@ -694,9 +694,9 @@ class AddNamedView(AddNamedView):
         operation_json = super().to_json()
         if self.parameters is not None:
             if isinstance(self.parameters, list):
-                operation_json['parameters'] = {}
+                operation_json["parameters"] = {}
                 for param in self.parameters:
-                    operation_json['parameters'][param.name] = param.get_detail()
+                    operation_json["parameters"][param.name] = param.get_detail()
         return operation_json
 
 # Element definitions
@@ -707,14 +707,14 @@ class Filter(Filter):
         operation_json = super().to_json()
         if self.edges is not None:
             if isinstance(self.edges, list):
-                operation_json['edges'] = {}
+                operation_json["edges"] = {}
                 for el_def in self.edges:
-                    operation_json['edges'][el_def.group] = el_def.to_json()
+                    operation_json["edges"][el_def.group] = el_def.to_json()
         if self.entities is not None:
             if isinstance(self.entities, list):
-                operation_json['entities'] = {}
+                operation_json["entities"] = {}
                 for el_def in self.entities:
-                    operation_json['entities'][el_def.group] = el_def.to_json()
+                    operation_json["entities"][el_def.group] = el_def.to_json()
         return operation_json
 
 
@@ -723,14 +723,14 @@ class Aggregate(Aggregate):
         operation_json = super().to_json()
         if self.edges is not None:
             if isinstance(self.edges, list):
-                operation_json['edges'] = {}
+                operation_json["edges"] = {}
                 for el_def in self.edges:
-                    operation_json['edges'][el_def.group] = el_def.to_json()
+                    operation_json["edges"][el_def.group] = el_def.to_json()
         if self.entities is not None:
             if isinstance(self.entities, list):
-                operation_json['entities'] = {}
+                operation_json["entities"] = {}
                 for el_def in self.entities:
-                    operation_json['entities'][el_def.group] = el_def.to_json()
+                    operation_json["entities"][el_def.group] = el_def.to_json()
         return operation_json
 
 
@@ -739,14 +739,14 @@ class Transform(Transform):
         operation_json = super().to_json()
         if self.edges is not None:
             if isinstance(self.edges, list):
-                operation_json['edges'] = {}
+                operation_json["edges"] = {}
                 for el_def in self.edges:
-                    operation_json['edges'][el_def.group] = el_def.to_json()
+                    operation_json["edges"][el_def.group] = el_def.to_json()
         if self.entities is not None:
             if isinstance(self.entities, list):
-                operation_json['entities'] = {}
+                operation_json["entities"] = {}
                 for el_def in self.entities:
-                    operation_json['entities'][el_def.group] = el_def.to_json()
+                    operation_json["entities"][el_def.group] = el_def.to_json()
         return operation_json
 
 # List Input
@@ -778,7 +778,7 @@ class GetOperation(Operation):
                     json_seeds.append(seed.to_json())
                 else:
                     json_seeds.append(EntitySeed(seed).to_json())
-            operation_json['input'] = json_seeds
+            operation_json["input"] = json_seeds
         if isinstance(self.view, list):
             operation_json["views"] = operation_json.pop("view")
 
@@ -815,7 +815,7 @@ class GetElementsWithinSet(GetOperation, GetElementsWithinSet):
 def load_operation_json_map():
     for name, class_obj in inspect.getmembers(
             sys.modules[__name__], inspect.isclass):
-        if hasattr(class_obj, 'CLASS'):
+        if hasattr(class_obj, "CLASS"):
             JsonConverter.GENERIC_JSON_CONVERTERS[class_obj.CLASS] = \
                 lambda obj, class_obj=class_obj: class_obj(**obj)
             JsonConverter.CLASS_MAP[class_obj.CLASS] = class_obj

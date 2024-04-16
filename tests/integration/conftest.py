@@ -23,7 +23,7 @@ from gafferpy import gaffer_connector, gaffer as g
 
 def _connection_test():
     gc = gaffer_connector.GafferConnector(
-        'http://localhost:8080/rest/latest'
+        "http://localhost:8080/rest/latest"
     )
     try:
         gc.execute_get(operation=g.GetStatus())
@@ -42,7 +42,7 @@ def skip_connection():
 
 def _return_gaffer_connector():
     return gaffer_connector.GafferConnector(
-        'http://localhost:8080/rest/latest'
+        "http://localhost:8080/rest/latest"
     )
 
 
@@ -61,16 +61,16 @@ def _get_predicates(gc=_return_gaffer_connector()):
     predicates = g.json.loads(predicates)
 
     ignore_predicates = [
-        'uk.gov.gchq.koryphe.predicate.AdaptedPredicate',
-        'uk.gov.gchq.koryphe.predicate.AdaptedPredicate',
-        'uk.gov.gchq.koryphe.predicate.PredicateComposite',
-        'uk.gov.gchq.gaffer.rest.example.ExampleFilterFunction',
-        'uk.gov.gchq.koryphe.tuple.predicate.TupleAdaptedPredicate',
-        'uk.gov.gchq.gaffer.data.element.function.ElementFilter',
-        'uk.gov.gchq.koryphe.tuple.predicate.TupleAdaptedPredicateComposite',
-        'uk.gov.gchq.gaffer.store.util.AggregatorUtil$IsElementAggregated',
-        'uk.gov.gchq.gaffer.graph.hook.migrate.predicate.TransformAndFilter',
-        'uk.gov.gchq.gaffer.data.element.function.PropertiesFilter'
+        "uk.gov.gchq.koryphe.predicate.AdaptedPredicate",
+        "uk.gov.gchq.koryphe.predicate.AdaptedPredicate",
+        "uk.gov.gchq.koryphe.predicate.PredicateComposite",
+        "uk.gov.gchq.gaffer.rest.example.ExampleFilterFunction",
+        "uk.gov.gchq.koryphe.tuple.predicate.TupleAdaptedPredicate",
+        "uk.gov.gchq.gaffer.data.element.function.ElementFilter",
+        "uk.gov.gchq.koryphe.tuple.predicate.TupleAdaptedPredicateComposite",
+        "uk.gov.gchq.gaffer.store.util.AggregatorUtil$IsElementAggregated",
+        "uk.gov.gchq.gaffer.graph.hook.migrate.predicate.TransformAndFilter",
+        "uk.gov.gchq.gaffer.data.element.function.PropertiesFilter"
     ]
 
     predicates = [pred for pred in predicates if pred not in ignore_predicates]
@@ -85,24 +85,24 @@ def _get_functions(gc=_return_gaffer_connector()):
     functions = g.json.loads(functions)
 
     ignore_functions = [
-        'uk.gov.gchq.gaffer.operation.data.generator.EdgeIdExtractor',
-        'uk.gov.gchq.gaffer.store.util.AggregatorUtil$ToIngestElementKey',
-        'uk.gov.gchq.gaffer.rest.example.ExampleDomainObjectGenerator',
-        'uk.gov.gchq.gaffer.data.element.function.ElementTransformer',
-        'uk.gov.gchq.gaffer.traffic.generator.RoadTrafficCsvElementGenerator',
-        'uk.gov.gchq.gaffer.store.util.AggregatorUtil$ToElementKey',
-        'uk.gov.gchq.koryphe.function.FunctionComposite',
-        'uk.gov.gchq.gaffer.rest.example.ExampleTransformFunction',
-        'uk.gov.gchq.gaffer.data.graph.function.walk.ExtractWalkEdgesFromHop',
-        'uk.gov.gchq.gaffer.traffic.transform.DescriptionTransform',
-        'uk.gov.gchq.gaffer.store.util.AggregatorUtil$ToQueryElementKey',
-        'uk.gov.gchq.koryphe.tuple.TupleInputAdapter',
-        'uk.gov.gchq.gaffer.operation.data.generator.EntityIdExtractor',
-        'uk.gov.gchq.gaffer.traffic.generator.RoadTrafficStringElementGenerator',
-        'uk.gov.gchq.gaffer.rest.example.ExampleElementGenerator',
-        'uk.gov.gchq.gaffer.sketches.datasketches.cardinality.HllSketchEntityGenerator',
-        'uk.gov.gchq.gaffer.sketches.clearspring.cardinality.HyperLogLogPlusEntityGenerator',
-        'uk.gov.gchq.gaffer.data.element.function.PropertiesTransformer'
+        "uk.gov.gchq.gaffer.operation.data.generator.EdgeIdExtractor",
+        "uk.gov.gchq.gaffer.store.util.AggregatorUtil$ToIngestElementKey",
+        "uk.gov.gchq.gaffer.rest.example.ExampleDomainObjectGenerator",
+        "uk.gov.gchq.gaffer.data.element.function.ElementTransformer",
+        "uk.gov.gchq.gaffer.traffic.generator.RoadTrafficCsvElementGenerator",
+        "uk.gov.gchq.gaffer.store.util.AggregatorUtil$ToElementKey",
+        "uk.gov.gchq.koryphe.function.FunctionComposite",
+        "uk.gov.gchq.gaffer.rest.example.ExampleTransformFunction",
+        "uk.gov.gchq.gaffer.data.graph.function.walk.ExtractWalkEdgesFromHop",
+        "uk.gov.gchq.gaffer.traffic.transform.DescriptionTransform",
+        "uk.gov.gchq.gaffer.store.util.AggregatorUtil$ToQueryElementKey",
+        "uk.gov.gchq.koryphe.tuple.TupleInputAdapter",
+        "uk.gov.gchq.gaffer.operation.data.generator.EntityIdExtractor",
+        "uk.gov.gchq.gaffer.traffic.generator.RoadTrafficStringElementGenerator",
+        "uk.gov.gchq.gaffer.rest.example.ExampleElementGenerator",
+        "uk.gov.gchq.gaffer.sketches.datasketches.cardinality.HllSketchEntityGenerator",
+        "uk.gov.gchq.gaffer.sketches.clearspring.cardinality.HyperLogLogPlusEntityGenerator",
+        "uk.gov.gchq.gaffer.data.element.function.PropertiesTransformer"
     ]
 
     functions = [func for func in functions if func not in ignore_functions]

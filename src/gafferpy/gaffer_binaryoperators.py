@@ -34,9 +34,9 @@ class BinaryOperatorContext(ToJson, ToCodeString):
     def to_json(self):
         function_json = {}
         if self.selection is not None:
-            function_json['selection'] = self.selection
+            function_json["selection"] = self.selection
         if self.binary_operator is not None:
-            function_json['binaryOperator'] = self.binary_operator.to_json()
+            function_json["binaryOperator"] = self.binary_operator.to_json()
 
         return function_json
 
@@ -46,25 +46,25 @@ from gafferpy.generated_api.binaryoperators import *
 
 
 def binary_operator_context_converter(obj):
-    if 'class' in obj:
+    if "class" in obj:
         binary_operator = dict(obj)
     else:
-        binary_operator = obj['binary_operator']
+        binary_operator = obj["binary_operator"]
         if isinstance(binary_operator, dict):
             binary_operator = dict(binary_operator)
 
     if not isinstance(binary_operator, BinaryOperator):
         binary_operator = JsonConverter.from_json(binary_operator)
         if not isinstance(binary_operator, BinaryOperator):
-            class_name = binary_operator.get('class')
-            binary_operator.pop('class', None)
+            class_name = binary_operator.get("class")
+            binary_operator.pop("class", None)
             binary_operator = BinaryOperator(
                 class_name=class_name,
                 fields=binary_operator
             )
 
     return BinaryOperatorContext(
-        selection=obj.get('selection'),
+        selection=obj.get("selection"),
         binary_operator=binary_operator
     )
 
@@ -78,8 +78,8 @@ def binary_operator_converter(obj):
     if not isinstance(binary_operator, BinaryOperator):
         binary_operator = JsonConverter.from_json(binary_operator)
         if not isinstance(binary_operator, BinaryOperator):
-            class_name = binary_operator.get('class')
-            binary_operator.pop('class', None)
+            class_name = binary_operator.get("class")
+            binary_operator.pop("class", None)
             binary_operator = BinaryOperator(
                 class_name=class_name,
                 fields=binary_operator
@@ -91,7 +91,7 @@ def binary_operator_converter(obj):
 def load_binaryoperator_json_map():
     for name, class_obj in inspect.getmembers(
             sys.modules[__name__], inspect.isclass):
-        if hasattr(class_obj, 'CLASS'):
+        if hasattr(class_obj, "CLASS"):
             JsonConverter.GENERIC_JSON_CONVERTERS[class_obj.CLASS] = \
                 lambda obj, class_obj=class_obj: class_obj(**obj)
             JsonConverter.CLASS_MAP[class_obj.CLASS] = class_obj

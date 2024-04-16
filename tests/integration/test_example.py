@@ -22,4 +22,4 @@ skip_connection()
 
 
 def test_example_does_not_error():
-    example.run('http://localhost:8080/rest/latest')
+    example.run("http://localhost:8080/rest/latest")

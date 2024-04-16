@@ -22,4 +22,4 @@ skip_connection()
 
 
 def test_example_map_does_not_error():
-    example_map.run('http://localhost:8080/rest/latest')
+    example_map.run("http://localhost:8080/rest/latest")

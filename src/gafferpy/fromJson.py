@@ -20,7 +20,7 @@ from gafferpy import gaffer as g
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        raise TypeError('JSON str argument is required')
+        raise TypeError("JSON str argument is required")
 
     json_str = sys.argv[1]
     if len(sys.argv) > 2:
@@ -31,6 +31,6 @@ if __name__ == "__main__":
     pythonObj = g.JsonConverter.from_json(json_str,
                                           class_name=class_name)
     if not isinstance(pythonObj, g.ToCodeString):
-        raise TypeError('Unable to convert JSON to a Python: ' + json_str)
+        raise TypeError("Unable to convert JSON to a Python: " + json_str)
 
     print(pythonObj.to_code_string())

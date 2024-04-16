@@ -23,7 +23,7 @@ from gafferpy.gaffer_core import JsonConverter
 
 def test_throw_improper_string_json():
     with pytest.raises(json.JSONDecodeError):
-        JsonConverter.from_json('Not json')
+        JsonConverter.from_json("Not json")
 
 
 def test_throw_when_op():

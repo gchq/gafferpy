@@ -24,18 +24,18 @@ from .base_client import BaseClient
 
 
 class UrllibClient(BaseClient):
-    '''
+    """
     This class handles the connection to a Gaffer server and handles operations.
     This class is initialised with a host to connect to.
-    '''
+    """
 
     def __init__(self, base_url, verbose=False, headers={}, **kwargs):
-        '''
+        """
         This initialiser sets up a connection to the specified Gaffer server.
 
         The host (and port) of the Gaffer server, should be in the form,
-        'hostname:1234/service-name/version'
-        '''
+        "hostname:1234/service-name/version"
+        """
         super().__init__(base_url, verbose, headers, **kwargs)
 
         # Create the opener
@@ -52,22 +52,22 @@ class UrllibClient(BaseClient):
         try:
             response = self._opener.open(request)
         except urllib.error.HTTPError as error:
-            error_body = error.read().decode('utf-8')
-            new_error_string = ('HTTP error ' +
-                                str(error.code) + ' ' +
-                                error.reason + ': ' +
+            error_body = error.read().decode("utf-8")
+            new_error_string = ("HTTP error " +
+                                str(error.code) + " " +
+                                error.reason + ": " +
                                 error_body)
             raise ConnectionError(new_error_string)
 
-        response_text = response.read().decode('utf-8')
+        response_text = response.read().decode("utf-8")
 
         if not json_result and method == "GET":
             return response_text
 
         if self.verbose:
-            print('Query response: ' + response_text)
+            print("Query response: " + response_text)
 
-        if response_text is not None and response_text != '':
+        if response_text is not None and response_text != "":
             result = json.loads(response_text)
         else:
             result = None

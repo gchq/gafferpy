@@ -81,7 +81,7 @@ class GafferConnector:
         """
         This method queries Gaffer with the provided operation chain.
         """
-        target = '/graph/operations/execute'
+        target = "/graph/operations/execute"
 
         op_chain_json_obj = ToJson.recursive_to_json(operation_chain)
 

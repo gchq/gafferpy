@@ -24,8 +24,8 @@ def run(host, verbose=False):
 
 def run_with_connector(gc):
     print()
-    print('Running Map operations')
-    print('--------------------------')
+    print("Running Map operations")
+    print("--------------------------")
     print()
 
     count_all_elements_default_view(gc)
@@ -40,10 +40,10 @@ def count_all_elements_default_view(gc):
     elements = gc.execute_operation(
         g.CountAllElementsDefaultView()
     )
-    print('Count of all Elements in default View')
+    print("Count of all Elements in default View")
     print(elements)
     print()
 
 
 if __name__ == "__main__":
-    run('http://localhost:8080/rest/latest', False)
+    run("http://localhost:8080/rest/latest", False)

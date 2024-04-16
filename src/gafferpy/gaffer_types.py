@@ -60,10 +60,10 @@ def parse_java_type_to_string(java_type: str, return_full_path: bool = True) -> 
     else:
         type_name = str(python_type)
 
-    if return_full_path is False and 'gafferpy' in type_name:
+    if return_full_path is False and "gafferpy" in type_name:
         gafferpy_class = re.findall("gafferpy[\\w+ \\.]*", type_name)[0]
         # replace the full gafferpy path with just class name
-        type_name = type_name.replace(gafferpy_class, gafferpy_class.split('.')[-1])
+        type_name = type_name.replace(gafferpy_class, gafferpy_class.split(".")[-1])
 
     return type_name
 

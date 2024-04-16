@@ -34,20 +34,20 @@ class PredicateContext(ToJson, ToCodeString):
     def to_json(self):
         predicate_json = {}
         if self.selection is not None:
-            predicate_json['selection'] = self.selection
+            predicate_json["selection"] = self.selection
         if self.predicate is not None:
-            predicate_json['predicate'] = self.predicate.to_json()
+            predicate_json["predicate"] = self.predicate.to_json()
 
         return predicate_json
 
 
 class TimeUnit:
-    DAY = 'DAY'
-    HOUR = 'HOUR'
-    MINUTE = 'MINUTE'
-    SECOND = 'SECOND'
-    MILLISECOND = 'MILLISECOND'
-    MICROSECOND = 'MICROSECOND'
+    DAY = "DAY"
+    HOUR = "HOUR"
+    MINUTE = "MINUTE"
+    SECOND = "SECOND"
+    MILLISECOND = "MILLISECOND"
+    MICROSECOND = "MICROSECOND"
 
 
 # Import generated predicate implementations from fishbowl
@@ -63,25 +63,25 @@ def predicate_context_converter(obj):
     if obj is None:
         return None
 
-    if 'class' in obj:
+    if "class" in obj:
         predicate = dict(obj)
     else:
-        predicate = obj['predicate']
+        predicate = obj["predicate"]
         if isinstance(predicate, dict):
             predicate = dict(predicate)
 
     if not isinstance(predicate, Predicate):
         predicate = JsonConverter.from_json(predicate)
         if not isinstance(predicate, Predicate):
-            class_name = predicate.get('class')
-            predicate.pop('class', None)
+            class_name = predicate.get("class")
+            predicate.pop("class", None)
             predicate = Predicate(
                 class_name=class_name,
                 fields=predicate
             )
 
     return PredicateContext(
-        selection=obj.get('selection'),
+        selection=obj.get("selection"),
         predicate=predicate
     )
 
@@ -98,8 +98,8 @@ def predicate_converter(obj):
     if not isinstance(predicate, Predicate):
         predicate = JsonConverter.from_json(predicate)
         if not isinstance(predicate, Predicate):
-            class_name = predicate.get('class')
-            predicate.pop('class', None)
+            class_name = predicate.get("class")
+            predicate.pop("class", None)
             predicate = Predicate(
                 class_name=class_name,
                 fields=predicate
@@ -111,7 +111,7 @@ def predicate_converter(obj):
 def load_predicate_json_map():
     for name, class_obj in inspect.getmembers(
             sys.modules[__name__], inspect.isclass):
-        if hasattr(class_obj, 'CLASS'):
+        if hasattr(class_obj, "CLASS"):
             JsonConverter.GENERIC_JSON_CONVERTERS[class_obj.CLASS] = \
                 lambda obj, class_obj=class_obj: class_obj(**obj)
             JsonConverter.CLASS_MAP[class_obj.CLASS] = class_obj

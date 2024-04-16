@@ -18,7 +18,7 @@ from gafferpy_examples.example_map import run_with_connector
 from gafferpy import gaffer_connector_pki
 
 
-def run(host, verbose=False, pki_cert='cert.pem'):
+def run(host, verbose=False, pki_cert="cert.pem"):
     # Store your PKI certificate in file cert.pem
     pki = gaffer_connector_pki.PkiCredentials(pki_cert)
 
@@ -30,4 +30,4 @@ def create_connector(host, pki, verbose=False):
 
 
 if __name__ == "__main__":
-    run('localhost:8080/rest/latest')
+    run("localhost:8080/rest/latest")
