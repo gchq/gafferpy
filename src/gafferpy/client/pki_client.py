@@ -1,5 +1,5 @@
 #
-# Copyright 2022 Crown Copyright
+# Copyright 2022-2024 Crown Copyright
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,12 +22,12 @@ from .urllib_client import UrllibClient
 
 class PkiClient(UrllibClient):
     def __init__(self, base_url, verbose=False, headers={}, **kwargs):
-        '''
+        """
         This initialiser sets up a connection to the specified Gaffer server.
 
         The host (and port) of the Gaffer server, should be in the form,
-        'hostname:1234/service-name/version'
-        '''
+        "hostname:1234/service-name/version"
+        """
         super().__init__(base_url, verbose, headers, **kwargs)
 
         # Fail if none pki, protocol None

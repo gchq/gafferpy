@@ -1,5 +1,5 @@
 #
-# Copyright 2016-2023 Crown Copyright
+# Copyright 2016-2024 Crown Copyright
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -22,4 +22,4 @@ skip_connection()
 
 
 def test_example_does_not_error():
-    example.run('http://localhost:8080/rest/latest')
+    example.run("http://localhost:8080/rest/latest")

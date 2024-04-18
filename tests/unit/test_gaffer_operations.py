@@ -1,5 +1,5 @@
 #
-# Copyright 2016-2023 Crown Copyright
+# Copyright 2016-2024 Crown Copyright
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ from gafferpy.gaffer_operations import GetSchema
     "json_string,gafferpy_method",
     [
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.add.AddElements",
                 "validate" : true,
@@ -47,20 +47,20 @@ from gafferpy.gaffer_operations import GetSchema
                 "class" : "uk.gov.gchq.gaffer.data.element.Edge"
                 } ]
             }
-            ''',
+            """,
             g.AddElements(
                 skip_invalid_elements=False,
                 input=[
                     g.Entity(
                         vertex=6,
-                        properties={'count': 1},
+                        properties={"count": 1},
                         group="entity"
                     ),
                     g.Edge(
                         destination=6,
                         source=5,
                         group="edge",
-                        properties={'count': 1},
+                        properties={"count": 1},
                         directed=True
                     )
                 ],
@@ -68,7 +68,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.add.AddElementsFromFile",
                 "filename" : "filename",
@@ -77,7 +77,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "validate" : true,
                 "skipInvalidElements" : false
             }
-            ''',
+            """,
             g.AddElementsFromFile(
                 parallelism=1,
                 validate=True,
@@ -88,7 +88,7 @@ from gafferpy.gaffer_operations import GetSchema
 
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.add.AddElementsFromKafka",
                 "topic" : "topic1",
@@ -99,7 +99,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "validate" : true,
                 "skipInvalidElements" : false
             }
-            ''',
+            """,
             g.AddElementsFromKafka(
                 topic="topic1",
                 parallelism=1,
@@ -114,7 +114,7 @@ from gafferpy.gaffer_operations import GetSchema
 
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.add.AddElementsFromSocket",
                 "hostname" : "localhost",
@@ -125,7 +125,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "skipInvalidElements" : false,
                 "delimiter" : ","
             }
-            ''',
+            """,
             g.AddElementsFromSocket(
                 validate=True,
                 element_generator="uk.gov.gchq.gaffer.doc.operation.generator.ElementGenerator",
@@ -138,7 +138,7 @@ from gafferpy.gaffer_operations import GetSchema
 
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -147,7 +147,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "class" : "uk.gov.gchq.gaffer.operation.impl.CountGroups"
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetAllElements(),
@@ -157,7 +157,7 @@ from gafferpy.gaffer_operations import GetSchema
 
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -167,7 +167,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "limit" : 5
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetAllElements(),
@@ -179,7 +179,7 @@ from gafferpy.gaffer_operations import GetSchema
 
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -193,7 +193,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "key" : "ALL"
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetAllElements(),
@@ -206,7 +206,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -219,7 +219,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "class" : "uk.gov.gchq.gaffer.operation.impl.job.GetJobDetails"
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetAllElements(),
@@ -230,7 +230,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -239,7 +239,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "key" : "ALL"
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetGafferResultCacheExport(
@@ -250,7 +250,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -278,7 +278,7 @@ from gafferpy.gaffer_operations import GetSchema
                 } ]
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetAllElements(),
@@ -305,7 +305,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -321,7 +321,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "graphId" : "graph2"
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetAllElements(
@@ -342,7 +342,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -360,7 +360,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "parentStorePropertiesId" : "storePropsId1"
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetAllElements(
@@ -385,7 +385,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -401,7 +401,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "graphId" : "newGraphId"
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetAllElements(
@@ -422,7 +422,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -485,7 +485,7 @@ from gafferpy.gaffer_operations import GetSchema
                 }
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetAllElements(
@@ -500,36 +500,36 @@ from gafferpy.gaffer_operations import GetSchema
                         )
                     ),
                     g.ExportToOtherGraph(
-                        schema={'edges': {
-                            'edge': {'groupBy': [], 'directed': 'true',
-                                     'properties': {'count': 'int'},
-                                     'destination': 'int', 'source': 'int'}},
-                                'entities': {
-                                'entity': {'groupBy': [], 'vertex': 'int',
-                                           'properties': {'count': 'int'}}},
-                                'types': {'true': {'validateFunctions': [{
-                                    'class': 'uk.gov.gchq.koryphe.impl.predicate.IsTrue'}],
-                                    'class': 'java.lang.Boolean'},
-                            'int': {'aggregateFunction': {
-                                    'class': 'uk.gov.gchq.koryphe.impl.binaryoperator.Sum'},
-                                    'class': 'java.lang.Integer'}}},
+                        schema={"edges": {
+                            "edge": {"groupBy": [], "directed": "true",
+                                     "properties": {"count": "int"},
+                                     "destination": "int", "source": "int"}},
+                                "entities": {
+                                "entity": {"groupBy": [], "vertex": "int",
+                                           "properties": {"count": "int"}}},
+                                "types": {"true": {"validateFunctions": [{
+                                    "class": "uk.gov.gchq.koryphe.impl.predicate.IsTrue"}],
+                                    "class": "java.lang.Boolean"},
+                            "int": {"aggregateFunction": {
+                                    "class": "uk.gov.gchq.koryphe.impl.binaryoperator.Sum"},
+                                    "class": "java.lang.Integer"}}},
                         store_properties={
-                            'gaffer.store.job.tracker.enabled': 'true',
-                            'gaffer.cache.service.class': 'uk.gov.gchq.gaffer.cache.impl.HashMapCacheService',
-                            'gaffer.store.properties.class': 'uk.gov.gchq.gaffer.accumulostore.AccumuloProperties',
-                            'accumulo.instance': 'someInstanceName',
-                            'accumulo.zookeepers': 'localhost',
-                            'accumulo.password': 'password',
-                            'gaffer.store.operation.declarations': 'ExportToOtherGraphOperationDeclarations.json',
-                            'accumulo.user': 'user01',
-                            'gaffer.store.class': 'uk.gov.gchq.gaffer.accumulostore.MiniAccumuloStore'},
+                            "gaffer.store.job.tracker.enabled": "true",
+                            "gaffer.cache.service.class": "uk.gov.gchq.gaffer.cache.impl.HashMapCacheService",
+                            "gaffer.store.properties.class": "uk.gov.gchq.gaffer.accumulostore.AccumuloProperties",
+                            "accumulo.instance": "someInstanceName",
+                            "accumulo.zookeepers": "localhost",
+                            "accumulo.password": "password",
+                            "gaffer.store.operation.declarations": "ExportToOtherGraphOperationDeclarations.json",
+                            "accumulo.user": "user01",
+                            "gaffer.store.class": "uk.gov.gchq.gaffer.accumulostore.MiniAccumuloStore"},
                         graph_id="newGraphId"
                     )
                 ]
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -552,7 +552,7 @@ from gafferpy.gaffer_operations import GetSchema
                 }
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetAllElements(
@@ -568,17 +568,17 @@ from gafferpy.gaffer_operations import GetSchema
                     ),
                     g.ExportToOtherGraph(
                         graph_id="otherGafferRestApiGraphId",
-                        store_properties={'gaffer.context-root': '/rest/v1',
-                                          'gaffer.store.class': 'uk.gov.gchq.gaffer.proxystore.ProxyStore',
-                                          'gaffer.host': 'localhost',
-                                          'gaffer.store.properties.class': 'uk.gov.gchq.gaffer.proxystore.ProxyProperties',
-                                          'gaffer.port': '8081'}
+                        store_properties={"gaffer.context-root": "/rest/v1",
+                                          "gaffer.store.class": "uk.gov.gchq.gaffer.proxystore.ProxyStore",
+                                          "gaffer.host": "localhost",
+                                          "gaffer.store.properties.class": "uk.gov.gchq.gaffer.proxystore.ProxyProperties",
+                                          "gaffer.port": "8081"}
                     )
                 ]
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -594,7 +594,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "graphId" : "exportGraphId"
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetAllElements(
@@ -615,7 +615,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -633,7 +633,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "parentStorePropertiesId" : "exportStorePropertiesId"
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetAllElements(
@@ -658,7 +658,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -672,7 +672,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "start" : 0
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetAllElements(),
@@ -685,7 +685,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -700,7 +700,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "end" : 4
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetAllElements(),
@@ -714,7 +714,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -744,7 +744,7 @@ from gafferpy.gaffer_operations import GetSchema
                 } ]
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetAllElements(),
@@ -773,7 +773,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.generate.GenerateElements",
                 "elementGenerator" : {
@@ -781,7 +781,7 @@ from gafferpy.gaffer_operations import GetSchema
                 },
                 "input" : [ "1,1", "1,2,1" ]
             }
-            ''',
+            """,
             g.GenerateElements(
                 element_generator=g.ElementGenerator(
                     fields={},
@@ -794,7 +794,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.generate.GenerateElements",
                 "elementGenerator" : {
@@ -811,24 +811,24 @@ from gafferpy.gaffer_operations import GetSchema
                 "c" : 1
                 } ]
             }
-            ''',
+            """,
             g.GenerateElements(
                 element_generator=g.ElementGenerator(
                     class_name="uk.gov.gchq.gaffer.doc.operation.GenerateElementsExample$DomainObjectGenerator",
                     fields={}
                 ),
                 input=[
-                    {'c': 1,
-                        'class': 'uk.gov.gchq.gaffer.doc.operation.GenerateElementsExample$DomainObject1',
-                        'a': 1},
-                    {'b': 2, 'c': 1,
-                        'class': 'uk.gov.gchq.gaffer.doc.operation.GenerateElementsExample$DomainObject2',
-                        'a': 1}
+                    {"c": 1,
+                        "class": "uk.gov.gchq.gaffer.doc.operation.GenerateElementsExample$DomainObject1",
+                        "a": 1},
+                    {"b": 2, "c": 1,
+                        "class": "uk.gov.gchq.gaffer.doc.operation.GenerateElementsExample$DomainObject2",
+                        "a": 1}
                 ]
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.generate.GenerateObjects",
                 "elementGenerator" : {
@@ -852,18 +852,18 @@ from gafferpy.gaffer_operations import GetSchema
                 "class" : "uk.gov.gchq.gaffer.data.element.Edge"
                 } ]
             }
-            ''',
+            """,
             g.GenerateObjects(
                 input=[
                     g.Entity(
-                        properties={'count': 1},
+                        properties={"count": 1},
                         vertex=6,
                         group="entity"
                     ),
                     g.Edge(
                         directed=True,
                         source=5,
-                        properties={'count': 1},
+                        properties={"count": 1},
                         group="edge",
                         destination=6
                     )
@@ -875,7 +875,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.generate.GenerateObjects",
                 "elementGenerator" : {
@@ -899,7 +899,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "class" : "uk.gov.gchq.gaffer.data.element.Edge"
                 } ]
             }
-            ''',
+            """,
             g.GenerateObjects(
                 element_generator=g.ElementGenerator(
                     class_name="uk.gov.gchq.gaffer.doc.operation.GenerateObjectsExample$DomainObjectGenerator",
@@ -907,14 +907,14 @@ from gafferpy.gaffer_operations import GetSchema
                 ),
                 input=[
                     g.Entity(
-                        properties={'count': 1},
+                        properties={"count": 1},
                         vertex=6,
                         group="entity"
                     ),
                     g.Edge(
                         directed=True,
                         group="edge",
-                        properties={'count': 1},
+                        properties={"count": 1},
                         source=5,
                         destination=6
                     )
@@ -922,7 +922,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAdjacentIds",
                 "input" : [ {
@@ -930,7 +930,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 } ]
             }
-            ''',
+            """,
             g.GetAdjacentIds(
                 input=[
                     g.EntitySeed(
@@ -940,7 +940,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAdjacentIds",
                 "includeIncomingOutGoing" : "OUTGOING",
@@ -949,7 +949,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 } ]
             }
-            ''',
+            """,
             g.GetAdjacentIds(
                 input=[
                     g.EntitySeed(
@@ -960,7 +960,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAdjacentIds",
                 "view" : {
@@ -984,7 +984,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 } ]
             }
-            ''',
+            """,
             g.GetAdjacentIds(
                 view=g.View(
                     entities=[
@@ -1015,15 +1015,15 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements"
             }
-            ''',
+            """,
             g.GetAllElements()
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements",
                 "view" : {
@@ -1053,7 +1053,7 @@ from gafferpy.gaffer_operations import GetSchema
                 }
                 }
             }
-            ''',
+            """,
             g.GetAllElements(
                 view=g.View(
                     entities=[
@@ -1088,15 +1088,15 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.job.GetAllJobDetails"
             }
-            ''',
+            """,
             g.GetAllJobDetails()
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
                 "input" : [ {
@@ -1110,7 +1110,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "class" : "uk.gov.gchq.gaffer.operation.data.EdgeSeed"
                 } ]
             }
-            ''',
+            """,
             g.GetElements(
                 input=[
                     g.EntitySeed(
@@ -1126,7 +1126,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
                 "input" : [ {
@@ -1138,7 +1138,7 @@ from gafferpy.gaffer_operations import GetSchema
                     "allEntities": true
                 }
             }
-            ''',
+            """,
             g.GetElements(
                 input=[
                     g.EntitySeed(
@@ -1152,7 +1152,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
                 "input" : [ {
@@ -1163,7 +1163,7 @@ from gafferpy.gaffer_operations import GetSchema
                     "allEdges": true
                 }
             }
-            ''',
+            """,
             g.GetElements(
                 input=[
                     g.EntitySeed(
@@ -1177,7 +1177,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
                 "input" : [ {
@@ -1188,7 +1188,7 @@ from gafferpy.gaffer_operations import GetSchema
                     "allEntities": true
                 }
             }
-            ''',
+            """,
             g.GetElements(
                 input=[
                     g.EntitySeed(
@@ -1201,7 +1201,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
                 "view" : {
@@ -1241,7 +1241,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "class" : "uk.gov.gchq.gaffer.operation.data.EdgeSeed"
                 } ]
             }
-            ''',
+            """,
             g.GetElements(
                 view=g.View(
                     edges=[
@@ -1287,7 +1287,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
                 "input" : [ {
@@ -1295,7 +1295,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 } ]
             }
-            ''',
+            """,
             g.GetElements(
                 input=[
                     g.EntitySeed(
@@ -1305,7 +1305,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
                 "input" : [ {
@@ -1316,7 +1316,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "class" : "uk.gov.gchq.gaffer.operation.data.EdgeSeed"
                 } ]
             }
-            ''',
+            """,
             g.GetElements(
                 input=[
                     g.EdgeSeed(
@@ -1329,7 +1329,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
                 "view" : {
@@ -1366,7 +1366,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "class" : "uk.gov.gchq.gaffer.operation.data.EdgeSeed"
                 } ]
             }
-            ''',
+            """,
             g.GetElements(
                 view=g.View(
                     edges=[
@@ -1411,7 +1411,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
                 "view" : {
@@ -1447,7 +1447,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "class" : "uk.gov.gchq.gaffer.operation.data.EdgeSeed"
                 } ]
             }
-            ''',
+            """,
             g.GetElements(
                 view=g.View(
                     edges=[
@@ -1491,7 +1491,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
                 "view" : {
@@ -1529,7 +1529,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 } ]
             }
-            ''',
+            """,
             g.GetElements(
                 view=g.View(
                     edges=[
@@ -1578,7 +1578,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
                 "view" : {
@@ -1605,7 +1605,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 } ]
             }
-            ''',
+            """,
             g.GetElements(
                 view=g.View(
                     edges=[
@@ -1615,7 +1615,7 @@ from gafferpy.gaffer_operations import GetSchema
                                     projection=[
                                         "vertex|count"
                                     ],
-                                    function=g.Concat(separator='|'),
+                                    function=g.Concat(separator="|"),
                                     selection=[
                                         "SOURCE",
                                         "count"
@@ -1627,7 +1627,7 @@ from gafferpy.gaffer_operations import GetSchema
                                 "vertex|count"
                             ],
                             transient_properties={
-                                'vertex|count': 'java.lang.String'}
+                                "vertex|count": "java.lang.String"}
                         )
                     ],
                     entities=[
@@ -1641,7 +1641,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
                 "view" : {
@@ -1668,7 +1668,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 } ]
             }
-            ''',
+            """,
             g.GetElements(
                 view=g.View(
                     entities=[
@@ -1679,14 +1679,14 @@ from gafferpy.gaffer_operations import GetSchema
                                 "count"
                             ],
                             transient_properties={
-                                'vertex|count': 'java.lang.String'},
+                                "vertex|count": "java.lang.String"},
                             transform_functions=[
                                 g.FunctionContext(
                                     selection=[
                                         "SOURCE",
                                         "count"
                                     ],
-                                    function=g.Concat(separator='|'),
+                                    function=g.Concat(separator="|"),
                                     projection=[
                                         "vertex|count"
                                     ]
@@ -1704,16 +1704,16 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class": "uk.gov.gchq.gaffer.operation.impl.get.GetFromEndpoint",
                 "endpoint": "http://mydata.io"
             }
-            ''',
+            """,
             g.GetFromEndpoint(endpoint="http://mydata.io")
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -1727,7 +1727,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "key" : "ALL"
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetAllElements(),
@@ -1740,7 +1740,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -1753,7 +1753,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "class" : "uk.gov.gchq.gaffer.operation.impl.job.GetJobDetails"
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetAllElements(),
@@ -1764,7 +1764,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -1773,7 +1773,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "key" : "ALL"
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetGafferResultCacheExport(
@@ -1784,7 +1784,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -1812,7 +1812,7 @@ from gafferpy.gaffer_operations import GetSchema
                 } ]
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetAllElements(),
@@ -1839,29 +1839,29 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.job.GetJobDetails",
                 "jobId" : "18be2a20-5f36-4598-b522-1efc409b6b39"
             }
-            ''',
+            """,
             g.GetJobDetails(
                 job_id="18be2a20-5f36-4598-b522-1efc409b6b39"
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.job.GetJobResults",
                 "jobId" : "92932856-be96-41b3-85d8-bba7b6886284"
             }
-            ''',
+            """,
             g.GetJobResults(
                 job_id="92932856-be96-41b3-85d8-bba7b6886284"
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -1875,7 +1875,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "start" : 0
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetAllElements(),
@@ -1888,7 +1888,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -1903,7 +1903,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "end" : 4
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetAllElements(),
@@ -1917,7 +1917,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -1947,7 +1947,7 @@ from gafferpy.gaffer_operations import GetSchema
                 } ]
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetAllElements(),
@@ -1976,7 +1976,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -1987,7 +1987,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "truncate" : true
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetAllElements(),
@@ -1999,7 +1999,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -2010,7 +2010,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "truncate" : false
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetAllElements(),
@@ -2022,7 +2022,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -2033,7 +2033,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "truncate" : true
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetAllElements(),
@@ -2045,7 +2045,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -2067,7 +2067,7 @@ from gafferpy.gaffer_operations import GetSchema
                 } ]
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetElements(
@@ -2096,7 +2096,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -2153,7 +2153,7 @@ from gafferpy.gaffer_operations import GetSchema
                 } ]
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetElements(
@@ -2185,7 +2185,7 @@ from gafferpy.gaffer_operations import GetSchema
                                     ],
                                     group="edge",
                                     transient_properties={
-                                        'score': 'java.lang.Integer'}
+                                        "score": "java.lang.Integer"}
                                 )
                             ],
                             entities=[
@@ -2207,7 +2207,7 @@ from gafferpy.gaffer_operations import GetSchema
                                     ],
                                     group="entity",
                                     transient_properties={
-                                        'score': 'java.lang.Integer'}
+                                        "score": "java.lang.Integer"}
                                 )
                             ]
                         )
@@ -2236,7 +2236,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -2258,7 +2258,7 @@ from gafferpy.gaffer_operations import GetSchema
                 } ]
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetElements(
@@ -2287,7 +2287,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -2344,7 +2344,7 @@ from gafferpy.gaffer_operations import GetSchema
                 } ]
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetElements(
@@ -2375,7 +2375,7 @@ from gafferpy.gaffer_operations import GetSchema
                                         )
                                     ],
                                     transient_properties={
-                                        'score': 'java.lang.Integer'},
+                                        "score": "java.lang.Integer"},
                                     group="entity"
                                 )
                             ],
@@ -2397,7 +2397,7 @@ from gafferpy.gaffer_operations import GetSchema
                                         )
                                     ],
                                     transient_properties={
-                                        'score': 'java.lang.Integer'},
+                                        "score": "java.lang.Integer"},
                                     group="edge"
                                 )
                             ]
@@ -2427,7 +2427,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.named.operation.AddNamedOperation",
                 "operationName" : "2-hop",
@@ -2446,7 +2446,7 @@ from gafferpy.gaffer_operations import GetSchema
                 } ]
                 }
             }
-            ''',
+            """,
             g.AddNamedOperation(
                 operation_chain=g.OperationChainDAO(
                     operations=[
@@ -2471,7 +2471,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.named.operation.AddNamedOperation",
                 "operationName" : "2-hop-with-score",
@@ -2490,7 +2490,7 @@ from gafferpy.gaffer_operations import GetSchema
                 } ]
                 }
             }
-            ''',
+            """,
             g.AddNamedOperation(
                 operation_chain=g.OperationChainDAO(
                     operations=[
@@ -2515,7 +2515,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.named.operation.AddNamedOperation",
                 "operationName" : "2-hop-with-limit",
@@ -2544,7 +2544,7 @@ from gafferpy.gaffer_operations import GetSchema
                 } ]
                 }
             }
-            ''',
+            """,
             g.AddNamedOperation(
                 description="2 hop query with settable limit",
                 parameters=[
@@ -2580,7 +2580,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.named.operation.AddNamedOperation",
                 "operationName" : "2-hop-with-limit",
@@ -2609,7 +2609,7 @@ from gafferpy.gaffer_operations import GetSchema
                 } ]
                 }
             }
-            ''',
+            """,
             g.AddNamedOperation(
                 read_access_roles=[
                     "read-user"
@@ -2645,15 +2645,15 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.named.operation.GetAllNamedOperations"
             }
-            ''',
+            """,
             g.GetAllNamedOperations()
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.named.operation.NamedOperation",
                 "operationName" : "2-hop",
@@ -2663,7 +2663,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 } ]
             }
-            ''',
+            """,
             g.NamedOperation(
                 operation_name="2-hop",
                 input=[
@@ -2674,7 +2674,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.named.operation.NamedOperation",
                 "operationName" : "2-hop-with-limit",
@@ -2687,9 +2687,9 @@ from gafferpy.gaffer_operations import GetSchema
                 "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 } ]
             }
-            ''',
+            """,
             g.NamedOperation(
-                parameters={'param1': 2},
+                parameters={"param1": 2},
                 input=[
                     g.EntitySeed(
                         vertex=1
@@ -2699,18 +2699,18 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.named.operation.DeleteNamedOperation",
                 "operationName" : "2-hop"
             }
-            ''',
+            """,
             g.DeleteNamedOperation(
                 operation_name="2-hop"
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -2734,7 +2734,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "deduplicate" : true
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetElements(
@@ -2765,7 +2765,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -2789,7 +2789,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "deduplicate" : false
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetElements(
@@ -2820,7 +2820,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -2879,7 +2879,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "deduplicate" : true
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetElements(
@@ -2911,7 +2911,7 @@ from gafferpy.gaffer_operations import GetSchema
                                     ],
                                     group="edge",
                                     transient_properties={
-                                        'score': 'java.lang.Integer'}
+                                        "score": "java.lang.Integer"}
                                 )
                             ],
                             entities=[
@@ -2933,7 +2933,7 @@ from gafferpy.gaffer_operations import GetSchema
                                     ],
                                     group="entity",
                                     transient_properties={
-                                        'score': 'java.lang.Integer'}
+                                        "score": "java.lang.Integer"}
                                 )
                             ]
                         )
@@ -2964,7 +2964,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -2980,7 +2980,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "class" : "uk.gov.gchq.gaffer.operation.impl.output.ToArray"
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetElements(
@@ -2998,7 +2998,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -3025,7 +3025,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "includeHeader" : true
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetElements(
@@ -3042,10 +3042,10 @@ from gafferpy.gaffer_operations import GetSchema
                         include_header=True,
                         csv_generator=g.CsvGenerator(
                             fields={
-                                'GROUP': 'Edge group',
-                                'VERTEX': 'vertex',
-                                'count': 'total count',
-                                'SOURCE': 'source'
+                                "GROUP": "Edge group",
+                                "VERTEX": "vertex",
+                                "count": "total count",
+                                "SOURCE": "source"
                             },
                             quoted=False
                         )
@@ -3054,7 +3054,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -3070,7 +3070,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "class" : "uk.gov.gchq.gaffer.operation.impl.output.ToEntitySeeds"
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetElements(
@@ -3088,7 +3088,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -3104,7 +3104,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "class" : "uk.gov.gchq.gaffer.operation.impl.output.ToList"
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetElements(
@@ -3122,7 +3122,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -3147,7 +3147,7 @@ from gafferpy.gaffer_operations import GetSchema
                 }
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetElements(
@@ -3163,10 +3163,10 @@ from gafferpy.gaffer_operations import GetSchema
                     g.ToMap(
                         element_generator=g.MapGenerator(
                             fields={
-                                'SOURCE': 'source',
-                                'count': 'total count',
-                                'VERTEX': 'vertex',
-                                'GROUP': 'group'
+                                "SOURCE": "source",
+                                "count": "total count",
+                                "VERTEX": "vertex",
+                                "GROUP": "group"
                             }
                         )
                     )
@@ -3174,7 +3174,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
                 "input" : [ {
@@ -3185,7 +3185,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "class" : "uk.gov.gchq.gaffer.operation.data.EntitySeed"
                 } ]
             }
-            ''',
+            """,
             g.GetElements(
                 input=[
                     g.EntitySeed(
@@ -3198,7 +3198,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -3214,7 +3214,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "class" : "uk.gov.gchq.gaffer.operation.impl.output.ToSet"
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetElements(
@@ -3232,7 +3232,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -3248,7 +3248,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "class" : "uk.gov.gchq.gaffer.operation.impl.output.ToStream"
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetElements(
@@ -3266,7 +3266,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -3291,7 +3291,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "class" : "uk.gov.gchq.gaffer.operation.impl.output.ToSet"
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetElements(
@@ -3321,7 +3321,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -3347,7 +3347,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "class" : "uk.gov.gchq.gaffer.operation.impl.output.ToSet"
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetElements(
@@ -3378,7 +3378,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -3404,7 +3404,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "class" : "uk.gov.gchq.gaffer.operation.impl.output.ToSet"
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetElements(
@@ -3435,7 +3435,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -3461,7 +3461,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "class" : "uk.gov.gchq.gaffer.operation.impl.output.ToSet"
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetElements(
@@ -3492,7 +3492,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations" : [ {
@@ -3512,7 +3512,7 @@ from gafferpy.gaffer_operations import GetSchema
                 }
                 } ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetJobResults(
@@ -3535,7 +3535,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class": "uk.gov.gchq.gaffer.operation.impl.function.Filter",
                 "globalElements": {
@@ -3648,7 +3648,7 @@ from gafferpy.gaffer_operations import GetSchema
                 }
             }
 
-            ''',
+            """,
             g.Filter(
                 global_edges=g.GlobalElementFilterDefinition(
                     predicates=[
@@ -3741,7 +3741,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "operations": [
                     {
@@ -3817,7 +3817,7 @@ from gafferpy.gaffer_operations import GetSchema
                 ],
                 "class": "uk.gov.gchq.gaffer.operation.OperationChain"
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetJobResults(
@@ -3888,7 +3888,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class": "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations": [
@@ -3965,7 +3965,7 @@ from gafferpy.gaffer_operations import GetSchema
                     }
                 ]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetJobResults(
@@ -4029,7 +4029,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.ScoreOperationChain",
                 "operationChain" : {
@@ -4046,13 +4046,13 @@ from gafferpy.gaffer_operations import GetSchema
                     } ]
                 }
             }
-            ''',
+            """,
             g.ScoreOperationChain(
                 operation_chain=g.OperationChain(
                     operations=[
                         g.GetElements(),
                         g.NamedOperation(
-                            operation_name='namedOp'
+                            operation_name="namedOp"
                         ),
                         g.Limit(
                             truncate=True,
@@ -4063,7 +4063,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.ScoreOperationChain",
                 "operationChain" : {
@@ -4080,7 +4080,7 @@ from gafferpy.gaffer_operations import GetSchema
                     } ]
                 }
             }
-            ''',
+            """,
             g.ScoreOperationChain(
                 operation_chain={
                     "class": "uk.gov.gchq.gaffer.operation.OperationChain",
@@ -4098,7 +4098,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class": "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations": [{
@@ -4123,7 +4123,7 @@ from gafferpy.gaffer_operations import GetSchema
                     }]
                 }]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetWalks(
@@ -4154,7 +4154,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.GetWalks",
                 "operations" : [
@@ -4242,7 +4242,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "vertex" : "A"
                 } ]
             }
-            ''',
+            """,
             g.GetWalks(
                 results_limit=1000000,
                 operations=[
@@ -4355,7 +4355,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
             "class" : "uk.gov.gchq.gaffer.operation.OperationChain",
             "operations" : [
@@ -4377,7 +4377,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "key1": "value1"
             }
         }
-        ''',
+        """,
             g.OperationChain(
                 operations=[
                     g.OperationChain(
@@ -4391,18 +4391,18 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class": "uk.gov.gchq.gaffer.store.operation.GetSchema",
                 "compact": true
             }
-            ''',
+            """,
             GetSchema(
                 compact=True
             )
         ],
         [
-            '''
+            """
             {
                 "class": "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations": [{
@@ -4451,7 +4451,7 @@ from gafferpy.gaffer_operations import GetSchema
                     "class": "uk.gov.gchq.gaffer.operation.impl.output.ToSet"
                 }]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetWalks(
@@ -4504,25 +4504,25 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class": "uk.gov.gchq.gaffer.operation.impl.SplitStoreFromFile",
                 "inputPath": "path/to/file"
             }
-            ''',
+            """,
             g.SplitStoreFromFile(
                 input_path="path/to/file"
             )
         ],
         [
-            '''
+            """
             {
                 "class": "uk.gov.gchq.gaffer.operation.impl.SplitStoreFromIterable",
                 "input": [
                     "1", "2", "3"
                 ]
             }
-            ''',
+            """,
             g.SplitStoreFromIterable(
                 input=[
                     "1", "2", "3"
@@ -4530,7 +4530,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class": "uk.gov.gchq.gaffer.operation.impl.SampleElementsForSplitPoints",
                 "input" : [ {
@@ -4553,19 +4553,19 @@ from gafferpy.gaffer_operations import GetSchema
                 "numSplits": 5,
                 "proportionToSample": 0.1
             }
-            ''',
+            """,
             g.SampleElementsForSplitPoints(
                 input=[
                     g.Entity(
                         vertex=6,
-                        properties={'count': 1},
+                        properties={"count": 1},
                         group="entity"
                     ),
                     g.Edge(
                         destination=6,
                         source=5,
                         group="edge",
-                        properties={'count': 1},
+                        properties={"count": 1},
                         directed=True
                     )
                 ],
@@ -4574,7 +4574,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.If",
                 "input" : [{
@@ -4608,13 +4608,13 @@ from gafferpy.gaffer_operations import GetSchema
                     "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements"
                 }
             }
-            ''',
+            """,
             g.If(
                 input=g.Entity(
-                    group='entity',
-                    vertex='a1',
+                    group="entity",
+                    vertex="a1",
                     properties={
-                        'count': 5
+                        "count": 5
                     }
                 ),
                 conditional=g.Conditional(
@@ -4625,7 +4625,7 @@ from gafferpy.gaffer_operations import GetSchema
                     transform=g.Map(
                         functions=[
                             g.ExtractProperty(
-                                name='count'
+                                name="count"
                             )
                         ]
                     )
@@ -4635,7 +4635,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.named.view.AddNamedView",
                 "name" : "testNamedView",
@@ -4648,22 +4648,22 @@ from gafferpy.gaffer_operations import GetSchema
                 "overwriteFlag" : true,
                 "writeAccessRoles" : [ "auth1", "auth2" ]
             }
-            ''',
+            """,
             g.AddNamedView(
-                name='testNamedView',
-                description='example test NamedView',
+                name="testNamedView",
+                description="example test NamedView",
                 view=g.View(
                     edges=[
                         g.ElementDefinition(
-                            group='testEdge'
+                            group="testEdge"
                         )]
                 ),
                 overwrite_flag=True,
-                write_access_roles=['auth1', 'auth2']
+                write_access_roles=["auth1", "auth2"]
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.named.view.AddNamedView",
                 "view" : {
@@ -4692,17 +4692,17 @@ from gafferpy.gaffer_operations import GetSchema
                 "overwriteFlag" : true,
                 "writeAccessRoles" : [ "auth1", "auth2" ]
             }
-            ''',
+            """,
             g.AddNamedView(
-                name='isMoreThan',
-                description='is more than',
+                name="isMoreThan",
+                description="is more than",
                 view=g.View(
                     edges=[
                         g.ElementDefinition(
-                            group='testEdge',
+                            group="testEdge",
                             pre_aggregation_filter_functions=[
                                 g.PredicateContext(
-                                    selection='count',
+                                    selection="count",
                                     predicate=g.IsMoreThan(
                                         value="${countThreshold}"
                                     )
@@ -4720,38 +4720,38 @@ from gafferpy.gaffer_operations import GetSchema
                     )
                 ],
                 overwrite_flag=True,
-                write_access_roles=['auth1', 'auth2']
+                write_access_roles=["auth1", "auth2"]
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.federatedstore.operation.RemoveGraph",
                 "graphId" : "graph1"
             }
-            ''',
+            """,
             g.RemoveGraph(
                 graph_id="graph1"
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.federatedstore.operation.GetAllGraphIds"
             }
-            ''',
+            """,
             g.GetAllGraphIds()
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.federatedstore.operation.GetAllGraphInfo"
             }
-            ''',
+            """,
             g.GetAllGraphInfo()
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.federatedstore.operation.AddGraph",
                 "graphId" : "graph1",
@@ -4783,7 +4783,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "gaffer.cache.service.class" : "uk.gov.gchq.gaffer.cache.impl.HashMapCacheService"
                 }
             }
-            ''',
+            """,
             g.AddGraph(
                 graph_id="graph1",
                 is_public=False,
@@ -4816,7 +4816,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.federatedstore.operation.AddGraphWithHooks",
                 "graphId" : "graph1",
@@ -4853,7 +4853,7 @@ from gafferpy.gaffer_operations import GetSchema
                 }
                 ]
             }
-            ''',
+            """,
             g.AddGraphWithHooks(
                 graph_id="graph1",
                 is_public=False,
@@ -4889,7 +4889,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class": "uk.gov.gchq.gaffer.federatedstore.operation.ChangeGraphAccess",
                 "graphId": "example_graph_id",
@@ -4897,7 +4897,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "ownerUserId": "example_user_id",
                 "isPublic": true
             }
-            ''',
+            """,
             g.ChangeGraphAccess(
                 graph_id="example_graph_id",
                 graph_auths=["Auth_1", "Auth_2"],
@@ -4906,7 +4906,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.While",
                 "maxRepeats" : 5,
@@ -4921,7 +4921,7 @@ from gafferpy.gaffer_operations import GetSchema
                     "class" : "uk.gov.gchq.gaffer.operation.impl.get.GetAdjacentIds"
                 }
             }
-            ''',
+            """,
             g.While(
                 max_repeats=5,
                 input=[
@@ -4934,7 +4934,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.While",
                 "maxRepeats" : 10,
@@ -4964,7 +4964,7 @@ from gafferpy.gaffer_operations import GetSchema
                 },
                 "operation" : {"class": "uk.gov.gchq.gaffer.operation.impl.get.GetElements"}
             }
-            ''',
+            """,
             g.While(
                 max_repeats=10,
                 input=[
@@ -4994,31 +4994,31 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.store.operation.HasTrait",
                 "trait": "VISIBILITY",
                 "currentTraits" : true
             }
-            ''',
+            """,
             g.HasTrait(
                 trait="VISIBILITY",
                 current_traits=True
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.store.operation.GetTraits",
                 "currentTraits" : true
             }
-            ''',
+            """,
             g.GetTraits(
                 current_traits=True
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.Reduce",
                 "input" : [{
@@ -5036,7 +5036,7 @@ from gafferpy.gaffer_operations import GetSchema
                 },
                 "identity": 10
             }
-            ''',
+            """,
             g.Reduce(
                 input=[
                     g.Edge(
@@ -5057,7 +5057,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.ForEach",
                 "input" : [{
@@ -5072,7 +5072,7 @@ from gafferpy.gaffer_operations import GetSchema
                 }],
                 "operation": {"class": "uk.gov.gchq.gaffer.operation.impl.get.GetElements"}
             }
-            ''',
+            """,
             g.ForEach(
                 input=[
                     g.Edge(
@@ -5089,7 +5089,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.output.ToSingletonList",
                 "input" : [{
@@ -5103,7 +5103,7 @@ from gafferpy.gaffer_operations import GetSchema
                     }
                 }]
             }
-            ''',
+            """,
             g.ToSingletonList(
                 input=[
                     g.Edge(
@@ -5119,7 +5119,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.ValidateOperationChain",
                 "operationChain" : {
@@ -5134,7 +5134,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "key" : "value"
                 }
             }
-            ''',
+            """,
             g.ValidateOperationChain(
                 operation_chain=g.OperationChain(
                     operations=[
@@ -5148,7 +5148,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.ValidateOperationChain",
                 "operationChain" : {
@@ -5163,7 +5163,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "key" : "value"
                 }
             }
-            ''',
+            """,
             g.ValidateOperationChain(
                 operation_chain={
                     "class": "uk.gov.gchq.gaffer.operation.OperationChain",
@@ -5179,7 +5179,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.SetVariable",
                 "input" : "testVal",
@@ -5188,7 +5188,7 @@ from gafferpy.gaffer_operations import GetSchema
                     "key" : "value"
                 }
             }
-            ''',
+            """,
             g.SetVariable(
                 input="testVal",
                 variable_name="testVarName",
@@ -5198,7 +5198,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.GetVariable",
                 "variableName" : "testVarName",
@@ -5206,7 +5206,7 @@ from gafferpy.gaffer_operations import GetSchema
                     "key" : "value"
                 }
             }
-            ''',
+            """,
             g.GetVariable(
                 variable_name="testVarName",
                 options={
@@ -5215,7 +5215,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.operation.impl.GetVariables",
                 "variableNames" : ["testVarName", "testVarName2"],
@@ -5223,7 +5223,7 @@ from gafferpy.gaffer_operations import GetSchema
                     "key" : "value"
                 }
             }
-            ''',
+            """,
             g.GetVariables(
                 variable_names=["testVarName", "testVarName2"],
                 options={
@@ -5232,7 +5232,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class": "uk.gov.gchq.gaffer.operation.impl.join.Join",
                 "input": [ "test2" ],
@@ -5252,17 +5252,17 @@ from gafferpy.gaffer_operations import GetSchema
                 "joinType": "INNER",
                 "collectionLimit": 10
             }
-            ''',
+            """,
             g.Join(
-                input=['test2'],
-                operation=g.GetElements(input=[g.EntitySeed('test')]),
+                input=["test2"],
+                operation=g.GetElements(input=[g.EntitySeed("test")]),
                 match_method=g.ElementMatch(),
                 flatten=False,
                 join_type=g.JoinType.INNER,
                 collection_limit=10)
         ],
         [
-            '''
+            """
             {
                 "class" : "uk.gov.gchq.gaffer.federatedstore.operation.FederatedOperation",
                 "operation": {
@@ -5277,7 +5277,7 @@ from gafferpy.gaffer_operations import GetSchema
                 "key" : "value"
                 }
             }
-            ''',
+            """,
             g.FederatedOperation(
                 operation=g.OperationChain([g.AddElements(), g.GetElements()]),
                 options={
@@ -5286,7 +5286,7 @@ from gafferpy.gaffer_operations import GetSchema
             )
         ],
         [
-            '''
+            """
             {
                 "class": "uk.gov.gchq.gaffer.operation.impl.join.Join",
                 "input": [ "test2" ],
@@ -5310,39 +5310,39 @@ from gafferpy.gaffer_operations import GetSchema
                 "flatten": false,
                 "joinType": "OUTER"
             }
-            ''',
+            """,
             g.Join(
-                input=['test2'],
-                operation=g.GetElements(input=[g.EntitySeed('test')]),
+                input=["test2"],
+                operation=g.GetElements(input=[g.EntitySeed("test")]),
                 match_method=g.KeyFunctionMatch(first_key_function=g.ExtractId("DESTINATION")),
                 match_key=g.MatchKey.RIGHT,
                 flatten=False,
                 join_type=g.JoinType.OUTER)
         ],
         [
-            '''
+            """
             {
                 "class": "uk.gov.gchq.gaffer.operation.impl.job.CancelScheduledJob",
                 "jobId": "238492-2ad-fadf034-324-2a"
             }
-            ''',
+            """,
             g.CancelScheduledJob(job_id="238492-2ad-fadf034-324-2a")
         ],
         [
-            '''
+            """
             {
                 "class": "uk.gov.gchq.gaffer.federatedstore.operation.ChangeGraphId",
                 "graphId": "old_name",
                 "newGraphId": "new_name"
             }
-            ''',
+            """,
             g.ChangeGraphId(
                 graph_id="old_name",
                 new_graph_id="new_name"
             )
         ],
         [
-            '''
+            """
             {
                 "class": "uk.gov.gchq.gaffer.operation.OperationChain",
                 "operations": [{
@@ -5384,7 +5384,7 @@ from gafferpy.gaffer_operations import GetSchema
                     }]
                 }]
             }
-            ''',
+            """,
             g.OperationChain(
                 operations=[
                     g.GetWalks(
@@ -5396,7 +5396,7 @@ from gafferpy.gaffer_operations import GetSchema
                             transform=g.Map(
                                 functions=[
                                     g.ExtractProperty(
-                                        name='count'
+                                        name="count"
                                     )
                                 ]
                             )

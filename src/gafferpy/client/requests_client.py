@@ -1,5 +1,5 @@
 #
-# Copyright 2016-2022 Crown Copyright
+# Copyright 2016-2024 Crown Copyright
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,10 +23,10 @@ try:
     _REQUESTS_AVAILABLE = True
 
     class SSLAdapter(HTTPAdapter):
-        '''
+        """
         A subclass of the HTTPS Transport Adapter that is used to
         setup an arbitrary SSL version for the requests session.
-        '''
+        """
 
         def __init__(self, ssl_version=None, **kwargs):
             self.ssl_version = ssl_version
@@ -48,10 +48,10 @@ from .base_client import BaseClient
 
 
 class RequestsClient(BaseClient):
-    '''
+    """
     This class handles the connection to a Gaffer server and handles operations.
     This class is initialised with a host to connect to.
-    '''
+    """
 
     def __init__(self, base_url, verbose=False, headers={}, **kwargs):
         if not _REQUESTS_AVAILABLE:
@@ -70,7 +70,7 @@ class RequestsClient(BaseClient):
         self._session.verify = kwargs.get("verify", True)
         self._session.proxies = kwargs.get("proxies", {})
         protocol = kwargs.get("protocol", None)
-        self._session.mount('https://', SSLAdapter(ssl_version=protocol))
+        self._session.mount("https://", SSLAdapter(ssl_version=protocol))
 
     def perform_request(self, method, target, headers=None, body=None, json_result=True):
         url = self.base_url + target
@@ -85,7 +85,7 @@ class RequestsClient(BaseClient):
             response.raise_for_status()
         except requests.exceptions.HTTPError as error:
             raise ConnectionError(
-                'HTTP error ' + str(error.response.status_code) + ': ' + error.response.text)
+                "HTTP error " + str(error.response.status_code) + ": " + error.response.text)
 
         if not json_result and method == "GET":
             return response.text
@@ -96,10 +96,10 @@ class RequestsClient(BaseClient):
             response_json = response.text
 
         if self.verbose:
-            print('\nQuery response:\n' +
-                  json.dumps(response_json, indent=4) + '\n')
+            print("\nQuery response:\n" +
+                  json.dumps(response_json, indent=4) + "\n")
 
-        if response_json is not None and response_json != '':
+        if response_json is not None and response_json != "":
             result = response_json
         else:
             result = None

@@ -1,5 +1,5 @@
 #
-# Copyright 2016-2022 Crown Copyright
+# Copyright 2016-2024 Crown Copyright
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ from gafferpy import gaffer_connector
 warnings.warn("""
 This connector is deprecated, instead use gaffer_connector.GafferConnector(
     host,
-    client_class='pki',
+    client_class="pki",
     pki = pki,
     protocol = protocol
     )
@@ -68,7 +68,7 @@ class PkiCredentials:
 
         # Read the contents of the certificate file to check that it is
         # readable
-        with open(cert_filename, 'r') as cert_file:
+        with open(cert_filename, "r") as cert_file:
             self._cert_file_contents = cert_file.read()
             cert_file.close()
 
@@ -77,7 +77,7 @@ class PkiCredentials:
 
         # Obtain the password if required and remember it
         if password is None:
-            password = getpass.getpass('Password for PEM certificate file: ')
+            password = getpass.getpass("Password for PEM certificate file: ")
         self._password = password
 
     def get_ssl_context(self, protocol=None):
@@ -105,4 +105,4 @@ class PkiCredentials:
         return ssl_context
 
     def __str__(self):
-        return 'Certificates from ' + self._cert_filename
+        return "Certificates from " + self._cert_filename

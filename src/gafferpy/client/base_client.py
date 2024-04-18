@@ -1,5 +1,5 @@
 #
-# Copyright 2022 Crown Copyright
+# Copyright 2022-2024 Crown Copyright
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,22 +15,22 @@
 #
 
 class BaseClient:
-    '''
+    """
     This class handles the connection to a Gaffer server and handles operations.
     This class is initialised with a host to connect to.
-    '''
+    """
 
     def __init__(self, base_url, verbose=False, headers={}, **kwargs):
-        '''
+        """
         This initialiser sets up a connection to the specified Gaffer server.
 
         The host (and port) of the Gaffer server, should be in the form,
-        'hostname:1234/service-name/version'
-        '''
+        "hostname:1234/service-name/version"
+        """
         self.base_url = base_url
         self.verbose = verbose
         self.headers = headers
-        self.headers.setdefault('Content-Type', 'application/json;charset=utf-8')
+        self.headers.setdefault("Content-Type", "application/json;charset=utf-8")
 
     def perform_request(self, method, target, headers=None, body=None, json_result=True):
         raise NotImplementedError()

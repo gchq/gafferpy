@@ -1,5 +1,5 @@
 #
-# Copyright 2016-2022 Crown Copyright
+# Copyright 2016-2024 Crown Copyright
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -81,7 +81,7 @@ class GafferConnector:
         """
         This method queries Gaffer with the provided operation chain.
         """
-        target = '/graph/operations/execute'
+        target = "/graph/operations/execute"
 
         op_chain_json_obj = ToJson.recursive_to_json(operation_chain)
 

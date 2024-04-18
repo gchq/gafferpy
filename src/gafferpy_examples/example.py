@@ -1,5 +1,5 @@
 #
-# Copyright 2016-2023 Crown Copyright
+# Copyright 2016-2024 Crown Copyright
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -24,8 +24,8 @@ def run(host, verbose=False):
 
 def run_with_connector(gc):
     print()
-    print('Running operations')
-    print('--------------------------')
+    print("Running operations")
+    print("--------------------------")
     print()
 
     get_schema(gc)
@@ -87,7 +87,7 @@ def get_schema(gc):
         g.GetSchema()
     )
 
-    print('Schema:')
+    print("Schema:")
     print(result)
     print()
 
@@ -98,19 +98,19 @@ def get_filter_functions(gc):
         g.GetFilterFunctions()
     )
 
-    print('Filter Functions:')
+    print("Filter Functions:")
     print(result)
     print()
 
 
 def get_class_filter_functions(gc):
     # Get class filter functions
-    class_name = 'uk.gov.gchq.koryphe.impl.predicate.IsMoreThan'
+    class_name = "uk.gov.gchq.koryphe.impl.predicate.IsMoreThan"
     result = gc.execute_get(
         g.GetClassFilterFunctions(class_name=class_name)
     )
 
-    print('Class Filter Functions (IsMoreThan):')
+    print("Class Filter Functions (IsMoreThan):")
     print(result)
     print()
 
@@ -121,7 +121,7 @@ def get_element_generators(gc):
         g.GetElementGenerators()
     )
 
-    print('Element generators:')
+    print("Element generators:")
     print(result)
     print()
 
@@ -132,7 +132,7 @@ def get_object_generators(gc):
         g.GetObjectGenerators()
     )
 
-    print('Object generators:')
+    print("Object generators:")
     print(result)
     print()
 
@@ -143,19 +143,19 @@ def get_operations(gc):
         g.GetOperations()
     )
 
-    print('Operations:')
+    print("Operations:")
     print(result)
     print()
 
 
 def get_serialised_fields(gc):
     # Get serialised fields
-    class_name = 'uk.gov.gchq.koryphe.impl.predicate.IsMoreThan'
+    class_name = "uk.gov.gchq.koryphe.impl.predicate.IsMoreThan"
     result = gc.execute_get(
         g.GetSerialisedFields(class_name=class_name)
     )
 
-    print('Serialised Fields (IsMoreThan):')
+    print("Serialised Fields (IsMoreThan):")
     print(result)
     print()
 
@@ -166,14 +166,14 @@ def get_store_traits(gc):
         g.GetStoreTraits()
     )
 
-    print('Store Traits:')
+    print("Store Traits:")
     print(result)
     print()
 
 
 def is_operation_supported(gc):
     # Is operation supported
-    operation = 'uk.gov.gchq.gaffer.operation.impl.add.AddElements'
+    operation = "uk.gov.gchq.gaffer.operation.impl.add.AddElements"
     result = gc.is_operation_supported(
         g.IsOperationSupported(operation=operation)
     )
@@ -190,29 +190,29 @@ def add_elements(gc):
         g.AddElements(
             input=[
                 g.Entity(
-                    group='JunctionUse',
-                    vertex='M1:1',
+                    group="JunctionUse",
+                    vertex="M1:1",
                     properties={
-                        'countByVehicleType': g.freq_map({
-                            'BUS': 10,
-                            'CAR': 50
+                        "countByVehicleType": g.freq_map({
+                            "BUS": 10,
+                            "CAR": 50
                         }),
-                        'endDate': g.date(1034319600000),
-                        'count': g.long(60),
-                        'startDate': g.date(1034316000000)
+                        "endDate": g.date(1034319600000),
+                        "count": g.long(60),
+                        "startDate": g.date(1034316000000)
                     }
                 ),
                 g.Edge(
-                    group='RoadHasJunction',
-                    source='M1',
-                    destination='M1:1',
+                    group="RoadHasJunction",
+                    source="M1",
+                    destination="M1:1",
                     directed=True,
                     properties={}
                 )
             ]
         )
     )
-    print('Elements have been added')
+    print("Elements have been added")
     print()
 
 
@@ -221,25 +221,25 @@ def get_elements(gc):
     input = gc.execute_operation(
         g.GetElements(
             input=[
-                g.EntitySeed('M5:10'),
+                g.EntitySeed("M5:10"),
 
                 # Edge input can be provided as follows
-                g.EdgeSeed('M5:10', 'M5:11', g.DirectedType.EITHER),
-                g.EdgeSeed('M5:10', 'M5:11', g.DirectedType.DIRECTED),
+                g.EdgeSeed("M5:10", "M5:11", g.DirectedType.EITHER),
+                g.EdgeSeed("M5:10", "M5:11", g.DirectedType.DIRECTED),
                 # Or you can use True or False for the direction
-                g.EdgeSeed('M5:10', 'M5:11', True)
+                g.EdgeSeed("M5:10", "M5:11", True)
             ],
             view=g.View(
                 edges=[
                     g.ElementDefinition(
-                        group='RoadUse',
+                        group="RoadUse",
                         group_by=[],
                         transient_properties=[
-                            g.Property('description', 'java.lang.String')
+                            g.Property("description", "java.lang.String")
                         ],
                         pre_aggregation_filter_functions=[
                             g.PredicateContext(
-                                selection=['count'],
+                                selection=["count"],
                                 predicate=g.IsMoreThan(
                                     value=g.long(1)
                                 )
@@ -247,11 +247,11 @@ def get_elements(gc):
                         ],
                         transform_functions=[
                             g.FunctionContext(
-                                selection=['SOURCE', 'DESTINATION', 'count'],
+                                selection=["SOURCE", "DESTINATION", "count"],
                                 function=g.Function(
-                                    class_name='uk.gov.gchq.gaffer.traffic.transform.DescriptionTransform'
+                                    class_name="uk.gov.gchq.gaffer.traffic.transform.DescriptionTransform"
                                 ),
-                                projection=['description']
+                                projection=["description"]
                             )
                         ]
                     )
@@ -260,7 +260,7 @@ def get_elements(gc):
             directed_type=g.DirectedType.EITHER
         )
     )
-    print('Related input')
+    print("Related input")
     print(input)
     print()
 
@@ -272,13 +272,13 @@ def get_adj_seeds(gc):
             g.GetAdjacentIds(
                 input=[
                     g.EntitySeed(
-                        vertex='M5'
+                        vertex="M5"
                     )
                 ],
                 view=g.View(
                     edges=[
                         g.ElementDefinition(
-                            'RoadHasJunction',
+                            "RoadHasJunction",
                             group_by=[]
                         )
                     ]
@@ -289,7 +289,7 @@ def get_adj_seeds(gc):
                 view=g.View(
                     edges=[
                         g.ElementDefinition(
-                            'RoadUse',
+                            "RoadUse",
                             group_by=[]
                         )
                     ]
@@ -298,7 +298,7 @@ def get_adj_seeds(gc):
             )
         ]
     )
-    print('Adjacent entities - 2 hop')
+    print("Adjacent entities - 2 hop")
     print(adj_seeds)
     print()
 
@@ -311,7 +311,7 @@ def get_all_elements(gc):
             g.Limit(result_limit=3)
         ]
     )
-    print('All input (Limited to first 3)')
+    print("All input (Limited to first 3)")
     print(all_elements)
     print()
 
@@ -321,14 +321,14 @@ def get_walks(gc):
     walks = gc.execute_operation(
         g.GetWalks(
             input=[
-                g.EntitySeed('M32'),
+                g.EntitySeed("M32"),
             ],
             operations=[
                 g.GetElements(
                     view=g.View(
                         edges=[
                             g.ElementDefinition(
-                                group='RoadHasJunction'
+                                group="RoadHasJunction"
                             )
                         ]
                     )
@@ -337,7 +337,7 @@ def get_walks(gc):
                     view=g.View(
                         edges=[
                             g.ElementDefinition(
-                                group='JunctionLocatedAt'
+                                group="JunctionLocatedAt"
                             )
                         ]
                     )
@@ -346,7 +346,7 @@ def get_walks(gc):
         )
     )
     print(
-        'Walks from M32 traversing down RoadHasJunction then JunctionLocatedAt')
+        "Walks from M32 traversing down RoadHasJunction then JunctionLocatedAt")
     print(walks)
     print()
 
@@ -358,18 +358,18 @@ def add_cardinality_entity(gc):
         g.AddElements(
             input=[
                 g.Entity(
-                    group='Cardinality',
-                    vertex='M1:1',
+                    group="Cardinality",
+                    vertex="M1:1",
                     properties={
-                        'hll': g.hll_sketch(['M1']),
-                        'count': g.long(60),
-                        'edgeGroup': g.tree_set(['RoadHasJunction'])
+                        "hll": g.hll_sketch(["M1"]),
+                        "count": g.long(60),
+                        "edgeGroup": g.tree_set(["RoadHasJunction"])
                     }
                 )
             ]
         )
     )
-    print('Cardinality entity has been added')
+    print("Cardinality entity has been added")
     print()
 
 
@@ -378,14 +378,14 @@ def generate_elements(gc):
     input = gc.execute_operation(
         g.GenerateElements(
             element_generator=g.ElementGenerator(
-                class_name='uk.gov.gchq.gaffer.traffic.generator.RoadTrafficStringElementGenerator'
+                class_name="uk.gov.gchq.gaffer.traffic.generator.RoadTrafficStringElementGenerator"
             ),
             input=[
                 '"South West","E06000054","Wiltshire","6016","389200","179080","M4","LA Boundary","381800","180030","17","391646","179560","TM","E","2000","2000-05-03 00:00:00","7","0","9","2243","15","426","127","21","20","37","106","56","367","3060"'
             ]
         )
     )
-    print('Generated input from provided domain input')
+    print("Generated input from provided domain input")
     print(input)
     print()
 
@@ -395,15 +395,15 @@ def generate_domain_objs(gc):
     input = gc.execute_operation(
         g.GenerateObjects(
             element_generator=g.ElementGenerator(
-                class_name='uk.gov.gchq.gaffer.rest.example.ExampleDomainObjectGenerator'
+                class_name="uk.gov.gchq.gaffer.rest.example.ExampleDomainObjectGenerator"
             ),
             input=[
-                g.Entity('entity', '1'),
-                g.Edge('edge', '1', '2', True)
+                g.Entity("entity", "1"),
+                g.Edge("edge", "1", "2", True)
             ]
         )
     )
-    print('Generated input from provided input')
+    print("Generated input from provided input")
     print(input)
     print()
 
@@ -413,11 +413,11 @@ def generate_domain_objects_chain(gc):
     input = gc.execute_operations(
         [
             g.GetElements(
-                input=[g.EntitySeed(vertex='M5')],
+                input=[g.EntitySeed(vertex="M5")],
                 view=g.View(
                     edges=[
                         g.ElementDefinition(
-                            group='RoadHasJunction',
+                            group="RoadHasJunction",
                             group_by=[]
                         )
                     ]
@@ -426,12 +426,12 @@ def generate_domain_objects_chain(gc):
 
             g.GenerateObjects(
                 element_generator=g.ElementGenerator(
-                    class_name='uk.gov.gchq.gaffer.rest.example.ExampleDomainObjectGenerator'
+                    class_name="uk.gov.gchq.gaffer.rest.example.ExampleDomainObjectGenerator"
                 )
             )
         ]
     )
-    print('Generated input from get input by seed')
+    print("Generated input from get input by seed")
     print(input)
     print()
 
@@ -440,11 +440,11 @@ def get_element_group_counts(gc):
     # Get Elements
     group_counts = gc.execute_operations([
         g.GetElements(
-            input=[g.EntitySeed('M5')]
+            input=[g.EntitySeed("M5")]
         ),
         g.CountGroups(limit=1000)
     ])
-    print('Groups counts (limited to 1000 input)')
+    print("Groups counts (limited to 1000 input)")
     print(group_counts)
     print()
 
@@ -454,7 +454,7 @@ def get_sub_graph(gc):
     entity_seeds = gc.execute_operations(
         [
             g.GetAdjacentIds(
-                input=[g.EntitySeed('South West')],
+                input=[g.EntitySeed("South West")],
                 include_incoming_out_going=g.InOutType.OUT
             ),
             g.ExportToSet(),
@@ -464,7 +464,7 @@ def get_sub_graph(gc):
             g.GetSetExport()
         ]
     )
-    print('Export and Get to/from an in memory set')
+    print("Export and Get to/from an in memory set")
     print(entity_seeds)
     print()
 
@@ -474,7 +474,7 @@ def export_to_gaffer_result_cache(gc):
     job_details = gc.execute_operations(
         [
             g.GetAdjacentIds(
-                input=[g.EntitySeed('South West')],
+                input=[g.EntitySeed("South West")],
                 include_incoming_out_going=g.InOutType.OUT
             ),
             g.ExportToGafferResultCache(),
@@ -482,15 +482,15 @@ def export_to_gaffer_result_cache(gc):
             g.GetJobDetails()
         ]
     )
-    print('Export to Gaffer Result Cache. Job Details:')
+    print("Export to Gaffer Result Cache. Job Details:")
     print(job_details)
     print()
 
-    job_id = job_details['jobId']
+    job_id = job_details["jobId"]
     entity_seeds = gc.execute_operation(
         g.GetGafferResultCacheExport(job_id=job_id),
     )
-    print('Get Gaffer Result Cache Export.')
+    print("Get Gaffer Result Cache Export.")
     print(entity_seeds)
     print()
 
@@ -500,7 +500,7 @@ def get_job_details(gc):
     job_details_initial = gc.execute_operations(
         [
             g.GetAdjacentIds(
-                input=[g.EntitySeed('1')],
+                input=[g.EntitySeed("1")],
             ),
             g.ExportToGafferResultCache(),
             g.DiscardOutput(),
@@ -508,12 +508,12 @@ def get_job_details(gc):
         ]
     )
 
-    job_id = job_details_initial['jobId']
+    job_id = job_details_initial["jobId"]
 
     job_details = gc.execute_operation(
         g.GetJobDetails(job_id=job_id),
     )
-    print('Get job details')
+    print("Get job details")
     print(job_details)
     print()
 
@@ -523,16 +523,16 @@ def get_all_job_details(gc):
     all_job_details = gc.execute_operation(
         g.GetAllJobDetails(),
     )
-    print('Get all job details (just prints the first 3 results)')
+    print("Get all job details (just prints the first 3 results)")
     print(all_job_details[:3])
     print()
 
 
 def delete_named_operation(gc):
     gc.execute_operation(
-        g.DeleteNamedOperation('2-hop-with-limit')
+        g.DeleteNamedOperation("2-hop-with-limit")
     )
-    print('Deleted named operation: 2-hop-with-limit')
+    print("Deleted named operation: 2-hop-with-limit")
     print()
 
 
@@ -551,8 +551,8 @@ def add_named_operation(gc):
                     "resultLimit": "${param1}"
                 }]
             },
-            operation_name='2-hop-with-limit',
-            description='2 hop query with limit',
+            operation_name="2-hop-with-limit",
+            description="2 hop query with limit",
             overwrite_flag=True,
             read_access_roles=["read-user"],
             write_access_roles=["write-user"],
@@ -568,7 +568,7 @@ def add_named_operation(gc):
         )
     )
 
-    print('Added named operation: 2-hop-with-limit')
+    print("Added named operation: 2-hop-with-limit")
     print()
 
 
@@ -576,7 +576,7 @@ def get_all_named_operations(gc):
     namedOperations = gc.execute_operation(
         g.GetAllNamedOperations()
     )
-    print('Named operations')
+    print("Named operations")
     print(namedOperations)
     print()
 
@@ -584,29 +584,29 @@ def get_all_named_operations(gc):
 def named_operation(gc):
     result = gc.execute_operation(
         g.NamedOperation(
-            operation_name='2-hop-with-limit',
+            operation_name="2-hop-with-limit",
             parameters={
-                'param1': 2
+                "param1": 2
             },
             input=[
-                g.EntitySeed('M5')
+                g.EntitySeed("M5")
             ]
         )
     )
-    print('Execute named operation')
+    print("Execute named operation")
     print(result)
     print()
 
 
 def delete_named_views(gc):
     gc.execute_operation(
-        g.DeleteNamedView(name='summarise')
+        g.DeleteNamedView(name="summarise")
     )
-    print('Deleted named view: summarise')
+    print("Deleted named view: summarise")
     gc.execute_operation(
-        g.DeleteNamedView(name='dateRange')
+        g.DeleteNamedView(name="dateRange")
     )
-    print('Deleted named view: dateRange')
+    print("Deleted named view: dateRange")
     print()
 
 
@@ -618,13 +618,13 @@ def add_named_view_summarise(gc):
                     g.GlobalElementDefinition(group_by=[])
                 ]
             ),
-            name='summarise',
-            description='Summarises all results (overrides the groupBy to an empty array).',
+            name="summarise",
+            description="Summarises all results (overrides the groupBy to an empty array).",
             overwrite_flag=True
         )
     )
 
-    print('Added named view: summarise')
+    print("Added named view: summarise")
     print()
 
 
@@ -635,17 +635,17 @@ def add_named_view_date_range(gc):
                 global_elements=g.GlobalElementDefinition(
                     pre_aggregation_filter_functions=[
                         g.PredicateContext(
-                            selection=['startDate'],
+                            selection=["startDate"],
                             predicate=g.InDateRange(
-                                start='${start}',
-                                end='${end}'
+                                start="${start}",
+                                end="${end}"
                             )
                         )
                     ]
                 )
             ),
-            name='dateRange',
-            description='Filters results to a provided date range.',
+            name="dateRange",
+            description="Filters results to a provided date range.",
             overwrite_flag=True,
             parameters=[
                 g.NamedViewParameter(
@@ -664,7 +664,7 @@ def add_named_view_date_range(gc):
         )
     )
 
-    print('Added named view: dateRange')
+    print("Added named view: dateRange")
     print()
 
 
@@ -672,7 +672,7 @@ def get_all_named_views(gc):
     namedViews = gc.execute_operation(
         g.GetAllNamedViews()
     )
-    print('Named views')
+    print("Named views")
     print(namedViews)
     print()
 
@@ -682,7 +682,7 @@ def named_view_summarise(gc):
         g.GetElements(
             input=[
                 g.EntitySeed(
-                    vertex='M32:1'
+                    vertex="M32:1"
                 )
             ],
             view=g.NamedView(
@@ -690,7 +690,7 @@ def named_view_summarise(gc):
             )
         )
     )
-    print('Execute get elements with summarised named view')
+    print("Execute get elements with summarised named view")
     print(result)
     print()
 
@@ -700,19 +700,19 @@ def named_view_date_range(gc):
         g.GetElements(
             input=[
                 g.EntitySeed(
-                    vertex='M32:1'
+                    vertex="M32:1"
                 )
             ],
             view=g.NamedView(
                 name="dateRange",
                 parameters={
-                    'start': '2005/05/03 06:00',
-                    'end': '2005/05/03 09:00'
+                    "start": "2005/05/03 06:00",
+                    "end": "2005/05/03 09:00"
                 }
             )
         )
     )
-    print('Execute get elements with date range named view')
+    print("Execute get elements with date range named view")
     print(result)
     print()
 
@@ -722,7 +722,7 @@ def named_views(gc):
         g.GetElements(
             input=[
                 g.EntitySeed(
-                    vertex='M32:1'
+                    vertex="M32:1"
                 )
             ],
             view=[
@@ -732,14 +732,14 @@ def named_views(gc):
                 g.NamedView(
                     name="dateRange",
                     parameters={
-                        'start': '2005/05/03 06:00',
-                        'end': '2005/05/03 09:00'
+                        "start": "2005/05/03 06:00",
+                        "end": "2005/05/03 09:00"
                     }
                 )
             ]
         )
     )
-    print('Execute get elements with summarised and date range named views')
+    print("Execute get elements with summarised and date range named views")
     print(result)
     print()
 
@@ -751,7 +751,7 @@ def sort_elements(gc):
             view=g.View(
                 edges=[
                     g.ElementDefinition(
-                        group='RoadUse',
+                        group="RoadUse",
                         group_by=[]
                     )
                 ]
@@ -760,14 +760,14 @@ def sort_elements(gc):
         g.Sort(
             comparators=[
                 g.ElementPropertyComparator(
-                    groups=['RoadUse'],
-                    property='count'
+                    groups=["RoadUse"],
+                    property="count"
                 )
             ],
             result_limit=5
         )
     ])
-    print('Sorted input')
+    print("Sorted input")
     print(input)
     print()
 
@@ -779,7 +779,7 @@ def max_element(gc):
             view=g.View(
                 edges=[
                     g.ElementDefinition(
-                        group='RoadUse',
+                        group="RoadUse",
                         group_by=[]
                     )
                 ]
@@ -788,13 +788,13 @@ def max_element(gc):
         g.Max(
             comparators=[
                 g.ElementPropertyComparator(
-                    groups=['RoadUse'],
-                    property='count'
+                    groups=["RoadUse"],
+                    property="count"
                 )
             ]
         )
     ])
-    print('Max element')
+    print("Max element")
     print(input)
     print()
 
@@ -806,7 +806,7 @@ def min_element(gc):
             view=g.View(
                 edges=[
                     g.ElementDefinition(
-                        group='RoadUse',
+                        group="RoadUse",
                         group_by=[]
                     )
                 ]
@@ -815,13 +815,13 @@ def min_element(gc):
         g.Min(
             comparators=[
                 g.ElementPropertyComparator(
-                    groups=['RoadUse'],
-                    property='count'
+                    groups=["RoadUse"],
+                    property="count"
                 )
             ]
         )
     ])
-    print('Min element')
+    print("Min element")
     print(input)
     print()
 
@@ -832,13 +832,13 @@ def to_vertices_to_entity_seeds(gc):
         g.GetElements(
             input=[
                 g.EntitySeed(
-                    vertex='South West'
+                    vertex="South West"
                 )
             ],
             view=g.View(
                 edges=[
                     g.ElementDefinition(
-                        'RegionContainsLocation',
+                        "RegionContainsLocation",
                         group_by=[]
                     )
                 ]
@@ -854,7 +854,7 @@ def to_vertices_to_entity_seeds(gc):
             view=g.View(
                 edges=[
                     g.ElementDefinition(
-                        'LocationContainsRoad',
+                        "LocationContainsRoad",
                         group_by=[]
                     )
                 ]
@@ -863,7 +863,7 @@ def to_vertices_to_entity_seeds(gc):
         ),
         g.Limit(5)
     ])
-    print('ToVertices then ToEntitySeeds')
+    print("ToVertices then ToEntitySeeds")
     print(input)
     print()
 
@@ -873,11 +873,11 @@ def complex_op_chain(gc):
     junctions = gc.execute_operations(
         operations=[
             g.GetAdjacentIds(
-                input=[g.EntitySeed(vertex='South West')],
+                input=[g.EntitySeed(vertex="South West")],
                 view=g.View(
                     edges=[
                         g.ElementDefinition(
-                            group='RegionContainsLocation',
+                            group="RegionContainsLocation",
                             group_by=[]
                         )
                     ]
@@ -887,7 +887,7 @@ def complex_op_chain(gc):
                 view=g.View(
                     edges=[
                         g.ElementDefinition(
-                            group='LocationContainsRoad',
+                            group="LocationContainsRoad",
                             group_by=[]
                         )
                     ]
@@ -898,7 +898,7 @@ def complex_op_chain(gc):
                 view=g.View(
                     edges=[
                         g.ElementDefinition(
-                            group='RoadHasJunction',
+                            group="RoadHasJunction",
                             group_by=[]
                         )
                     ]
@@ -908,37 +908,37 @@ def complex_op_chain(gc):
                 view=g.View(
                     entities=[
                         g.ElementDefinition(
-                            group='JunctionUse',
+                            group="JunctionUse",
                             group_by=[],
                             transient_properties=[
-                                g.Property('busCount', 'java.lang.Long')
+                                g.Property("busCount", "java.lang.Long")
                             ],
                             pre_aggregation_filter_functions=[
                                 g.PredicateContext(
-                                    selection=['startDate'],
+                                    selection=["startDate"],
                                     predicate=g.InDateRange(
-                                        start='2000/01/01',
-                                        end='2001/01/01'
+                                        start="2000/01/01",
+                                        end="2001/01/01"
                                     )
                                 )
                             ],
                             post_aggregation_filter_functions=[
                                 g.PredicateContext(
-                                    selection=['countByVehicleType'],
+                                    selection=["countByVehicleType"],
                                     predicate=g.PredicateMap(
                                         predicate=g.IsMoreThan(
-                                            value={'java.lang.Long': 1000},
+                                            value={"java.lang.Long": 1000},
                                             or_equal_to=False
                                         ),
-                                        key='BUS'
+                                        key="BUS"
                                     )
                                 )
                             ],
                             transform_functions=[
                                 g.FunctionContext(
-                                    selection=['countByVehicleType'],
-                                    function=g.FreqMapExtractor(key='BUS'),
-                                    projection=['busCount']
+                                    selection=["countByVehicleType"],
+                                    function=g.FreqMapExtractor(key="BUS"),
+                                    projection=["busCount"]
                                 )
                             ]
                         )
@@ -949,8 +949,8 @@ def complex_op_chain(gc):
             g.ToCsv(
                 csv_generator=g.CsvGenerator(
                     fields={
-                        'VERTEX': 'Junction',
-                        'busCount': 'Bus Count'
+                        "VERTEX": "Junction",
+                        "busCount": "Bus Count"
                     },
                     quoted=False
                 ),
@@ -959,7 +959,7 @@ def complex_op_chain(gc):
         ]
     )
     print(
-        'All road junctions in the South West that were heavily used by buses in year 2000.')
+        "All road junctions in the South West that were heavily used by buses in year 2000.")
     print(junctions)
     print()
 
@@ -976,10 +976,10 @@ def op_chain_in_json(gc):
             }]
         }
     )
-    print('Operation chain defined in json')
+    print("Operation chain defined in json")
     print(result)
     print()
 
 
 if __name__ == "__main__":
-    run('http://localhost:8080/rest/latest', False)
+    run("http://localhost:8080/rest/latest", False)

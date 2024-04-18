@@ -1,5 +1,5 @@
 #
-# Copyright 2016-2022 Crown Copyright
+# Copyright 2016-2024 Crown Copyright
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ from gafferpy.gaffer_core import JsonConverter
 
 
 class GetGraph:
-    def __init__(self, _url=''):
+    def __init__(self, _url=""):
         self._url = _url
 
     def get_url(self):
@@ -38,7 +38,7 @@ from gafferpy.generated_api.config import *
 
 
 class GetClassFilterFunctions(GetFilterFunctions):
-    def __init__(self, class_name=''):
+    def __init__(self, class_name=""):
         super().__init__(class_name)
 
 
@@ -53,7 +53,7 @@ class IsOperationSupported:
 def load_config_json_map():
     for name, class_obj in inspect.getmembers(
             sys.modules[__name__], inspect.isclass):
-        if hasattr(class_obj, 'CLASS'):
+        if hasattr(class_obj, "CLASS"):
             JsonConverter.GENERIC_JSON_CONVERTERS[class_obj.CLASS] = \
                 lambda obj, class_obj=class_obj: class_obj(**obj)
             JsonConverter.CLASS_MAP[class_obj.CLASS] = class_obj
