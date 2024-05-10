@@ -1,5 +1,5 @@
 #
-# Copyright 2022-2024 Crown Copyright
+# Copyright 2022 Crown Copyright
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ To make changes, either extend these classes or change fishbowl.
 """
 
 import typing
-from gafferpy.gaffer_core import AbstractBinaryOperator, BinaryOperator, Function
+from gafferpy.gaffer_core import AbstractBinaryOperator,BinaryOperator,Function
 
 
 class RoaringBitmapAggregator(AbstractBinaryOperator):
