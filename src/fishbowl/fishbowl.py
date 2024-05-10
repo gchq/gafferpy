@@ -245,7 +245,7 @@ class Fishbowl:
                     import_map[module].add(_class)
 
         return [
-            f"from {import_path} import {", ".join(sorted(classes))}" for import_path,
+            f"from {import_path} import {','.join(sorted(classes))}" for import_path,
             classes in import_map.items()
         ]
 
