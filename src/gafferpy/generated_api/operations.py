@@ -20,10 +20,10 @@ To make changes, either extend these classes or change fishbowl.
 """
 
 import typing
-from gafferpy.gaffer_operations import AggregatePair,Conditional,Operation,View
-from gafferpy.gaffer_core import BinaryOperator,Element,ElementSeed,Function
+from gafferpy.gaffer_operations import AggregatePair, Conditional, Operation, View
+from gafferpy.gaffer_core import BinaryOperator, Element, ElementSeed, Function
 from gafferpy.gaffer_predicates import ElementFilter
-from gafferpy.gaffer_functions import CsvGenerator,ElementTransformer,MapGenerator
+from gafferpy.gaffer_functions import CsvGenerator, ElementTransformer, MapGenerator
 
 
 class ImportAccumuloKeyValueFiles(Operation):
