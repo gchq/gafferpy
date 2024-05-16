@@ -6,9 +6,8 @@ on:
         description: 'Gaffer Version'
         required: true
 
-permissions:
-  pull-requests: write
-  contents: write
+env:
+  GH_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
 
 jobs:
   update-gaffer-version:
@@ -18,10 +17,10 @@ jobs:
 
     steps:
     - name: Checkout base branch
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Setup JDK
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4
       with:
         distribution: 'zulu'
         java-version: '8'
@@ -49,13 +48,22 @@ jobs:
         git config user.name github-actions[bot]
         git config user.email 41898282+github-actions[bot]@users.noreply.github.com
 
+    - name: Create Issue
+      id: create-issue
+      run: |
+        gh issue create --title "Update Gaffer version to ${{ github.event.inputs.version }}" --body "Use Gaffer version ${{ github.event.inputs.version }}" --label enhancement \
+        | sed -zE "s|.*/issues/([0-9]+)|ISSUE_ID=\1|" >> "$GITHUB_OUTPUT"
+
     - name: Create PR branch
+      env:
+        VERSION_UPDATE_BRANCH: gh-${{ steps.create-issue.outputs.ISSUE_ID }}-updating-gaffer-version-${{ github.event.inputs.version }}
       run: |
         git checkout -b ${{ env.VERSION_UPDATE_BRANCH }}
         git commit -am "Updated Gaffer version to ${{ github.event.inputs.version }}"
         git push --set-upstream origin ${{ env.VERSION_UPDATE_BRANCH }}
 
     - name: Submit PR
-      run: gh pr create --fill --head ${{ env.VERSION_UPDATE_BRANCH }}
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        ISSUE_ID: ${{ steps.create-issue.outputs.ISSUE_ID }}
+      run: |-
+          gh pr create --title "Gh-$ISSUE_ID: Updated Gaffer version to ${{ github.event.inputs.version }}" --body ""
