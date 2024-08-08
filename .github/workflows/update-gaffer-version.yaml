@@ -49,7 +49,7 @@ jobs:
 
     - name: Create PR branch
       env:
-        VERSION_UPDATE_BRANCH: gh-${{ steps.create-issue.outputs.ISSUE_ID }}-updating-gaffer-version-${{ github.event.milestone.title }}
+        VERSION_UPDATE_BRANCH: release/${{ github.event.milestone.title }}
       run: |
         git checkout -b ${{ env.VERSION_UPDATE_BRANCH }}
         git commit -am "Updated Gaffer version to ${{ github.event.milestone.title }}"
