@@ -1,5 +1,5 @@
 #
-# Copyright 2016-2023 Crown Copyright
+# Copyright 2016-2024 Crown Copyright
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -49,12 +49,12 @@ def test_execute_operation(client_class, gc):
     elements = gc.execute_operation(
         g.GetElements(
             input=[
-                g.EntitySeed('M5:10')
+                g.EntitySeed("M5:10")
             ],
             view=g.View(
                 edges=[
                     g.ElementDefinition(
-                        group='JunctionLocatedAt'
+                        group="JunctionLocatedAt"
                     )
                 ]
             )
@@ -71,7 +71,7 @@ def test_execute_operation(client_class, gc):
 def test_is_operation_supported(client_class, gc):
     response = gc.is_operation_supported(
         g.IsOperationSupported(
-            operation='uk.gov.gchq.gaffer.operation.impl.get.GetAllElements'
+            operation="uk.gov.gchq.gaffer.operation.impl.get.GetAllElements"
         ),
         json_result=True
     )
@@ -115,7 +115,7 @@ def test_dummy_header(client_class, gc):
     Test that the addition of a dummy header does not effect the standard test
     """
     gc = gaffer_connector.GafferConnector(
-        'http://localhost:8080/rest/latest',
+        "http://localhost:8080/rest/latest",
         headers={
             "dummy_Header": "value"},
         client_class=client_class
@@ -124,12 +124,12 @@ def test_dummy_header(client_class, gc):
     elements = gc.execute_operation(
         g.GetElements(
             input=[
-                g.EntitySeed('M5:10')
+                g.EntitySeed("M5:10")
             ],
             view=g.View(
                 edges=[
                     g.ElementDefinition(
-                        group='JunctionLocatedAt'
+                        group="JunctionLocatedAt"
                     )
                 ]
             )
@@ -144,7 +144,7 @@ def test_class_initilisation(client_class, gc):
     """
     Test that the gaffer_connector class is correctly initialised with instance attributes
     """
-    host = 'http://localhost:8080/rest/latest'
+    host = "http://localhost:8080/rest/latest"
     verbose = False
     headers = {"dummy_Header": "value"}
     gc = gaffer_connector.GafferConnector(

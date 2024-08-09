@@ -1,5 +1,5 @@
 #
-# Copyright 2016-2023 Crown Copyright
+# Copyright 2016-2024 Crown Copyright
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ from gafferpy.gaffer_core import *
 
 
 class ElementGenerator(Function):
-    CLASS = 'uk.gov.gchq.gaffer.data.generator.ElementGenerator'
+    CLASS = "uk.gov.gchq.gaffer.data.generator.ElementGenerator"
 
     def __init__(
         self,
@@ -51,27 +51,27 @@ class FunctionContext(TupleAdaptedFunction):
 
 
 def function_context_converter(obj):
-    if 'class' in obj:
+    if "class" in obj:
         function = dict(obj)
     else:
-        function = obj['function']
+        function = obj["function"]
         if isinstance(function, dict):
             function = dict(function)
 
     if not isinstance(function, Function):
         function = JsonConverter.from_json(function)
         if not isinstance(function, Function):
-            class_name = function.get('class')
-            function.pop('class', None)
+            class_name = function.get("class")
+            function.pop("class", None)
             function = Function(
                 class_name=class_name,
                 fields=function
             )
 
     return FunctionContext(
-        selection=obj.get('selection'),
+        selection=obj.get("selection"),
         function=function,
-        projection=obj.get('projection')
+        projection=obj.get("projection")
     )
 
 
@@ -84,8 +84,8 @@ def function_converter(obj):
     if not isinstance(function, Function):
         function = JsonConverter.from_json(function)
         if not isinstance(function, Function):
-            class_name = function.get('class')
-            function.pop('class', None)
+            class_name = function.get("class")
+            function.pop("class", None)
             function = Function(
                 class_name=class_name,
                 fields=function
@@ -97,7 +97,7 @@ def function_converter(obj):
 def load_function_json_map():
     for name, class_obj in inspect.getmembers(
             sys.modules[__name__], inspect.isclass):
-        if hasattr(class_obj, 'CLASS'):
+        if hasattr(class_obj, "CLASS"):
             JsonConverter.GENERIC_JSON_CONVERTERS[class_obj.CLASS] = \
                 lambda obj, class_obj=class_obj: class_obj(**obj)
             JsonConverter.CLASS_MAP[class_obj.CLASS] = class_obj

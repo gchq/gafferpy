@@ -1,5 +1,5 @@
 #
-# Copyright 2016-2023 Crown Copyright
+# Copyright 2016-2024 Crown Copyright
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -37,13 +37,13 @@ class ToJson:
         """
         Converts an object to a simple json dictionary
         """
-        raise NotImplementedError('Use an implementation')
+        raise NotImplementedError("Use an implementation")
 
     def to_json_str(self):
         return json.dumps(ToJson.recursive_to_json(self))
 
     def to_json_pretty_str(self):
-        return json.dumps(ToJson.recursive_to_json(self), indent=4, separators=(',', ': '))
+        return json.dumps(ToJson.recursive_to_json(self), indent=4, separators=(",", ": "))
 
     def pretty_print(self):
         print(self.to_json_pretty_str())
@@ -90,98 +90,98 @@ class ToCodeString:
    """
 
     @staticmethod
-    def obj_to_code_string(obj, indent=''):
+    def obj_to_code_string(obj, indent=""):
         if obj is None:
-            return ''
+            return ""
 
-        new_line = ' \n' + indent
-        new_line_indent = new_line + '  '
+        new_line = " \n" + indent
+        new_line_indent = new_line + "  "
 
         if isinstance(obj, ToCodeString):
-            obj_str = obj.to_code_string(indent=indent + '  ')
+            obj_str = obj.to_code_string(indent=indent + "  ")
         elif isinstance(obj, list):
-            obj_str = '['
+            obj_str = "["
             for item in obj:
                 obj_item_str = ToCodeString.obj_to_code_string(item,
-                                                               indent=indent + '  ')
-                if obj_str == '[':
-                    obj_str = obj_str + new_line_indent + '  ' + obj_item_str
+                                                               indent=indent + "  ")
+                if obj_str == "[":
+                    obj_str = obj_str + new_line_indent + "  " + obj_item_str
                 else:
-                    obj_str = obj_str + ',' + new_line_indent + '  ' + obj_item_str
-            obj_str = obj_str + new_line_indent + ']'
+                    obj_str = obj_str + "," + new_line_indent + "  " + obj_item_str
+            obj_str = obj_str + new_line_indent + "]"
         elif isinstance(obj, str):
             obj_str = '"' + obj + '"'
         else:
             obj_str = str(obj)
         return obj_str
 
-    def to_code_string(self, header=False, indent=''):
-        new_line = ' \n' + indent
-        new_line_indent = new_line + '  '
+    def to_code_string(self, header=False, indent=""):
+        new_line = " \n" + indent
+        new_line_indent = new_line + "  "
         fields = dict(self.__dict__)
 
-        field_code_str = ''
+        field_code_str = ""
 
         for name, val in fields.items():
-            if (not name.startswith('_')) and val is not None:
+            if (not name.startswith("_")) and val is not None:
                 val_str = ToCodeString.obj_to_code_string(val, indent)
-                if field_code_str == '':
-                    field_code_str = name + '=' + val_str
+                if field_code_str == "":
+                    field_code_str = name + "=" + val_str
                 else:
-                    field_code_str = field_code_str + ',' + new_line_indent + name + '=' + val_str
+                    field_code_str = field_code_str + "," + new_line_indent + name + "=" + val_str
 
         if header:
-            header_str = 'from gafferpy import gaffer as g\n' + new_line
+            header_str = "from gafferpy import gaffer as g\n" + new_line
         else:
-            header_str = ''
+            header_str = ""
 
-        if field_code_str == '':
-            return header_str + 'g.' + type(self).__name__ + '()'
+        if field_code_str == "":
+            return header_str + "g." + type(self).__name__ + "()"
 
-        return header_str + 'g.' + type(self).__name__ + '(' + new_line_indent \
+        return header_str + "g." + type(self).__name__ + "(" + new_line_indent \
             + field_code_str \
-            + new_line + ')'
+            + new_line + ")"
 
 
 class DirectedType:
-    EITHER = 'EITHER'
-    DIRECTED = 'DIRECTED'
-    UNDIRECTED = 'UNDIRECTED'
+    EITHER = "EITHER"
+    DIRECTED = "DIRECTED"
+    UNDIRECTED = "UNDIRECTED"
 
 
 class InOutType:
-    EITHER = 'EITHER'
-    IN = 'INCOMING'
-    OUT = 'OUTGOING'
+    EITHER = "EITHER"
+    IN = "INCOMING"
+    OUT = "OUTGOING"
 
 
 class SeedMatchingType:
-    RELATED = 'RELATED'
-    EQUAL = 'EQUAL'
+    RELATED = "RELATED"
+    EQUAL = "EQUAL"
 
 
 class EdgeVertices:
-    NONE = 'NONE'
-    SOURCE = 'SOURCE'
-    DESTINATION = 'DESTINATION'
-    BOTH = 'BOTH'
+    NONE = "NONE"
+    SOURCE = "SOURCE"
+    DESTINATION = "DESTINATION"
+    BOTH = "BOTH"
 
 
 class UseMatchedVertex:
-    IGNORE = 'IGNORE'
-    EQUAL = 'EQUAL'
-    OPPOSITE = 'OPPOSITE'
+    IGNORE = "IGNORE"
+    EQUAL = "EQUAL"
+    OPPOSITE = "OPPOSITE"
 
 
 class MatchKey:
-    LEFT = 'LEFT'
-    RIGHT = 'RIGHT'
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
 
 
 class JoinType:
-    FULL = 'FULL'
-    OUTER = 'OUTER'
-    INNER = 'INNER'
+    FULL = "FULL"
+    OUTER = "OUTER"
+    INNER = "INNER"
 
 
 class ElementSeed(ToJson, ToCodeString):
@@ -189,34 +189,34 @@ class ElementSeed(ToJson, ToCodeString):
         return json.dumps(self.to_json())
 
     def to_json(self):
-        raise NotImplementedError('Use either EntitySeed or EdgeSeed')
+        raise NotImplementedError("Use either EntitySeed or EdgeSeed")
 
     def to_json_wrapped(self):
-        raise NotImplementedError('Use either EntitySeed or EdgeSeed')
+        raise NotImplementedError("Use either EntitySeed or EdgeSeed")
 
 
 class EntitySeed(ElementSeed):
-    CLASS = 'uk.gov.gchq.gaffer.operation.data.EntitySeed'
+    CLASS = "uk.gov.gchq.gaffer.operation.data.EntitySeed"
 
     def __init__(self, vertex):
         super().__init__()
         self.vertex = vertex
 
     def to_json(self):
-        return {'class': self.CLASS,
-                'vertex': self.vertex}
+        return {"class": self.CLASS,
+                "vertex": self.vertex}
 
     def to_json_wrapped(self):
         return {
             self.CLASS: {
-                'vertex': self.vertex,
-                'class': self.CLASS
+                "vertex": self.vertex,
+                "class": self.CLASS
             }
         }
 
 
 class EdgeSeed(ElementSeed):
-    CLASS = 'uk.gov.gchq.gaffer.operation.data.EdgeSeed'
+    CLASS = "uk.gov.gchq.gaffer.operation.data.EdgeSeed"
 
     def __init__(self, source, destination, directed_type, matched_vertex=None):
         super().__init__()
@@ -232,27 +232,27 @@ class EdgeSeed(ElementSeed):
 
     def to_json(self):
         seed = {
-            'class': self.CLASS,
-            'source': self.source,
-            'destination': self.destination,
-            'directedType': self.directed_type
+            "class": self.CLASS,
+            "source": self.source,
+            "destination": self.destination,
+            "directedType": self.directed_type
         }
 
         if self.matched_vertex is not None:
-            seed['matchedVertex'] = self.matched_vertex
+            seed["matchedVertex"] = self.matched_vertex
 
         return seed
 
     def to_json_wrapped(self):
         seed = {
-            'source': self.source,
-            'destination': self.destination,
-            'directedType': self.directed_type,
-            'class': self.CLASS
+            "source": self.source,
+            "destination": self.destination,
+            "directedType": self.directed_type,
+            "class": self.CLASS
         }
 
         if self.matched_vertex is not None:
-            seed['matchedVertex'] = self.matched_vertex
+            seed["matchedVertex"] = self.matched_vertex
 
         return {
             self.CLASS: seed
@@ -268,7 +268,7 @@ class Comparator(ToJson, ToCodeString):
 
     def to_json(self):
         tmp_json = {
-            'class': self.class_name
+            "class": self.class_name
         }
 
         if self.fields is not None:
@@ -279,7 +279,7 @@ class Comparator(ToJson, ToCodeString):
 
 
 class ElementPropertyComparator(Comparator):
-    CLASS = 'uk.gov.gchq.gaffer.data.element.comparison.ElementPropertyComparator'
+    CLASS = "uk.gov.gchq.gaffer.data.element.comparison.ElementPropertyComparator"
 
     def __init__(self, groups, property, reversed=False):
         super().__init__(class_name=None)
@@ -290,21 +290,21 @@ class ElementPropertyComparator(Comparator):
     def to_json(self):
         tmp_json = super().to_json()
         tmp_json["class"] = self.CLASS
-        tmp_json['groups'] = self.groups
-        tmp_json['property'] = self.property
-        tmp_json['reversed'] = self.reversed
+        tmp_json["groups"] = self.groups
+        tmp_json["property"] = self.property
+        tmp_json["reversed"] = self.reversed
         return tmp_json
 
 
 class SeedPair(ToJson, ToCodeString):
-    CLASS = 'uk.gov.gchq.gaffer.commonutil.pair.Pair'
+    CLASS = "uk.gov.gchq.gaffer.commonutil.pair.Pair"
 
     def __init__(self, first, second):
         super().__init__()
 
         if isinstance(first, ElementSeed):
             self.first = first
-        elif isinstance(first, dict) and 'class' in first:
+        elif isinstance(first, dict) and "class" in first:
             self.first = JsonConverter.from_json(first)
         elif isinstance(first, dict) and EntitySeed.CLASS in first:
             self.first = first[EntitySeed.CLASS]
@@ -319,7 +319,7 @@ class SeedPair(ToJson, ToCodeString):
 
         if isinstance(second, ElementSeed):
             self.second = second
-        elif isinstance(second, dict) and 'class' in second:
+        elif isinstance(second, dict) and "class" in second:
             self.second = JsonConverter.from_json(second)
         elif isinstance(second, dict) and EntitySeed.CLASS in second:
             self.second = second[EntitySeed.CLASS]
@@ -334,9 +334,9 @@ class SeedPair(ToJson, ToCodeString):
 
     def to_json(self):
         return {
-            'class': self.CLASS,
-            'first': self.first.to_json_wrapped(),
-            'second': self.second.to_json_wrapped()
+            "class": self.CLASS,
+            "first": self.first.to_json_wrapped(),
+            "second": self.second.to_json_wrapped()
         }
 
 
@@ -344,24 +344,24 @@ class Element(ToJson, ToCodeString):
     def __init__(self, _class_name, group, properties=None):
         super().__init__()
         if not isinstance(_class_name, str):
-            raise TypeError('ClassName must be a class name string')
+            raise TypeError("ClassName must be a class name string")
         if not isinstance(group, str):
-            raise TypeError('Group must be a string')
+            raise TypeError("Group must be a string")
         if not isinstance(properties, dict) and properties is not None:
-            raise TypeError('properties must be a dictionary or None')
+            raise TypeError("properties must be a dictionary or None")
         self._class_name = _class_name
         self.group = group
         self.properties = properties
 
     def to_json(self):
-        element = {'class': self._class_name, 'group': self.group}
+        element = {"class": self._class_name, "group": self.group}
         if self.properties is not None:
-            element['properties'] = self.properties
+            element["properties"] = self.properties
         return element
 
 
 class Entity(Element):
-    CLASS = 'uk.gov.gchq.gaffer.data.element.Entity'
+    CLASS = "uk.gov.gchq.gaffer.data.element.Entity"
 
     def __init__(self, group, vertex, properties=None):
         super().__init__(self.CLASS, group,
@@ -370,12 +370,12 @@ class Entity(Element):
 
     def to_json(self):
         entity = super().to_json()
-        entity['vertex'] = self.vertex
+        entity["vertex"] = self.vertex
         return entity
 
 
 class Edge(Element):
-    CLASS = 'uk.gov.gchq.gaffer.data.element.Edge'
+    CLASS = "uk.gov.gchq.gaffer.data.element.Edge"
 
     def __init__(self, group, source, destination, directed, properties=None,
                  matched_vertex=None):
@@ -383,7 +383,7 @@ class Edge(Element):
                          properties)
         # Validate the arguments
         if not isinstance(directed, bool):
-            raise TypeError('Directed must be a boolean')
+            raise TypeError("Directed must be a boolean")
         self.source = source
         self.destination = destination
         self.directed = directed
@@ -391,11 +391,11 @@ class Edge(Element):
 
     def to_json(self):
         edge = super().to_json()
-        edge['source'] = self.source
-        edge['destination'] = self.destination
-        edge['directed'] = self.directed
+        edge["source"] = self.source
+        edge["destination"] = self.destination
+        edge["directed"] = self.directed
         if self.matched_vertex is not None:
-            edge['matchedVertex'] = self.matched_vertex
+            edge["matchedVertex"] = self.matched_vertex
 
         return edge
 
@@ -407,27 +407,27 @@ class JsonConverter:
 
     @staticmethod
     def to_snake_case(name):
-        s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
-        return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
+        s1 = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", name)
+        return re.sub("([a-z0-9])([A-Z])", r"\1_\2", s1).lower()
 
     @staticmethod
     def object_decoder(obj, class_name=None):
         if not isinstance(obj, dict):
             raise TypeError(
-                'from_json called on object of type ' + str(type(obj)) +
-                ', should be a dict. obj: ' + str(obj)
+                "from_json called on object of type " + str(type(obj)) +
+                ", should be a dict. obj: " + str(obj)
             )
 
         if class_name is None:
-            if 'class' in obj:
-                class_name = obj.get('class')
+            if "class" in obj:
+                class_name = obj.get("class")
             else:
                 return obj
 
-        if obj.get('class'):
-            if class_name != obj.get('class'):
+        if obj.get("class"):
+            if class_name != obj.get("class"):
                 raise TypeError(
-                    'Argument ' + str(obj) + ' not of type ' + str(class_name)
+                    "Argument " + str(obj) + " not of type " + str(class_name)
                 )
 
         custom_json_converter = JsonConverter.CUSTOM_JSON_CONVERTERS.get(
@@ -441,7 +441,7 @@ class JsonConverter:
             if custom_json_converter is not None:
                 obj = custom_json_converter(mapped_obj)
             else:
-                mapped_obj.pop('class', None)
+                mapped_obj.pop("class", None)
                 obj = generic_json_converter(mapped_obj)
 
         return obj
@@ -452,7 +452,7 @@ class JsonConverter:
             return None
 
         if class_obj is not None:
-            if hasattr(class_obj, 'CLASS'):
+            if hasattr(class_obj, "CLASS"):
                 class_name = class_obj.CLASS
 
         if class_name is not None:
@@ -490,11 +490,11 @@ class JsonConverter:
                     if not isinstance(json_obj, str):
                         json_obj = json.dumps(json_obj)
                     raise TypeError(
-                        'Json object could not be deserialised correctly: \n' + json_obj)
+                        "Json object could not be deserialised correctly: \n" + json_obj)
                 if json_obj != obj.to_json():
                     raise TypeError(
-                        'Json object could not be deserialised correctly: \n'
-                        'Original: \n'
+                        "Json object could not be deserialised correctly: \n"
+                        "Original: \n"
                         + json.dumps(json_obj)
                         + " \nConverted:\n"
                         + json.dumps(obj.to_json()))
@@ -502,7 +502,7 @@ class JsonConverter:
                 if not isinstance(json_obj, str):
                     json_obj = json.dumps(json_obj)
                 raise TypeError(
-                    'Json object could not be deserialised correctly: \n' + json_obj)
+                    "Json object could not be deserialised correctly: \n" + json_obj)
 
         return obj
 
@@ -511,13 +511,13 @@ class JsonConverter:
         if obj is None:
             if allow_none:
                 return None
-            raise TypeError('Argument must be of type ' + str(expected_class))
+            raise TypeError("Argument must be of type " + str(expected_class))
         if not issubclass(expected_class, ToJson):
-            raise TypeError(str(expected_class) + ' must inherit ToJson')
+            raise TypeError(str(expected_class) + " must inherit ToJson")
         if not isinstance(obj, ToJson):
             obj = JsonConverter.from_json(obj, expected_class)
         if not isinstance(obj, expected_class):
-            raise TypeError(str(obj) + ' must be of type ' +
+            raise TypeError(str(obj) + " must be of type " +
                             str(expected_class))
         return obj
 
@@ -525,7 +525,7 @@ class JsonConverter:
 def load_core_json_map():
     for name, class_obj in inspect.getmembers(
             sys.modules[__name__], inspect.isclass):
-        if hasattr(class_obj, 'CLASS'):
+        if hasattr(class_obj, "CLASS"):
             JsonConverter.GENERIC_JSON_CONVERTERS[class_obj.CLASS] = \
                 lambda obj, class_obj=class_obj: class_obj(**obj)
             JsonConverter.CLASS_MAP[class_obj.CLASS] = class_obj
@@ -548,7 +548,7 @@ class BinaryOperator(ToJson, ToCodeString):
             function_json = {}
 
         if self.class_name is not None:
-            function_json['class'] = self.class_name
+            function_json["class"] = self.class_name
 
         return function_json
 
@@ -564,7 +564,7 @@ class AbstractBinaryOperator(BinaryOperator):
         function_json = {}
 
         if self._class_name is not None:
-            function_json['class'] = self._class_name
+            function_json["class"] = self._class_name
 
         return function_json
 
@@ -583,7 +583,7 @@ class Predicate(ToJson, ToCodeString):
             predicate_json = {}
 
         if self.class_name is not None:
-            predicate_json['class'] = self.class_name
+            predicate_json["class"] = self.class_name
 
         return predicate_json
 
@@ -597,7 +597,7 @@ class AbstractPredicate(Predicate):
         predicate_json = {}
 
         if self._class_name is not None:
-            predicate_json['class'] = self._class_name
+            predicate_json["class"] = self._class_name
 
         return predicate_json
 
@@ -616,7 +616,7 @@ class Function(ToJson, ToCodeString):
             function_json = {}
 
         if self.class_name is not None:
-            function_json['class'] = self.class_name
+            function_json["class"] = self.class_name
 
         return function_json
 
@@ -631,6 +631,6 @@ class AbstractFunction(Function):
     def to_json(self):
         function_json = {}
         if self._class_name is not None:
-            function_json['class'] = self._class_name
+            function_json["class"] = self._class_name
 
         return function_json

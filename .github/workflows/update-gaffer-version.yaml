@@ -47,6 +47,12 @@ jobs:
         git config user.name github-actions[bot]
         git config user.email 41898282+github-actions[bot]@users.noreply.github.com
 
+    - name: Create Issue
+      id: create-issue
+      run: |
+        gh issue create --title "Update Gaffer version to ${{ github.event.inputs.version }}" --body "Use Gaffer version ${{ github.event.inputs.version }}" --label enhancement \
+        | sed -zE "s|.*/issues/([0-9]+)|ISSUE_ID=\1|" >> "$GITHUB_OUTPUT"
+
     - name: Create PR branch
       env:
         VERSION_UPDATE_BRANCH: release/${{ github.event.milestone.title }}

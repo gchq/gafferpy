@@ -1,5 +1,5 @@
 #
-# Copyright 2023 Crown Copyright
+# Copyright 2023-2024 Crown Copyright
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -172,7 +172,7 @@ class Fishbowl:
 
         operation_summaries = sorted(operation_summaries, key=lambda op: op["name"])
 
-        op_names = [op['name'] for op in operation_summaries]
+        op_names = [op["name"] for op in operation_summaries]
 
         imports = self._generate_import_strings(op_names)
 
@@ -221,7 +221,7 @@ class Fishbowl:
             List of import strings e.g. `from gafferpy.gaffer_binaryoperators import BinaryOperator`
 
         """
-        get_field_types = self._get_function_dict()['get_field_types']
+        get_field_types = self._get_function_dict()["get_field_types"]
 
         class_names = [func.split(".")[-1] for func in funcs]
 
@@ -232,12 +232,12 @@ class Fishbowl:
         for func in funcs:
             for java_type in get_field_types(func).values():
                 python_type = parse_java_type_to_string(java_type)
-                if 'gafferpy' not in python_type:
+                if "gafferpy" not in python_type:
                     continue
 
                 gafferpy_import = re.findall("gafferpy[\\w+ \\.]*", python_type)[0]
                 gafferpy_import = gafferpy_import.replace("generated_api.", "gaffer_")
-                import_parts = gafferpy_import.split('.')
+                import_parts = gafferpy_import.split(".")
                 module = ".".join(import_parts[:-1])
                 _class = import_parts[-1]
                 # only import classes not already defined in the file in question
@@ -245,7 +245,7 @@ class Fishbowl:
                     import_map[module].add(_class)
 
         return [
-            f"from {import_path} import {', '.join(sorted(classes))}" for import_path,
+            f"from {import_path} import {','.join(sorted(classes))}" for import_path,
             classes in import_map.items()
         ]
 
