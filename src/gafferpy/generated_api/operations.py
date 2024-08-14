@@ -1,5 +1,5 @@
 #
-# Copyright 2022-2024 Crown Copyright
+# Copyright 2022 Crown Copyright
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -20,10 +20,10 @@ To make changes, either extend these classes or change fishbowl.
 """
 
 import typing
-from gafferpy.gaffer_operations import AggregatePair, Conditional, Operation, View
-from gafferpy.gaffer_core import BinaryOperator, Element, ElementSeed, Function
+from gafferpy.gaffer_operations import AggregatePair,Conditional,Operation,View
+from gafferpy.gaffer_core import BinaryOperator,Element,ElementSeed,Function
 from gafferpy.gaffer_predicates import ElementFilter
-from gafferpy.gaffer_functions import CsvGenerator, ElementTransformer, MapGenerator
+from gafferpy.gaffer_functions import CsvGenerator,ElementTransformer,MapGenerator
 
 
 class ImportAccumuloKeyValueFiles(Operation):
@@ -215,6 +215,7 @@ class GetElementsWithinSet(Operation):
     Args:
         input:
         view:
+        include_incoming_out_going: Should the edges point towards, or away from your seeds
         directed_type: Is the Edge directed?
         views:
         options: Additional map of options
@@ -227,6 +228,7 @@ class GetElementsWithinSet(Operation):
         self,
         input: typing.Optional[typing.List[typing.Any]] = None,
         view: typing.Optional[View] = None,
+        include_incoming_out_going: typing.Optional[str] = None,
         directed_type: typing.Optional[str] = None,
         views: typing.Optional[typing.List[View]] = None,
         options: typing.Optional[typing.Dict[str, str]] = None
@@ -235,6 +237,7 @@ class GetElementsWithinSet(Operation):
         super().__init__(_class_name=self.CLASS, options=options)
         self.input = input
         self.view = view
+        self.include_incoming_out_going = include_incoming_out_going
         self.directed_type = directed_type
         self.views = views
 
@@ -244,6 +247,8 @@ class GetElementsWithinSet(Operation):
             operation_json["input"] = self.input
         if self.view is not None:
             operation_json["view"] = self.view
+        if self.include_incoming_out_going is not None:
+            operation_json["includeIncomingOutGoing"] = self.include_incoming_out_going
         if self.directed_type is not None:
             operation_json["directedType"] = self.directed_type
         if self.views is not None:
@@ -2381,6 +2386,44 @@ class Sort(Operation):
             operation_json["deduplicate"] = self.deduplicate
         if self.comparators is not None:
             operation_json["comparators"] = self.comparators
+        return operation_json
+
+
+class DeleteElements(Operation):
+    """
+    Deletes elements
+
+    Args:
+        input:
+        skip_invalid_elements:
+        validate:
+        options: Additional map of options
+    Returns:
+        java.lang.Void
+    """
+    CLASS = "uk.gov.gchq.gaffer.operation.impl.delete.DeleteElements"
+
+    def __init__(
+        self,
+        input: typing.Optional[typing.List[Element]] = None,
+        skip_invalid_elements: typing.Optional[bool] = None,
+        validate: typing.Optional[bool] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
+        super().__init__(_class_name=self.CLASS, options=options)
+        self.input = input
+        self.skip_invalid_elements = skip_invalid_elements
+        self.validate = validate
+
+    def to_json(self):
+        operation_json = super().to_json()
+        if self.input is not None:
+            operation_json["input"] = self.input
+        if self.skip_invalid_elements is not None:
+            operation_json["skipInvalidElements"] = self.skip_invalid_elements
+        if self.validate is not None:
+            operation_json["validate"] = self.validate
         return operation_json
 
 

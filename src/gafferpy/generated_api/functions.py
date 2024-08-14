@@ -1,5 +1,5 @@
 #
-# Copyright 2022-2024 Crown Copyright
+# Copyright 2022 Crown Copyright
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ To make changes, either extend these classes or change fishbowl.
 """
 
 import typing
-from gafferpy.gaffer_core import AbstractFunction, BinaryOperator, Function, Predicate
+from gafferpy.gaffer_core import AbstractFunction,BinaryOperator,Function,Predicate
 
 
 class ElementTransformer(AbstractFunction):
@@ -923,6 +923,56 @@ class ToTimestampSet(AbstractFunction):
         if self.millis_correction is not None:
             function_json["millisCorrection"] = self.millis_correction
         return function_json
+
+
+class GafferEdgeGenerator(AbstractFunction):
+    CLASS = "uk.gov.gchq.gaffer.tinkerpop.generator.GafferEdgeGenerator"
+
+    def __init__(self):
+        super().__init__(_class_name=self.CLASS)
+
+    def to_json(self):
+        return super().to_json()
+
+
+class GafferEntityGenerator(AbstractFunction):
+    CLASS = "uk.gov.gchq.gaffer.tinkerpop.generator.GafferEntityGenerator"
+
+    def __init__(self):
+        super().__init__(_class_name=self.CLASS)
+
+    def to_json(self):
+        return super().to_json()
+
+
+class GafferPopEdgeGenerator(AbstractFunction):
+    CLASS = "uk.gov.gchq.gaffer.tinkerpop.generator.GafferPopEdgeGenerator"
+
+    def __init__(self):
+        super().__init__(_class_name=self.CLASS)
+
+    def to_json(self):
+        return super().to_json()
+
+
+class GafferPopElementGenerator(AbstractFunction):
+    CLASS = "uk.gov.gchq.gaffer.tinkerpop.generator.GafferPopElementGenerator"
+
+    def __init__(self):
+        super().__init__(_class_name=self.CLASS)
+
+    def to_json(self):
+        return super().to_json()
+
+
+class GafferPopVertexGenerator(AbstractFunction):
+    CLASS = "uk.gov.gchq.gaffer.tinkerpop.generator.GafferPopVertexGenerator"
+
+    def __init__(self):
+        super().__init__(_class_name=self.CLASS)
+
+    def to_json(self):
+        return super().to_json()
 
 
 class FreqMapExtractor(AbstractFunction):
