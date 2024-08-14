@@ -20,7 +20,7 @@ To make changes, either extend these classes or change fishbowl.
 """
 
 import typing
-from gafferpy.gaffer_core import AbstractPredicate,Function,Predicate
+from gafferpy.gaffer_core import AbstractPredicate, Function, Predicate
 from gafferpy.gaffer_functions import ElementTransformer
 
 
