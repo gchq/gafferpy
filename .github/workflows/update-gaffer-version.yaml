@@ -1,10 +1,9 @@
 name: Update Gaffer Version
+
 on:
-  workflow_dispatch:
-    inputs:
-      version:
-        description: 'Gaffer Version'
-        required: true
+  milestone:
+    types:
+      - closed
 
 env:
   GH_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
@@ -13,7 +12,7 @@ jobs:
   update-gaffer-version:
     runs-on: ubuntu-latest
     env:
-      VERSION_UPDATE_BRANCH: updating-gaffer-version-${{ github.event.inputs.version }}
+      VERSION_UPDATE_BRANCH: updating-gaffer-version-${{ github.event.milestone.title }}
 
     steps:
     - name: Checkout base branch
@@ -28,7 +27,7 @@ jobs:
     - name: Update Gaffer Version
       run: |
         oldVersion=`sed -n 's/^__version__.*"\(.*\)"$/\1/p' src/__init__.py`
-        newVersion=${{ github.event.inputs.version }}
+        newVersion=${{ github.event.milestone.title }}
 
         sed -i'' "s#__version__ = \"$oldVersion\"#__version__ = \"$newVersion\"#g" src/__init__.py
         sed -i'' "s#__version__ = \"$oldVersion\"#__version__ = \"$newVersion\"#g" src/*/__init__.py
@@ -36,7 +35,7 @@ jobs:
 
     - name: Update gafferpy
       run: |
-        newVersion=${{ github.event.inputs.version }}
+        newVersion=${{ github.event.milestone.title }}
         curl -o spring-rest.jar https://repo.maven.apache.org/maven2/uk/gov/gchq/gaffer/spring-rest/$newVersion/spring-rest-$newVersion-exec.jar
         java -Dgaffer.schemas=tests/road-traffic-example/schema -Dgaffer.storeProperties=tests/road-traffic-example/federatedStore.properties -Dgaffer.graph.config=tests/road-traffic-example/federatedGraphConfig.json -jar spring-rest.jar &
         sleep 1m
@@ -48,22 +47,22 @@ jobs:
         git config user.name github-actions[bot]
         git config user.email 41898282+github-actions[bot]@users.noreply.github.com
 
-    - name: Create Issue
-      id: create-issue
-      run: |
-        gh issue create --title "Update Gaffer version to ${{ github.event.inputs.version }}" --body "Use Gaffer version ${{ github.event.inputs.version }}" --label enhancement \
-        | sed -zE "s|.*/issues/([0-9]+)|ISSUE_ID=\1|" >> "$GITHUB_OUTPUT"
-
     - name: Create PR branch
       env:
-        VERSION_UPDATE_BRANCH: gh-${{ steps.create-issue.outputs.ISSUE_ID }}-updating-gaffer-version-${{ github.event.inputs.version }}
+        VERSION_UPDATE_BRANCH: updating-to-gaffer-version-${{ github.event.milestone.title }}
       run: |
         git checkout -b ${{ env.VERSION_UPDATE_BRANCH }}
-        git commit -am "Updated Gaffer version to ${{ github.event.inputs.version }}"
+        git commit -am "Updated Gaffer version to ${{ github.event.milestone.title }}"
         git push --set-upstream origin ${{ env.VERSION_UPDATE_BRANCH }}
+
+    - name: Tag release branch
+      run: |
+        git tag gafferpy-${{ github.event.milestone.title }}
+        git push origin gafferpy-${{ github.event.milestone.title }}
+        git push
 
     - name: Submit PR
       env:
         ISSUE_ID: ${{ steps.create-issue.outputs.ISSUE_ID }}
       run: |-
-          gh pr create --title "Gh-$ISSUE_ID: Updated Gaffer version to ${{ github.event.inputs.version }}" --body ""
+          gh pr create --title "Updated Gaffer version to ${{ github.event.milestone.title }}" --body ""
