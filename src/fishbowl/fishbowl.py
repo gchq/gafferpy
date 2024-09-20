@@ -23,6 +23,7 @@ from gafferpy.gaffer_core import JsonConverter
 from gafferpy.gaffer_types import parse_java_type_to_string
 from collections import defaultdict
 from typing import Any, Callable, Dict, List, Set
+from datetime import datetime
 
 
 class Fishbowl:
@@ -76,6 +77,7 @@ class Fishbowl:
         templates_dir = parent_dir / "templates"
         file_loader = FileSystemLoader(templates_dir)
         self.env = Environment(loader=file_loader)
+        self.env.globals['copyright_years'] = f"2022-{datetime.now().year}"
 
         operations_python = self._generate_operations()
         functions_python = self._generate_transform_functions()
