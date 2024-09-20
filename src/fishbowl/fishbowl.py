@@ -30,10 +30,10 @@ class Fishbowl:
     def __init__(
         self,
         gaffer_connector: GafferConnector,
-        generated_directory_path: str = "generated"
+        generated_directory_path: str | Path = "generated"
     ):
         self._gaffer_connector = gaffer_connector
-        self.generated_directory_path = generated_directory_path
+        self.generated_directory_path = Path(generated_directory_path)
         print("Generating Python API from REST service...")
         self._generate_library()
         print(
@@ -44,7 +44,8 @@ class Fishbowl:
 
     def _write_to_file(self, file_path: Path, data: str) -> None:
         if data:
-            file_path.unlink()  # removes file
+            if file_path.exists():
+                file_path.unlink()  # removes file
             with open(file_path, "w+") as file:
                 file.write(data)
 
