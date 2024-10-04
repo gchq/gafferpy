@@ -113,7 +113,7 @@ class GafferConnector:
             The result of the query.
         """
         target = "/gremlin/execute"
-        request_headers = { 'accept': 'application/x-ndjson', 'Content-Type': 'text/plain' }
+        request_headers = {'accept': 'application/x-ndjson', 'Content-Type': 'text/plain'}
 
         result = self.client.perform_request(
             method="POST",
@@ -141,7 +141,7 @@ class GafferConnector:
             The result of the query.
         """
         target = "/gremlin/cypher/execute"
-        request_headers = { 'accept': 'application/x-ndjson', 'Content-Type': 'text/plain' }
+        request_headers = {'accept': 'application/x-ndjson', 'Content-Type': 'text/plain'}
 
         result = self.client.perform_request(
             method="POST",
@@ -156,7 +156,6 @@ class GafferConnector:
 
         # Return just raw result
         return result
-
 
     def execute_get(self, operation, headers=None, json_result=False):
         """
