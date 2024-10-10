@@ -24,7 +24,7 @@ from gafferpy.client import UrllibClient, RequestsClient, PkiClient
 from gafferpy.gaffer_core import ToJson
 from gafferpy.gaffer_config import IsOperationSupported
 from gafferpy.gaffer_operations import OperationChain
-
+from gremlin_python.structure.io.graphsonV3d0 import GraphSONReader
 
 CLIENT_CLASS_NAMES = {
     "urllib": UrllibClient,
@@ -57,6 +57,7 @@ class GafferConnector:
             client_class = CLIENT_CLASS_NAMES[client_class]
 
         self.client = client_class(host, verbose, headers, **kwargs)
+        self.graphson_reader = GraphSONReader()
 
     def execute(self, operation, headers=None):
         """
@@ -99,6 +100,62 @@ class GafferConnector:
             headers,
             json_body
         )
+
+    def execute_gremlin(self, query: str, to_objects=True):
+        """
+        Execute a Gremlin Groovy query using the Gaffer endpoint.
+
+        Args:
+            query: The Gremlin query.
+            to_objects: Should the result be converted to Python objects or left as raw GraphSON.
+
+        Returns:
+            The result of the query.
+        """
+        target = "/gremlin/execute"
+        request_headers = {'accept': 'application/x-ndjson', 'Content-Type': 'text/plain'}
+
+        result = self.client.perform_request(
+            method="POST",
+            target=target,
+            body=str.encode(query),
+            headers=request_headers
+        )
+
+        # Convert to python using gremlin-python's graphSON reader
+        if to_objects:
+            return self.graphson_reader.to_object(result)
+
+        # Return just raw result
+        return result
+
+    def execute_cypher(self, query: str, to_objects=True):
+        """
+        Execute an Open Cypher query using the Gaffer endpoint.
+
+        Args:
+            query: The Open Cypher query.
+            to_objects: Should the result be converted to Python objects or left as raw GraphSON.
+
+        Returns:
+            The result of the query.
+        """
+        target = "/gremlin/cypher/execute"
+        request_headers = {'accept': 'application/x-ndjson', 'Content-Type': 'text/plain'}
+
+        result = self.client.perform_request(
+            method="POST",
+            target=target,
+            body=str.encode(query),
+            headers=request_headers
+        )
+
+        # Convert to python using gremlin-python's graphSON reader
+        if to_objects:
+            return self.graphson_reader.to_object(result)
+
+        # Return just raw result
+        return result
 
     def execute_get(self, operation, headers=None, json_result=False):
         """
