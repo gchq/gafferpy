@@ -153,6 +153,32 @@ def long(value: int) -> Dict[str, int]:
     return {"java.lang.Long": value}
 
 
+def float_(value: float) -> Dict[str, float]:
+    """
+    Convert float value to an object that Gaffer can serialise into a Java Float type.
+
+    Args:
+        value: Float value to convert
+
+    Returns:
+        Dictionary that can be serialised to a Java Float.
+    """
+    return {"java.lang.Float": value}
+
+
+def double(value: float) -> Dict[str, float]:
+    """
+    Convert float value to an object that Gaffer can serialise into a Java Double type.
+
+    Args:
+        value: Float value to convert
+
+    Returns:
+        Dictionary that can be serialised to a Java Double.
+    """
+    return {"java.lang.Double": value}
+
+
 def date(value: int) -> Dict[str, int]:
     """
     Convert integer value to an object that Gaffer can serialise into a Java Date type.
