@@ -27,7 +27,6 @@ jobs:
     - name: Update Gaffer Version
       run: |
         newVersion=${{ github.event.milestone.title }}
-        
         bash update-versions.sh "${newVersion}"
 
     - name: Update gafferpy
@@ -36,6 +35,7 @@ jobs:
         curl -o spring-rest.jar https://repo.maven.apache.org/maven2/uk/gov/gchq/gaffer/spring-rest/$newVersion/spring-rest-$newVersion-exec.jar
         java -Dgaffer.schemas=tests/road-traffic-example/schema -Dgaffer.storeProperties=tests/road-traffic-example/federatedStore.properties -Dgaffer.graph.config=tests/road-traffic-example/federatedGraphConfig.json -jar spring-rest.jar &
         sleep 1m
+        pip install -r ./requirements.txt
         python src/generate.py
         rm spring-rest.jar
 
