@@ -1,5 +1,5 @@
 #
-# Copyright 2022 Crown Copyright
+# Copyright 2022-2024 Crown Copyright
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -47,6 +47,44 @@ class ElementAggregator(AbstractBinaryOperator):
         function_json = super().to_json()
         if self.operators is not None:
             function_json["operators"] = self.operators
+        return function_json
+
+
+class DefaultResultAccumulator(AbstractBinaryOperator):
+    CLASS = "uk.gov.gchq.gaffer.federated.simple.merge.DefaultResultAccumulator"
+
+    def __init__(
+        self,
+        schema: typing.Optional[typing.Dict] = None,
+        aggregate_elements: typing.Optional[bool] = None,
+    ):
+        super().__init__(_class_name=self.CLASS)
+        self.schema = schema
+        self.aggregate_elements = aggregate_elements
+
+    def to_json(self):
+        function_json = super().to_json()
+        if self.schema is not None:
+            function_json["schema"] = self.schema
+        if self.aggregate_elements is not None:
+            function_json["aggregateElements"] = self.aggregate_elements
+        return function_json
+
+
+class ElementAggregateOperator(AbstractBinaryOperator):
+    CLASS = "uk.gov.gchq.gaffer.federated.simple.merge.operator.ElementAggregateOperator"
+
+    def __init__(
+        self,
+        schema: typing.Optional[typing.Dict] = None,
+    ):
+        super().__init__(_class_name=self.CLASS)
+        self.schema = schema
+
+    def to_json(self):
+        function_json = super().to_json()
+        if self.schema is not None:
+            function_json["schema"] = self.schema
         return function_json
 
 
