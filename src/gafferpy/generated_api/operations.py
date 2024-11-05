@@ -1,5 +1,5 @@
 #
-# Copyright 2022 Crown Copyright
+# Copyright 2022-2024 Crown Copyright
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -301,6 +301,179 @@ class SummariseGroupOverRanges(Operation):
             operation_json["directedType"] = self.directed_type
         if self.views is not None:
             operation_json["views"] = self.views
+        return operation_json
+
+
+class AddGraph(Operation):
+    """
+    Adds a new Graph to the federated store
+
+    Args:
+        graph_config:
+        owner:
+        schema:
+        public:
+        is_public:
+        write_predicate:
+        properties:
+        read_predicate:
+        options: Additional map of options
+    Returns:
+        java.lang.Void
+    """
+    CLASS = "uk.gov.gchq.gaffer.federated.simple.operation.AddGraph"
+
+    def __init__(
+        self,
+        graph_config: typing.Any,
+        owner: typing.Optional[str] = None,
+        schema: typing.Optional[typing.Dict] = None,
+        public: typing.Optional[typing.Any] = None,
+        is_public: typing.Optional[bool] = None,
+        write_predicate: typing.Optional[typing.Any] = None,
+        properties: typing.Optional[typing.Dict] = None,
+        read_predicate: typing.Optional[typing.Any] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
+        super().__init__(_class_name=self.CLASS, options=options)
+        self.owner = owner
+        self.schema = schema
+        self.public = public
+        self.graph_config = graph_config
+        self.is_public = is_public
+        self.write_predicate = write_predicate
+        self.properties = properties
+        self.read_predicate = read_predicate
+
+    def to_json(self):
+        operation_json = super().to_json()
+        if self.owner is not None:
+            operation_json["owner"] = self.owner
+        if self.schema is not None:
+            operation_json["schema"] = self.schema
+        if self.public is not None:
+            operation_json["public"] = self.public
+        if self.graph_config is not None:
+            operation_json["graphConfig"] = self.graph_config
+        if self.is_public is not None:
+            operation_json["isPublic"] = self.is_public
+        if self.write_predicate is not None:
+            operation_json["writePredicate"] = self.write_predicate
+        if self.properties is not None:
+            operation_json["properties"] = self.properties
+        if self.read_predicate is not None:
+            operation_json["readPredicate"] = self.read_predicate
+        return operation_json
+
+
+class ChangeGraphId(Operation):
+    """
+    Changes Graph ID
+
+    Args:
+        new_graph_id:
+        graph_id:
+        options: Additional map of options
+    Returns:
+        java.lang.Void
+    """
+    CLASS = "uk.gov.gchq.gaffer.federated.simple.operation.ChangeGraphId"
+
+    def __init__(
+        self,
+        new_graph_id: typing.Optional[str] = None,
+        graph_id: typing.Optional[str] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
+        super().__init__(_class_name=self.CLASS, options=options)
+        self.new_graph_id = new_graph_id
+        self.graph_id = graph_id
+
+    def to_json(self):
+        operation_json = super().to_json()
+        if self.new_graph_id is not None:
+            operation_json["newGraphId"] = self.new_graph_id
+        if self.graph_id is not None:
+            operation_json["graphId"] = self.graph_id
+        return operation_json
+
+
+class GetAllGraphIds(Operation):
+    """
+    Get all the graph IDs available to a federated store
+
+    Args:
+        options: Additional map of options
+    Returns:
+        java.util.Set<T>
+    """
+    CLASS = "uk.gov.gchq.gaffer.federated.simple.operation.GetAllGraphIds"
+
+    def __init__(
+        self,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
+        super().__init__(_class_name=self.CLASS, options=options)
+
+    def to_json(self):
+        return super().to_json()
+
+
+class GetAllGraphInfo(Operation):
+    """
+    Get all the graph info from graphs in a federated store
+
+    Args:
+        options: Additional map of options
+    Returns:
+        java.util.Map<java.lang.String,java.lang.Object>
+    """
+    CLASS = "uk.gov.gchq.gaffer.federated.simple.operation.GetAllGraphInfo"
+
+    def __init__(
+        self,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
+        super().__init__(_class_name=self.CLASS, options=options)
+
+    def to_json(self):
+        return super().to_json()
+
+
+class RemoveGraph(Operation):
+    """
+    Removes a new Graph from the federated store optionally deleting all data
+
+    Args:
+        graph_id:
+        delete_all_data:
+        options: Additional map of options
+    Returns:
+        java.lang.Void
+    """
+    CLASS = "uk.gov.gchq.gaffer.federated.simple.operation.RemoveGraph"
+
+    def __init__(
+        self,
+        graph_id: str,
+        delete_all_data: typing.Optional[bool] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
+        super().__init__(_class_name=self.CLASS, options=options)
+        self.delete_all_data = delete_all_data
+        self.graph_id = graph_id
+
+    def to_json(self):
+        operation_json = super().to_json()
+        if self.delete_all_data is not None:
+            operation_json["deleteAllData"] = self.delete_all_data
+        if self.graph_id is not None:
+            operation_json["graphId"] = self.graph_id
         return operation_json
 
 
@@ -3033,6 +3206,28 @@ class GetFromEndpoint(Operation):
         if self.endpoint is not None:
             operation_json["endpoint"] = self.endpoint
         return operation_json
+
+
+class GetGraphCreatedTime(Operation):
+    """
+    Operation to retrieve Graph created date
+
+    Args:
+        options: Additional map of options
+    Returns:
+        java.util.Map<java.lang.String,java.lang.String>
+    """
+    CLASS = "uk.gov.gchq.gaffer.operation.impl.get.GetGraphCreatedTime"
+
+    def __init__(
+        self,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
+        super().__init__(_class_name=self.CLASS, options=options)
+
+    def to_json(self):
+        return super().to_json()
 
 
 class CancelScheduledJob(Operation):
