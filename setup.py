@@ -24,7 +24,7 @@ classifiers = [
 python_requires = ">3.6"
 install_requires = [
     "requests>=2.4.0",
-    "gremlinpython>=3.6.2"
+    "gremlinpython>=3.7.3"
 ]
 extras_require = {
     "dev": [
