@@ -1,3 +1,2 @@
 requests==2.31.0
 gremlinpython==3.6.2
-aiohttp==3.8.1
