@@ -21,7 +21,7 @@ classifiers = [
     "Programming Language :: Python :: 3 :: Only",
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
-python_requires = ">3.6"
+python_requires = ">3.3"
 install_requires = [
     "requests>=2.4.0",
     "gremlinpython>=3.6.2"
