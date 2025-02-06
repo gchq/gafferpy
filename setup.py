@@ -21,14 +21,15 @@ classifiers = [
     "Programming Language :: Python :: 3 :: Only",
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
-python_requires = ">s3.6"
-install_requires = []
+python_requires = ">3.6"
+install_requires = [
+    "requests>=2.4.0",
+    "gremlinpython>=3.6.2"
+]
 extras_require = {
-    "requests": ["requests>=2.4.0"],
     "dev": [
         "tox",
         "pytest",
-        "requests>=2.4.0",
         "sphinx~=7.2.6",
         "sphinx-rtd-theme~=1.3.0"
     ]
