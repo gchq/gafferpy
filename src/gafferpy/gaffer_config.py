@@ -17,9 +17,9 @@
 """
 This module contains Python copies of Gaffer config java classes
 """
+
 import inspect
 import sys
-
 from gafferpy.gaffer_core import JsonConverter
 
 
@@ -50,9 +50,18 @@ class IsOperationSupported:
         return self.operation
 
 
+def cleanup_config_json_map():
+    """Clear existing mappings to avoid memory bloat."""
+    JsonConverter.GENERIC_JSON_CONVERTERS.clear()
+    JsonConverter.CLASS_MAP.clear()
+
+
 def load_config_json_map():
-    for name, class_obj in inspect.getmembers(
-            sys.modules[__name__], inspect.isclass):
+    """Load configuration class mappings and clear previous ones."""
+    # Clear existing mappings to avoid memory bloat
+    cleanup_config_json_map()
+
+    for name, class_obj in inspect.getmembers(sys.modules[__name__], inspect.isclass):
         if hasattr(class_obj, "CLASS"):
             JsonConverter.GENERIC_JSON_CONVERTERS[class_obj.CLASS] = \
                 lambda obj, class_obj=class_obj: class_obj(**obj)
