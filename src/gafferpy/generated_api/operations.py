@@ -1,5 +1,5 @@
 #
-# Copyright 2022-2024 Crown Copyright
+# Copyright 2022-2025 Crown Copyright
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -362,6 +362,59 @@ class AddGraph(Operation):
             operation_json["writePredicate"] = self.write_predicate
         if self.properties is not None:
             operation_json["properties"] = self.properties
+        if self.read_predicate is not None:
+            operation_json["readPredicate"] = self.read_predicate
+        return operation_json
+
+
+class ChangeGraphAccess(Operation):
+    """
+    Changes the access controls on a Graph
+
+    Args:
+        owner:
+        public:
+        is_public:
+        write_predicate:
+        graph_id:
+        read_predicate:
+        options: Additional map of options
+    Returns:
+        java.lang.Void
+    """
+    CLASS = "uk.gov.gchq.gaffer.federated.simple.operation.ChangeGraphAccess"
+
+    def __init__(
+        self,
+        owner: typing.Optional[str] = None,
+        public: typing.Optional[typing.Any] = None,
+        is_public: typing.Optional[bool] = None,
+        write_predicate: typing.Optional[typing.Any] = None,
+        graph_id: typing.Optional[str] = None,
+        read_predicate: typing.Optional[typing.Any] = None,
+        options: typing.Optional[typing.Dict[str, str]] = None
+    ):
+
+        super().__init__(_class_name=self.CLASS, options=options)
+        self.owner = owner
+        self.public = public
+        self.is_public = is_public
+        self.write_predicate = write_predicate
+        self.graph_id = graph_id
+        self.read_predicate = read_predicate
+
+    def to_json(self):
+        operation_json = super().to_json()
+        if self.owner is not None:
+            operation_json["owner"] = self.owner
+        if self.public is not None:
+            operation_json["public"] = self.public
+        if self.is_public is not None:
+            operation_json["isPublic"] = self.is_public
+        if self.write_predicate is not None:
+            operation_json["writePredicate"] = self.write_predicate
+        if self.graph_id is not None:
+            operation_json["graphId"] = self.graph_id
         if self.read_predicate is not None:
             operation_json["readPredicate"] = self.read_predicate
         return operation_json
@@ -2572,7 +2625,7 @@ class DeleteElements(Operation):
         validate:
         options: Additional map of options
     Returns:
-        java.lang.Void
+        java.lang.Long
     """
     CLASS = "uk.gov.gchq.gaffer.operation.impl.delete.DeleteElements"
 

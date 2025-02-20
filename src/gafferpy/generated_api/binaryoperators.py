@@ -1,5 +1,5 @@
 #
-# Copyright 2022-2024 Crown Copyright
+# Copyright 2022-2025 Crown Copyright
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -436,6 +436,16 @@ class CollectionIntersect(AbstractBinaryOperator):
 
 class First(AbstractBinaryOperator):
     CLASS = "uk.gov.gchq.koryphe.impl.binaryoperator.First"
+
+    def __init__(self):
+        super().__init__(_class_name=self.CLASS)
+
+    def to_json(self):
+        return super().to_json()
+
+
+class IterableMerge(AbstractBinaryOperator):
+    CLASS = "uk.gov.gchq.koryphe.impl.binaryoperator.IterableMerge"
 
     def __init__(self):
         super().__init__(_class_name=self.CLASS)
